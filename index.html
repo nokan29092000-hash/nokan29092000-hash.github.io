@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nok — profile</title>
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;min-height:100vh;display:flex;align-items:center;
+justify-content:center;overflow:hidden;font-family:Arial,sans-serif;
+color:#e7edff;background:
+radial-gradient(ellipse at 20% 20%,#193c70 0%,transparent 45%),
+radial-gradient(ellipse at 80% 80%,#25265b 0%,transparent 45%),#080b12
+}
+body::before{
+content:"";position:fixed;inset:0;pointer-events:none;
+background:linear-gradient(120deg,transparent,#8db5ff08,transparent);
+animation:glow 7s infinite alternate
+}
+@keyframes glow{to{transform:translateX(15%)}}
+#enter{
+position:fixed;inset:0;z-index:5;display:grid;place-items:center;
+background:#080b12;cursor:pointer;transition:.7s
+}
+#enter span{
+color:#a9c9ff;letter-spacing:5px;font-size:13px;
+animation:blink 2s infinite
+}
+#enter small{display:block;margin-top:15px;color:#78849d;text-align:center}
+#enter.hidden{opacity:0;visibility:hidden}
+@keyframes blink{50%{opacity:.4}}
+.card{
+position:relative;width:min(390px,90vw);padding:32px 26px;
+text-align:center;background:#101827d9;border:1px solid #527ab755;
+border-radius:18px;box-shadow:0 0 70px #173c7850;
+backdrop-filter:blur(16px);animation:appear 1s ease both
+}
+@keyframes appear{
+from{opacity:0;transform:translateY(18px)}
+to{opacity:1;transform:translateY(0)}
+}
+.avatar{
+width:105px;height:105px;object-fit:cover;border-radius:50%;
+border:2px solid #719ee9;box-shadow:0 0 25px #5288dc55;
+background:#19263e
+}
+h1{margin:18px 0 8px;font-size:28px;letter-spacing:2px}
+.tag{color:#8eaff0;font-size:11px;letter-spacing:4px}
+.bio{color:#a5aec2;font-size:14px;line-height:1.8;margin:20px 0}
+.links{display:grid;gap:10px}
+.links a,#music{
+display:block;padding:13px;border:1px solid #40577866;
+border-radius:9px;background:#ffffff05;color:#dce8ff;
+text-decoration:none;font-size:13px;transition:.25s
+}
+.links a:hover,#music:hover{
+background:#5288dc22;border-color:#719ee9;transform:translateY(-2px)
+}
+#music{width:100%;margin-top:12px;cursor:pointer}
+footer{margin-top:24px;color:#65738e;font-size:10px;letter-spacing:3px}
+</style>
+</head>
+<body>
+<div id="enter">
+<div>
+<span>CLICK TO ENTER</span>
+<small>✦ welcome to my world ✦</small>
+</div>
+</div>
+
+<main class="card">
+<img class="avatar"
+src="https://placehold.co/200x200/19263e/bbd3ff?text=N"
+alt="Avatar">
+<h1>Nok</h1>
+<div class="tag">JUST EXISTING.</div>
+<p class="bio">
+somewhere between dreams and reality.<br>
+welcome to my little world.
+</p>
+
+<nav class="links">
+<a href="https://discord.com/" target="_blank" rel="noopener noreferrer">Discord ↗</a>
+<a href="https://t.me/" target="_blank" rel="noopener noreferrer">Telegram ↗</a>
+<a href="https://tiktok.com/" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
+</nav>
+
+<button id="music">♫ MUSIC: OFF</button>
+<audio id="audio" src="music.mp3" loop></audio>
+<footer>MADE BY NOK · 2026</footer>
+</main>
+
+<script>
+const enter=document.getElementById('enter');
+const audio=document.getElementById('audio');
+const music=document.getElementById('music');
+
+enter.addEventListener('click',()=>{
+enter.classList.add('hidden');
+});
+
+music.addEventListener('click',async()=>{
+if(audio.paused){
+try{
+await audio.play();
+music.textContent='♫ MUSIC: ON';
+}catch{
+music.textContent='ADD MUSIC FILE FIRST';
+}
+}else{
+audio.pause();
+music.textContent='♫ MUSIC: OFF';
+}
+});
+</script>
+</body>
+</html>
