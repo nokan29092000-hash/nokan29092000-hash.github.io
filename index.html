@@ -2,986 +2,2380 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080d14">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b12">
 <title>Nok — Personal Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#080d14;
-  --card:rgba(12,20,31,.91);
-  --text:#e8eef7;
-  --muted:#8999ad;
-  --accent:#5b9dff;
-  --border:rgba(130,170,220,.2);
-  --surface:rgba(12,20,31,.91);
-  --surface-text:#e8eef7;
+  --bg:#080b12;
+  --panel:rgba(12,17,28,.82);
+  --panel-strong:rgba(9,13,22,.96);
+  --text:#edf2fb;
+  --muted:#9aa8bd;
+  --line:rgba(177,198,230,.16);
+  --accent:#526f9e;
+  --accent-rgb:82,111,158;
+  --accent-soft:rgba(82,111,158,.18);
+  --shadow:0 24px 80px rgba(0,0,0,.45);
+  --radius:24px;
+  --card-rgb:12,17,28;
+  --card-alpha:.82;
+  --surface-opacity:1
 }
-* {box-sizing:border-box}
-html {min-height:100%;background:var(--bg)}
+* {
+  box-sizing:border-box
+}
+html {
+  min-height:100%;
+  background:#05070b;
+  scroll-behavior:smooth
+}
 body {
-  margin:0; min-height:100vh; min-height:100svh;
-  background:var(--bg); color:var(--text);
-  font-family:Inter,Segoe UI,Arial,sans-serif; overflow-x:hidden;
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  transition:background .35s,color .35s
 }
-body.theme-white {--bg:#e9edf2;--card:rgba(255,255,255,.94);--text:#17202d;--muted:#5f6d7d;--accent:#2467bd;--border:#cbd4e0;--surface:rgba(255,255,255,.94);--surface-text:#17202d}
-body.theme-gray {--bg:#252a31;--card:rgba(36,43,53,.94);--text:#e5e8ed;--muted:#a0a9b6;--accent:#81b8ff;--border:#444e5c;--surface:rgba(36,43,53,.94);--surface-text:#e5e8ed}
-button,input,select {font:inherit}
-button,a {cursor:pointer}
-a {color:inherit;text-decoration:none}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible {outline:2px solid var(--accent);outline-offset:3px}
-
-#background-video {
-  position:fixed;inset:0;width:100%;height:100%;object-fit:cover;
-  z-index:-5;filter:brightness(.62) contrast(1.15) saturate(.72)
+body.theme-white {
+  --bg:#e8ebf0;
+  --panel:rgba(255,255,255,.84);
+  --panel-strong:rgba(250,251,253,.97);
+  --text:#161c27;
+  --muted:#586476;
+  --line:rgba(30,42,62,.15);
+  --shadow:0 24px 80px rgba(24,31,43,.18);
+  --card-rgb:255,255,255;
+  --card-alpha:.84
 }
-.bg-overlay {position:fixed;inset:0;z-index:-4;pointer-events:none;background:linear-gradient(135deg,#060b12c7,#07111de8),radial-gradient(ellipse at 50% 40%,transparent,#03060bf0)}
-body.theme-white .bg-overlay {background:#e9edf2df}
-body.theme-gray .bg-overlay {background:#141a23df}
-#youtube-player {position:fixed;width:2px;height:2px;right:0;bottom:0;opacity:.01;pointer-events:none;z-index:-10}
-
-#app {
-  min-height:100vh;min-height:100svh;display:flex;align-items:center;
-  justify-content:center;padding:70px 18px 20px
+body.theme-gray {
+  --bg:#22262d;
+  --panel:rgba(37,42,51,.86);
+  --panel-strong:rgba(25,29,36,.97);
+  --text:#edf0f5;
+  --muted:#a3aab7;
+  --line:rgba(220,228,241,.14);
+  --card-rgb:37,42,51;
+  --card-alpha:.86
 }
-.profile-wrap {width:min(100%,480px)}
+body.accent-blue {
+  --accent:#526f9e;
+  --accent-rgb:82,111,158
+}
+body.accent-purple {
+  --accent:#72568f;
+  --accent-rgb:114,86,143
+}
+body.accent-red {
+  --accent:#914d58;
+  --accent-rgb:145,77,88
+}
+body.accent-pink {
+  --accent:#93657e;
+  --accent-rgb:147,101,126
+}
+body.accent-green {
+  --accent:#4f796e;
+  --accent-rgb:79,121,110
+}
+body.accent-cyan {
+  --accent:#4d7c88;
+  --accent-rgb:77,124,136
+}
+body.accent-orange {
+  --accent:#966e4d;
+  --accent-rgb:150,110,77
+}
+body.accent-yellow {
+  --accent:#8c8252;
+  --accent-rgb:140,130,82
+}
+body.accent-indigo {
+  --accent:#555b91;
+  --accent-rgb:85,91,145
+}
+body.accent-white {
+  --accent:#aab5c7;
+  --accent-rgb:170,181,199
+}
+body.accent-black {
+  --accent:#252a34;
+  --accent-rgb:37,42,52
+}
+button,input {
+  font:inherit
+}
+button {
+  color:inherit
+}
+button:focus-visible,a:focus-visible,input:focus-visible {
+  outline:2px solid var(--accent);
+  outline-offset:4px
+}
+a {
+  color:inherit;
+  text-decoration:none
+}
+button {
+  cursor:pointer
+}
+#mainBackground {
+  position:fixed;
+  inset:0;
+  z-index:-4;
+  background:radial-gradient(ellipse at 50% 15%,rgba(var(--accent-rgb),.19),transparent 45%),linear-gradient(145deg,#0b111c,#05070b 70%)
+}
+#mainBackground video {
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.22;
+  filter:saturate(.7) contrast(1.08)
+}
+#mainBackground:after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(3,5,10,.35),rgba(3,5,10,.76))
+}
+.ambient {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-2;
+  overflow:hidden;
+  background:radial-gradient(circle at 50% 50%,transparent 0,rgba(0,0,0,.12) 65%,rgba(0,0,0,.45) 100%)
+}
+.ambient:before,.ambient:after {
+  content:"";
+  position:absolute;
+  inset:-25%;
+  pointer-events:none;
+  will-change:transform,opacity
+}
+.ambient:before {
+  background:radial-gradient(ellipse at 25% 35%,rgba(54,99,158,.22),transparent 34%),radial-gradient(ellipse at 78% 62%,rgba(57,81,126,.18),transparent 32%),radial-gradient(ellipse at 55% 10%,rgba(108,139,184,.09),transparent 27%);
+  filter:blur(22px);
+  animation:ambient-drift 19s ease-in-out infinite alternate
+}
+.ambient:after {
+  background:linear-gradient(115deg,transparent 20%,rgba(103,146,207,.055) 48%,transparent 67%);
+  mix-blend-mode:screen;
+  animation:ambient-sweep 13s ease-in-out infinite alternate
+}
+@keyframes ambient-drift {
+  0% {
+    transform:translate3d(-3%,1%,0) scale(.96) rotate(-2deg)
+  }
+  50% {
+    transform:translate3d(2%,-2%,0) scale(1.04) rotate(1deg)
+  }
+  100% {
+    transform:translate3d(4%,3%,0) scale(1.08) rotate(3deg)
+  }
+}
+@keyframes ambient-sweep {
+  0% {
+    transform:translateX(-12%) rotate(-5deg);
+    opacity:.35
+  }
+  100% {
+    transform:translateX(12%) rotate(5deg);
+    opacity:.8
+  }
+}
+.topline {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:2px;
+  z-index:20;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:.7
+}
+.icon-button {
+  width:46px;
+  height:46px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  display:grid;
+  place-items:center;
+  transition:transform .2s,border-color .2s,background .2s;
+  box-shadow:0 8px 30px #0002
+}
+.icon-button:hover {
+  transform:translateY(-2px);
+  border-color:rgba(var(--accent-rgb),.7);
+  background:var(--accent-soft)
+}
+.icon-button svg {
+  width:21px;
+  height:21px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round
+}
+#settingsOpen {
+  position:fixed;
+  top:22px;
+  left:22px;
+  z-index:40
+}
+#settingsShade {
+  position:fixed;
+  inset:0;
+  z-index:48;
+  background:rgba(0,0,0,.56);
+  opacity:0;
+  visibility:hidden;
+  transition:.3s
+}
+#settingsShade.open {
+  opacity:1;
+  visibility:visible
+}
+#settingsPanel {
+  position:fixed;
+  z-index:49;
+  left:0;
+  top:0;
+  bottom:0;
+  width:min(35vw,470px);
+  min-width:330px;
+  padding:28px 25px 34px;
+  background:var(--panel-strong);
+  border-right:1px solid var(--line);
+  box-shadow:30px 0 80px #0004;
+  backdrop-filter:blur(28px);
+  transform:translateX(-105%);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  overflow:auto
+}
+#settingsPanel.open {
+  transform:translateX(0)
+}
+.settings-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:28px
+}
+.eyebrow {
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--muted)
+}
+.settings-head h2 {
+  margin:6px 0 0;
+  font-size:22px;
+  font-weight:650;
+  letter-spacing:-.04em
+}
+.setting-group {
+  padding:18px 0;
+  border-top:1px solid var(--line)
+}
+.setting-group h3 {
+  margin:0 0 12px;
+  font-size:11px;
+  font-weight:650;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted)
+}
+.segmented {
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap
+}
+.segmented button {
+  padding:9px 12px;
+  border-radius:11px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--muted);
+  font-size:12px;
+  transition:.2s
+}
+.segmented button.active,.segmented button:hover {
+  background:var(--accent-soft);
+  color:var(--text);
+  border-color:rgba(var(--accent-rgb),.6)
+}
+.swatches {
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:9px
+}
+.swatch {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  padding:8px 3px;
+  border:1px solid transparent;
+  border-radius:12px;
+  background:transparent;
+  color:var(--muted);
+  font-size:10px
+}
+.swatch:hover,.swatch.active {
+  border-color:var(--line);
+  background:var(--accent-soft);
+  color:var(--text)
+}
+.swatch i {
+  display:block;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:var(--swatch);
+  border:1px solid #ffffff30;
+  box-shadow:inset 0 0 0 3px #00000012
+}
+.setting-row {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  margin:13px 0 8px;
+  font-size:13px
+}
+.setting-row span:last-child {
+  font-variant-numeric:tabular-nums;
+  color:var(--muted)
+}
+input[type=range] {
+  width:100%;
+  accent-color:var(--accent);
+  cursor:pointer
+}
+.setting-note {
+  font-size:11px;
+  line-height:1.5;
+  color:var(--muted);
+  margin:10px 0 0
+}
+.toggle-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-top:13px;
+  font-size:13px
+}
+.switch {
+  position:relative;
+  width:38px;
+  height:22px;
+  flex:0 0 auto
+}
+.switch input {
+  opacity:0;
+  width:0;
+  height:0
+}
+.switch span {
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  background:#48505e;
+  transition:.2s
+}
+.switch span:before {
+  content:"";
+  position:absolute;
+  width:16px;
+  height:16px;
+  left:3px;
+  top:3px;
+  border-radius:50%;
+  background:white;
+  transition:.2s
+}
+.switch input:checked+span {
+  background:var(--accent)
+}
+.switch input:checked+span:before {
+  transform:translateX(16px)
+}
+.page {
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px 18px 35px
+}
 .profile-card {
-  padding:25px 28px 20px;border:1px solid var(--border);border-radius:24px;
-  background:var(--surface,var(--card));color:var(--surface-text,var(--text));
-  backdrop-filter:blur(20px);box-shadow:0 20px 70px #0008;text-align:center
+  position:relative;
+  width:min(100%,430px);
+  padding:25px 26px 21px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:rgba(var(--card-rgb),calc(var(--card-alpha) * var(--surface-opacity)));
+  backdrop-filter:blur(24px);
+  box-shadow:var(--shadow);
+  text-align:center;
+  animation:card-in .8s cubic-bezier(.2,.8,.2,1) both
 }
-.avatar {width:100px;height:100px;object-fit:cover;border-radius:50%;border:2px solid var(--accent);padding:4px;background:var(--bg)}
-.name {font-size:34px;letter-spacing:5px;margin:12px 0 5px;font-weight:750}
-.bio {font-size:13px;line-height:1.7;color:var(--muted);margin:12px auto 15px;max-width:350px}
-.roles {display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin:16px 0}
-.role {background:transparent;color:inherit;border:1px solid var(--border);border-radius:9px;padding:9px 13px;font-size:10px;letter-spacing:1.7px;transition:.2s}
-.role:hover {border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-.section-label {text-align:left;font-size:10px;color:var(--muted);letter-spacing:2.4px;text-transform:uppercase;margin:20px 0 10px}
-.links {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.link {min-height:42px;display:grid;place-items:center;border:1px solid var(--border);border-radius:10px;background:#789acb08;transition:.2s}
-.link:hover {border-color:var(--accent);background:#5b9dff12;transform:translateY(-2px)}
-.link svg {width:19px;height:19px;display:block}
-.server {margin-top:18px;border:1px solid var(--border);border-radius:13px;overflow:hidden;text-align:left}
-.server-head {position:relative;width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:6px;border:0;color:inherit;background:#5b9dff0b;padding:13px 16px}
-.server-title {font-size:13px;font-weight:750;letter-spacing:1.8px}
-.server-subtitle {color:var(--muted);font-size:9px;letter-spacing:2.5px}
-.server-arrow {position:absolute;right:17px;top:18px;color:var(--accent)}
-.server-content {padding:0 12px 12px;display:grid;gap:8px}
-.server-content.closed {display:none}
-.server-link {display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--muted);transition:.2s}
-.server-link:hover {color:var(--text);border-color:var(--accent)}
-.server-link span:last-child {color:var(--accent)}
-.footer {margin-top:17px;color:var(--muted);font-size:10px;letter-spacing:2px}
-
-/* Fixed controls */
-.settings-trigger {
-  position:fixed;z-index:40;top:18px;left:18px;
-  background:var(--card);color:var(--text);border:1px solid var(--border);
-  border-radius:11px;padding:11px 14px;font-size:11px;letter-spacing:1px;
-  backdrop-filter:blur(14px);box-shadow:0 10px 35px #0004
+.profile-card,.profile-card * {
+  color:var(--profile-text-color,var(--text))
 }
-.settings-trigger:hover {border-color:var(--accent)}
-.music-float {
-  position:fixed;z-index:39;top:18px;left:142px;
-  display:flex;align-items:center;gap:10px;
-  width:min(360px,calc(100vw - 165px));
-  padding:9px 12px;border:1px solid var(--border);border-radius:13px;
-  background:var(--surface,var(--card));color:var(--surface-text,var(--text));
-  backdrop-filter:blur(16px);box-shadow:0 10px 35px #0004
+.profile-card .live-dot {
+  background:#6a9d87
 }
-.music-symbol {font-size:18px;color:var(--accent)}
-.music-content {flex:1;min-width:0}
-.music-label {font-size:11px;font-weight:650}
-.music-status {font-size:9px;color:var(--muted);margin-top:3px}
-.music-play {width:32px;height:32px;flex:0 0 32px;border:0;border-radius:50%;background:var(--accent);color:#08111e;font-size:12px}
-.music-progress {display:flex;align-items:center;gap:6px;margin-top:6px}
-.music-progress input {width:100%;min-width:0;accent-color:var(--accent)}
-.music-time {font-size:9px;color:var(--muted);font-variant-numeric:tabular-nums}
-.secret-launcher {position:fixed;z-index:40;bottom:18px;right:20px;display:flex;align-items:flex-end;gap:7px;border:0;background:transparent;padding:0}
-.secret-label {background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:11px;padding:12px 14px;font-size:11px;letter-spacing:1.5px;backdrop-filter:blur(14px);box-shadow:0 10px 35px #0004;transition:.2s}
-.secret-launcher:hover .secret-label {border-color:var(--accent);color:var(--accent)}
-.little-person {position:relative;display:block;width:35px;height:53px;flex:0 0 35px;filter:drop-shadow(0 3px 4px #0005);transition:transform .25s}
-.secret-launcher:hover .little-person {transform:translateY(-4px) rotate(-3deg)}
-.person-head {position:absolute;top:1px;left:11px;width:15px;height:15px;background:#020305;border-radius:50%}
-.person-body {position:absolute;top:16px;left:9px;width:19px;height:24px;background:#020305;border-radius:9px 9px 5px 5px}
-.person-arm {position:absolute;top:20px;left:0;width:17px;height:6px;border-radius:8px;background:#020305;transform:rotate(-29deg);transform-origin:right center}
-.person-arm.right {left:22px;top:19px;width:17px;transform:rotate(-57deg);transform-origin:left center}
-.person-leg {position:absolute;top:36px;left:11px;width:7px;height:16px;border-radius:6px;background:#020305;transform:rotate(7deg)}
-.person-leg.right {left:20px;transform:rotate(-12deg)}
-
-/* Settings */
-.settings-backdrop {position:fixed;inset:0;z-index:50;background:#02050bb0;opacity:0;visibility:hidden;transition:.25s}
-.settings-backdrop.open {opacity:1;visibility:visible}
-.settings-panel {position:fixed;z-index:51;top:0;left:0;width:min(35vw,470px);min-width:330px;height:100dvh;padding:25px 23px 35px;overflow-y:auto;background:rgba(8,13,22,.97);color:#e8eef7;border-right:1px solid #40516a;box-shadow:20px 0 80px #0007;transform:translateX(-105%);transition:transform .3s;backdrop-filter:blur(24px)}
-.settings-panel.open {transform:translateX(0)}
-.settings-header {display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:25px}
-.settings-header h2 {margin:0;font-size:16px;letter-spacing:3px}
-.settings-close {width:36px;height:36px;border:1px solid #344255;background:#111c2b;border-radius:10px;color:#e8eef7}
-.settings-group {padding:17px 0;border-top:1px solid #253142}
-.settings-group h3 {margin:0 0 8px;font-size:11px;letter-spacing:2px;text-transform:uppercase}
-.settings-description {color:#8d9cb0;font-size:11px;line-height:1.6;margin:0 0 13px}
-.setting-select {width:100%;padding:11px 12px;color:#e8eef7;background:#111c2b;border:1px solid #344255;border-radius:9px}
-.swatches {display:flex;flex-wrap:wrap;gap:9px}
-.swatch {width:29px;height:29px;border:2px solid #69788b;border-radius:50%;padding:0;box-shadow:inset 0 0 0 2px #0a101a}
-.swatch.selected {border-color:#fff;outline:2px solid #5b9dff;outline-offset:2px}
-.range-label {display:flex;justify-content:space-between;gap:12px;font-size:11px;color:#bdc9d8;margin-bottom:8px}
-.settings-range {width:100%;accent-color:#5b9dff;cursor:pointer}
-.setting-row {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-.setting-row span {font-size:12px}
-.small-toggle {padding:8px 11px;border:1px solid #344255;background:#111c2b;color:#e8eef7;border-radius:8px;font-size:10px;letter-spacing:1px}
-.small-toggle.active {color:#b9d6ff;border-color:#5b9dff}
-.settings-hint {color:#7f90a6;font-size:10px;line-height:1.6;margin-top:10px}
-
-/* Secret room */
-#quote-screen {display:none;position:fixed;inset:0;z-index:30;overflow:hidden;isolation:isolate;background:#050910}
-#quote-screen.active {display:block}
-#secret-background-video {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;filter:brightness(.35) contrast(1.1) saturate(.7)}
-.secret-blue-overlay {position:absolute;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(135deg,rgba(2,9,22,.80),rgba(4,21,48,.70)),radial-gradient(ellipse at 50% 48%,rgba(24,81,150,.36),rgba(1,5,13,.88));transition:background .6s}
-#quote-screen.stage-3 .secret-blue-overlay {background:linear-gradient(135deg,#020916d9,#041127d9),radial-gradient(ellipse at 50% 48%,#143a6f55,#01040bf2)}
-#quote-screen.stage-5 .secret-blue-overlay {background:linear-gradient(135deg,#02060feb,#030d1ded),radial-gradient(ellipse at 50% 48%,#14315d40,#000000f5)}
-#quote-screen.stage-10 .secret-blue-overlay {background:linear-gradient(135deg,#02040af2,#070a14eb),radial-gradient(ellipse at 50% 48%,#19234233,#000000fa)}
-#quote-screen.stage-20 .secret-blue-overlay {background:linear-gradient(135deg,#000000f5,#08080ff2),radial-gradient(ellipse at 50% 48%,#24142329,#000000fc)}
-#quote-screen.stage-50 .secret-blue-overlay {background:linear-gradient(135deg,#000000fa,#030308f7),radial-gradient(ellipse at 50% 48%,#32081224,#000000fd)}
-.quote-top {position:absolute;top:18px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:center;gap:15px;z-index:4}
-.quote-heading {font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#a7b6ca}
-.close-quotes {border:1px solid #a0b9dc3d;background:#060c16cc;border-radius:10px;padding:10px 14px;font-size:12px;color:#e8eef7;backdrop-filter:blur(12px)}
-#quote-stage {position:absolute;inset:0;overflow:hidden}
-.quote-counter {position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-size:11px;color:#9baec7;letter-spacing:2px;z-index:4;background:#050a13dd;border:1px solid #82aadc33;border-radius:20px;padding:9px 14px;white-space:nowrap}
-.quote-card {position:absolute;width:min(230px,42vw);min-height:105px;padding:15px 16px;border:1px solid #82aadc40;border-radius:14px;background:rgba(7,14,25,.91);backdrop-filter:blur(15px);box-shadow:0 12px 42px #0007;text-align:left;cursor:pointer;user-select:none;color:#e8eef7;animation:cardIn .35s ease both;overflow:visible}
-.quote-card:hover {border-color:#5b9dff;background:rgba(9,21,39,.97)}
-.quote-card .tag {font-size:9px;letter-spacing:2px;color:#6eaaff;text-transform:uppercase;margin-bottom:9px}
-.quote-card .quote-text {font-size:12px;line-height:1.55}
-.quote-card .hint {font-size:9px;color:#7f90a6;margin-top:10px;letter-spacing:.5px}
-.quote-card.shattering {animation:cardVanish .3s ease-in forwards;pointer-events:none}
-.card-fragment {position:fixed;z-index:60;pointer-events:none;overflow:hidden;background:rgba(10,24,43,.96);border:1px solid rgba(100,165,255,.65);box-shadow:0 0 14px rgba(45,119,218,.24);animation:fragmentFly .65s cubic-bezier(.12,.62,.3,1) forwards}
-.card-fragment::after {content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent,#79b6ff35,transparent)}
-.shard {position:fixed;z-index:61;width:4px;height:7px;background:#78b6ff;box-shadow:0 0 10px #438dff;pointer-events:none;animation:shardFly .55s ease-out forwards}
-@keyframes cardIn {from{opacity:0;transform:scale(.86) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-@keyframes cardVanish {0%{opacity:1;filter:brightness(1)}25%{opacity:.85;filter:brightness(1.8)}100%{opacity:0;filter:blur(3px)}}
-@keyframes fragmentFly {from{opacity:1;transform:translate(0,0) rotate(0) scale(1)}to{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.25)}}
-@keyframes shardFly {from{opacity:1;transform:translate(0,0) rotate(0) scale(1)}to{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.2)}}
-.glitch-text {animation:glitchText .35s steps(2,end) 2}
-@keyframes glitchText {0%,100%{transform:translateX(0);opacity:1}25%{transform:translateX(-2px);opacity:.7}50%{transform:translateX(2px);opacity:1}75%{transform:translateX(-1px);opacity:.8}}
-.heart {position:fixed;z-index:70;pointer-events:none;font-size:24px;animation:heartPop .8s ease forwards}
-@keyframes heartPop {0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}35%{opacity:1;transform:translate(-50%,-75%) scale(1.3)}100%{opacity:0;transform:translate(-50%,-140%) scale(1)}}
-
-/* Dialogs */
-.modal-backdrop {position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:20px;background:#03070be0;backdrop-filter:blur(9px)}
-.modal-backdrop.show {display:flex}
-.modal {width:min(100%,420px);border:1px solid var(--border);border-radius:18px;padding:26px;background:var(--surface,var(--card));color:var(--surface-text,var(--text));box-shadow:0 20px 70px #0008}
-.modal h2 {font-size:18px;margin:0 0 13px;letter-spacing:1px}
-.modal p {font-size:13px;line-height:1.8;color:var(--muted);white-space:pre-line}
-.modal-actions {display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
-.modal-btn {border:1px solid var(--border);background:#5b9dff10;border-radius:9px;padding:11px 14px;font-size:12px;color:inherit}
-.modal-btn.primary {background:var(--accent);color:#08111e;border-color:var(--accent)}
-#secret-modal .modal {text-align:center;background:rgba(6,10,18,.97);border-color:#82aadc4d;color:#e8eef7}
-#secret-modal h2 {font-size:19px;letter-spacing:1px}
-#secret-modal .modal p {font-size:14px;color:#b4c1d1}
-.secret-count {font-size:10px;letter-spacing:3px;color:#8295ae;margin-bottom:16px}
-#secret-close,#secret-continue {color:#e8eef7}
-#secret-modal .modal-actions {justify-content:center}
-#secret-modal .modal-btn.primary {color:#07111e}
-
-@media(max-height:760px) and (min-width:701px) {
-  #app {padding-top:62px;padding-bottom:12px}
-  .profile-card {padding:19px 25px 15px}
-  .avatar {width:82px;height:82px}
-  .name {font-size:30px;margin:9px 0 4px}
-  .bio {margin:8px auto 10px;line-height:1.5}
-  .roles {margin:11px 0;gap:7px}
-  .role {padding:8px 11px}
-  .section-label {margin:13px 0 8px}
-  .server {margin-top:13px}
-  .server-head {padding:10px 14px}
-  .server-arrow {top:14px}
-  .server-link {padding:8px 10px}
-  .footer {margin-top:12px}
+.profile-card .social-link svg,.profile-card .chevron {
+  stroke:currentColor
 }
-@media(max-width:700px) {
-  #app {padding:78px 12px 72px}
-  .profile-wrap {width:min(100%,480px)}
-  .profile-card {padding:23px 18px}
-  .name {font-size:30px}
-  .settings-panel {width:min(88vw,390px);min-width:0;padding:22px 19px 30px}
-  .secret-launcher {right:12px;bottom:12px}
-  .little-person {transform:scale(.88);transform-origin:bottom center}
-  .secret-label {padding:11px 12px}
-  .quote-card {width:min(190px,43vw);min-height:100px;padding:12px}
-  .quote-card .quote-text {font-size:11px}
-  .quote-card .tag {font-size:8px}
-  .quote-top {top:12px;left:12px;right:12px}
-  .quote-heading {font-size:9px;letter-spacing:2px}
-  .close-quotes {padding:9px 11px;font-size:10px}
-  .quote-counter {bottom:12px;font-size:9px}
-  .settings-trigger {top:12px;left:12px;padding:10px 11px}
-  .music-float {top:12px;left:115px;width:calc(100vw - 127px);padding:7px 8px;gap:7px}
-  .music-symbol {display:none}
-  .music-label {font-size:10px}
-  .music-status {font-size:8px}
-  .music-play {width:29px;height:29px;flex-basis:29px}
-  .music-time {font-size:8px}
+@keyframes card-in {
+  from {
+    opacity:0;
+    transform:translateY(14px) scale(.985)
+  }
+  to {
+    opacity:1;
+    transform:translateY(0) scale(1)
+  }
 }
-@media(max-width:390px) {
-  .links {gap:7px}
-  .profile-card {padding:22px 14px}
-  .quote-card {width:42vw}
-  .music-progress {gap:4px}
-  .music-float {left:108px;width:calc(100vw - 120px)}
+.card-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:17px
+}
+.live-label,.location-label {
+  font-size:9px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted)
+}
+.live-dot {
+  display:inline-block;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#6a9d87;
+  margin-right:6px;
+  box-shadow:0 0 10px #6a9d8755
+}
+.avatar-wrap {
+  position:relative;
+  width:94px;
+  height:94px;
+  margin:0 auto 15px
+}
+.avatar-wrap:before {
+  content:"";
+  position:absolute;
+  inset:-7px;
+  border:1px solid rgba(var(--accent-rgb),.42);
+  border-radius:50%;
+  animation:orbit 12s linear infinite
+}
+.avatar-wrap:after {
+  content:"";
+  position:absolute;
+  inset:-12px;
+  border:1px dashed rgba(var(--accent-rgb),.22);
+  border-radius:50%
+}
+@keyframes orbit {
+  to {
+    transform:rotate(360deg)
+  }
+}
+.avatar {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,#303a4b,#10151e);
+  display:block
+}
+.avatar-fallback {
+  display:none;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,#303d52,#10141c);
+  font-size:30px;
+  letter-spacing:-.1em;
+  color:#d8e2f4
+}
+h1 {
+  margin:0;
+  font-family:"Space Grotesk",Inter,ui-sans-serif,system-ui,sans-serif;
+  font-size:32px;
+  font-weight:600;
+  letter-spacing:-.065em
+}
+.status {
+  margin-top:7px;
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:.09em
+}
+.bio {
+  max-width:310px;
+  margin:16px auto 18px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.75
+}
+.roles {
+  display:flex;
+  gap:7px;
+  justify-content:center;
+  margin-bottom:17px
+}
+.role {
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:transparent;
+  padding:8px 10px;
+  font-size:9px;
+  letter-spacing:.12em;
+  color:var(--muted);
+  transition:.2s
+}
+.role:hover {
+  border-color:rgba(var(--accent-rgb),.65);
+  color:var(--text);
+  background:var(--accent-soft);
+  transform:translateY(-1px)
+}
+.links {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:15px
+}
+.social-link {
+  min-height:58px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(255,255,255,.018);
+  font-size:9px;
+  color:var(--muted);
+  transition:.2s
+}
+.social-link:hover {
+  background:var(--accent-soft);
+  border-color:rgba(var(--accent-rgb),.6);
+  color:var(--text);
+  transform:translateY(-2px)
+}
+.social-link svg {
+  width:17px;
+  height:17px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round
+}
+.server-box {
+  border:1px solid var(--line);
+  border-radius:14px;
+  text-align:left;
+  overflow:hidden;
+  margin-bottom:12px
+}
+.server-toggle {
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 13px;
+  border:0;
+  background:transparent;
+  text-align:left
+}
+.server-title {
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.02em
+}
+.server-sub {
+  display:block;
+  margin-top:3px;
+  font-size:10px;
+  color:var(--muted);
+  font-weight:400
+}
+.chevron {
+  color:var(--muted);
+  transition:transform .2s
+}
+.server-box.open .chevron {
+  transform:rotate(180deg)
+}
+.server-links {
+  display:none;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  padding:0 10px 10px
+}
+.server-box.open .server-links {
+  display:grid
+}
+.server-links a {
+  padding:9px 4px;
+  text-align:center;
+  border-radius:9px;
+  background:var(--accent-soft);
+  font-size:10px;
+  color:var(--muted);
+  transition:.2s
+}
+.server-links a:hover {
+  color:var(--text);
+  background:rgba(var(--accent-rgb),.3)
+}
+.music-card {
+  position:fixed;
+  z-index:40;
+  top:22px;
+  left:82px;
+  width:min(420px,calc(100vw - 105px));
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:12px 13px;
+  text-align:left;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  box-shadow:0 8px 30px #0002
+}
+.music-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:9px
+}
+.music-info {
+  display:flex;
+  flex-direction:column;
+  min-width:0
+}
+.music-title {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.music-author {
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.music-nav {
+  display:flex;
+  align-items:center;
+  gap:2px
+}
+  <!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b12">
+<title>Nok — Personal Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080b12;
+  --panel:rgba(12,17,28,.82);
+  --panel-strong:rgba(9,13,22,.96);
+  --text:#edf2fb;
+  --muted:#9aa8bd;
+  --line:rgba(177,198,230,.16);
+  --accent:#526f9e;
+  --accent-rgb:82,111,158;
+  --accent-soft:rgba(82,111,158,.18);
+  --shadow:0 24px 80px rgba(0,0,0,.45);
+  --radius:24px;
+  --card-rgb:12,17,28;
+  --card-alpha:.82;
+  --surface-opacity:1
+}
+* {
+  box-sizing:border-box
+}
+html {
+  min-height:100%;
+  background:#05070b;
+  scroll-behavior:smooth
+}
+body {
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  transition:background .35s,color .35s
+}
+body.theme-white {
+  --bg:#e8ebf0;
+  --panel:rgba(255,255,255,.84);
+  --panel-strong:rgba(250,251,253,.97);
+  --text:#161c27;
+  --muted:#586476;
+  --line:rgba(30,42,62,.15);
+  --shadow:0 24px 80px rgba(24,31,43,.18);
+  --card-rgb:255,255,255;
+  --card-alpha:.84
+}
+body.theme-gray {
+  --bg:#22262d;
+  --panel:rgba(37,42,51,.86);
+  --panel-strong:rgba(25,29,36,.97);
+  --text:#edf0f5;
+  --muted:#a3aab7;
+  --line:rgba(220,228,241,.14);
+  --card-rgb:37,42,51;
+  --card-alpha:.86
+}
+body.accent-blue {
+  --accent:#526f9e;
+  --accent-rgb:82,111,158
+}
+body.accent-purple {
+  --accent:#72568f;
+  --accent-rgb:114,86,143
+}
+body.accent-red {
+  --accent:#914d58;
+  --accent-rgb:145,77,88
+}
+body.accent-pink {
+  --accent:#93657e;
+  --accent-rgb:147,101,126
+}
+body.accent-green {
+  --accent:#4f796e;
+  --accent-rgb:79,121,110
+}
+body.accent-cyan {
+  --accent:#4d7c88;
+  --accent-rgb:77,124,136
+}
+body.accent-orange {
+  --accent:#966e4d;
+  --accent-rgb:150,110,77
+}
+body.accent-yellow {
+  --accent:#8c8252;
+  --accent-rgb:140,130,82
+}
+body.accent-indigo {
+  --accent:#555b91;
+  --accent-rgb:85,91,145
+}
+body.accent-white {
+  --accent:#aab5c7;
+  --accent-rgb:170,181,199
+}
+body.accent-black {
+  --accent:#252a34;
+  --accent-rgb:37,42,52
+}
+button,input {
+  font:inherit
+}
+button {
+  color:inherit
+}
+button:focus-visible,a:focus-visible,input:focus-visible {
+  outline:2px solid var(--accent);
+  outline-offset:4px
+}
+a {
+  color:inherit;
+  text-decoration:none
+}
+button {
+  cursor:pointer
+}
+#mainBackground {
+  position:fixed;
+  inset:0;
+  z-index:-4;
+  background:radial-gradient(ellipse at 50% 15%,rgba(var(--accent-rgb),.19),transparent 45%),linear-gradient(145deg,#0b111c,#05070b 70%)
+}
+#mainBackground video {
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.22;
+  filter:saturate(.7) contrast(1.08)
+}
+#mainBackground:after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(3,5,10,.35),rgba(3,5,10,.76))
+}
+.ambient {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-2;
+  overflow:hidden;
+  background:radial-gradient(circle at 50% 50%,transparent 0,rgba(0,0,0,.12) 65%,rgba(0,0,0,.45) 100%)
+}
+.ambient:before,.ambient:after {
+  content:"";
+  position:absolute;
+  inset:-25%;
+  pointer-events:none;
+  will-change:transform,opacity
+}
+.ambient:before {
+  background:radial-gradient(ellipse at 25% 35%,rgba(54,99,158,.22),transparent 34%),radial-gradient(ellipse at 78% 62%,rgba(57,81,126,.18),transparent 32%),radial-gradient(ellipse at 55% 10%,rgba(108,139,184,.09),transparent 27%);
+  filter:blur(22px);
+  animation:ambient-drift 19s ease-in-out infinite alternate
+}
+.ambient:after {
+  background:linear-gradient(115deg,transparent 20%,rgba(103,146,207,.055) 48%,transparent 67%);
+  mix-blend-mode:screen;
+  animation:ambient-sweep 13s ease-in-out infinite alternate
+}
+@keyframes ambient-drift {
+  0% {
+    transform:translate3d(-3%,1%,0) scale(.96) rotate(-2deg)
+  }
+  50% {
+    transform:translate3d(2%,-2%,0) scale(1.04) rotate(1deg)
+  }
+  100% {
+    transform:translate3d(4%,3%,0) scale(1.08) rotate(3deg)
+  }
+}
+@keyframes ambient-sweep {
+  0% {
+    transform:translateX(-12%) rotate(-5deg);
+    opacity:.35
+  }
+  100% {
+    transform:translateX(12%) rotate(5deg);
+    opacity:.8
+  }
+}
+.topline {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:2px;
+  z-index:20;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:.7
+}
+.icon-button {
+  width:46px;
+  height:46px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  display:grid;
+  place-items:center;
+  transition:transform .2s,border-color .2s,background .2s;
+  box-shadow:0 8px 30px #0002
+}
+.icon-button:hover {
+  transform:translateY(-2px);
+  border-color:rgba(var(--accent-rgb),.7);
+  background:var(--accent-soft)
+}
+.icon-button svg {
+  width:21px;
+  height:21px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round
+}
+#settingsOpen {
+  position:fixed;
+  top:22px;
+  left:22px;
+  z-index:40
+}
+#settingsShade {
+  position:fixed;
+  inset:0;
+  z-index:48;
+  background:rgba(0,0,0,.56);
+  opacity:0;
+  visibility:hidden;
+  transition:.3s
+}
+#settingsShade.open {
+  opacity:1;
+  visibility:visible
+}
+#settingsPanel {
+  position:fixed;
+  z-index:49;
+  left:0;
+  top:0;
+  bottom:0;
+  width:min(35vw,470px);
+  min-width:330px;
+  padding:28px 25px 34px;
+  background:var(--panel-strong);
+  border-right:1px solid var(--line);
+  box-shadow:30px 0 80px #0004;
+  backdrop-filter:blur(28px);
+  transform:translateX(-105%);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  overflow:auto
+}
+#settingsPanel.open {
+  transform:translateX(0)
+}
+.settings-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:28px
+}
+.eyebrow {
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--muted)
+}
+.settings-head h2 {
+  margin:6px 0 0;
+  font-size:22px;
+  font-weight:650;
+  letter-spacing:-.04em
+}
+.setting-group {
+  padding:18px 0;
+  border-top:1px solid var(--line)
+}
+.setting-group h3 {
+  margin:0 0 12px;
+  font-size:11px;
+  font-weight:650;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted)
+}
+.segmented {
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap
+}
+.segmented button {
+  padding:9px 12px;
+  border-radius:11px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--muted);
+  font-size:12px;
+  transition:.2s
+}
+.segmented button.active,.segmented button:hover {
+  background:var(--accent-soft);
+  color:var(--text);
+  border-color:rgba(var(--accent-rgb),.6)
+}
+.swatches {
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:9px
+}
+.swatch {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  padding:8px 3px;
+  border:1px solid transparent;
+  border-radius:12px;
+  background:transparent;
+  color:var(--muted);
+  font-size:10px
+}
+.swatch:hover,.swatch.active {
+  border-color:var(--line);
+  background:var(--accent-soft);
+  color:var(--text)
+}
+.swatch i {
+  display:block;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:var(--swatch);
+  border:1px solid #ffffff30;
+  box-shadow:inset 0 0 0 3px #00000012
+}
+.setting-row {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  margin:13px 0 8px;
+  font-size:13px
+}
+.setting-row span:last-child {
+  font-variant-numeric:tabular-nums;
+  color:var(--muted)
+}
+input[type=range] {
+  width:100%;
+  accent-color:var(--accent);
+  cursor:pointer
+}
+.setting-note {
+  font-size:11px;
+  line-height:1.5;
+  color:var(--muted);
+  margin:10px 0 0
+}
+.toggle-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-top:13px;
+  font-size:13px
+}
+.switch {
+  position:relative;
+  width:38px;
+  height:22px;
+  flex:0 0 auto
+}
+.switch input {
+  opacity:0;
+  width:0;
+  height:0
+}
+.switch span {
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  background:#48505e;
+  transition:.2s
+}
+.switch span:before {
+  content:"";
+  position:absolute;
+  width:16px;
+  height:16px;
+  left:3px;
+  top:3px;
+  border-radius:50%;
+  background:white;
+  transition:.2s
+}
+.switch input:checked+span {
+  background:var(--accent)
+}
+.switch input:checked+span:before {
+  transform:translateX(16px)
+}
+.page {
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px 18px 35px
+}
+.profile-card {
+  position:relative;
+  width:min(100%,430px);
+  padding:25px 26px 21px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:rgba(var(--card-rgb),calc(var(--card-alpha) * var(--surface-opacity)));
+  backdrop-filter:blur(24px);
+  box-shadow:var(--shadow);
+  text-align:center;
+  animation:card-in .8s cubic-bezier(.2,.8,.2,1) both
+}
+.profile-card,.profile-card * {
+  color:var(--profile-text-color,var(--text))
+}
+.profile-card .live-dot {
+  background:#6a9d87
+}
+.profile-card .social-link svg,.profile-card .chevron {
+  stroke:currentColor
+}
+@keyframes card-in {
+  from {
+    opacity:0;
+    transform:translateY(14px) scale(.985)
+  }
+  to {
+    opacity:1;
+    transform:translateY(0) scale(1)
+  }
+}
+.card-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:17px
+}
+.live-label,.location-label {
+  font-size:9px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted)
+}
+.live-dot {
+  display:inline-block;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#6a9d87;
+  margin-right:6px;
+  box-shadow:0 0 10px #6a9d8755
+}
+.avatar-wrap {
+  position:relative;
+  width:94px;
+  height:94px;
+  margin:0 auto 15px
+}
+.avatar-wrap:before {
+  content:"";
+  position:absolute;
+  inset:-7px;
+  border:1px solid rgba(var(--accent-rgb),.42);
+  border-radius:50%;
+  animation:orbit 12s linear infinite
+}
+.avatar-wrap:after {
+  content:"";
+  position:absolute;
+  inset:-12px;
+  border:1px dashed rgba(var(--accent-rgb),.22);
+  border-radius:50%
+}
+@keyframes orbit {
+  to {
+    transform:rotate(360deg)
+  }
+}
+.avatar {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,#303a4b,#10151e);
+  display:block
+}
+.avatar-fallback {
+  display:none;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,#303d52,#10141c);
+  font-size:30px;
+  letter-spacing:-.1em;
+  color:#d8e2f4
+}
+h1 {
+  margin:0;
+  font-family:"Space Grotesk",Inter,ui-sans-serif,system-ui,sans-serif;
+  font-size:32px;
+  font-weight:600;
+  letter-spacing:-.065em
+}
+.status {
+  margin-top:7px;
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:.09em
+}
+.bio {
+  max-width:310px;
+  margin:16px auto 18px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.75
+}
+.roles {
+  display:flex;
+  gap:7px;
+  justify-content:center;
+  margin-bottom:17px
+}
+.role {
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:transparent;
+  padding:8px 10px;
+  font-size:9px;
+  letter-spacing:.12em;
+  color:var(--muted);
+  transition:.2s
+}
+.role:hover {
+  border-color:rgba(var(--accent-rgb),.65);
+  color:var(--text);
+  background:var(--accent-soft);
+  transform:translateY(-1px)
+}
+.links {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:15px
+}
+.social-link {
+  min-height:58px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(255,255,255,.018);
+  font-size:9px;
+  color:var(--muted);
+  transition:.2s
+}
+.social-link:hover {
+  background:var(--accent-soft);
+  border-color:rgba(var(--accent-rgb),.6);
+  color:var(--text);
+  transform:translateY(-2px)
+}
+.social-link svg {
+  width:17px;
+  height:17px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round
+}
+.server-box {
+  border:1px solid var(--line);
+  border-radius:14px;
+  text-align:left;
+  overflow:hidden;
+  margin-bottom:12px
+}
+.server-toggle {
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 13px;
+  border:0;
+  background:transparent;
+  text-align:left
+}
+.server-title {
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.02em
+}
+.server-sub {
+  display:block;
+  margin-top:3px;
+  font-size:10px;
+  color:var(--muted);
+  font-weight:400
+}
+.chevron {
+  color:var(--muted);
+  transition:transform .2s
+}
+.server-box.open .chevron {
+  transform:rotate(180deg)
+}
+.server-links {
+  display:none;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  padding:0 10px 10px
+}
+.server-box.open .server-links {
+  display:grid
+}
+.server-links a {
+  padding:9px 4px;
+  text-align:center;
+  border-radius:9px;
+  background:var(--accent-soft);
+  font-size:10px;
+  color:var(--muted);
+  transition:.2s
+}
+.server-links a:hover {
+  color:var(--text);
+  background:rgba(var(--accent-rgb),.3)
+}
+.music-card {
+  position:fixed;
+  z-index:40;
+  top:22px;
+  left:82px;
+  width:min(420px,calc(100vw - 105px));
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:12px 13px;
+  text-align:left;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  box-shadow:0 8px 30px #0002
+}
+.music-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:9px
+}
+.music-info {
+  display:flex;
+  flex-direction:column;
+  min-width:0
+}
+.music-title {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.music-author {
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.music-nav {
+  display:flex;
+  align-items:center;
+  gap:2px
+}
+  .shatter-overlay {
+  position:fixed;
+  z-index:95;
+  overflow:visible;
+  pointer-events:none;
+  contain:layout style;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.18));
+  will-change:transform,opacity
+}
+.shatter-overlay .shard {
+  transform-box:fill-box;
+  transform-origin:center;
+  will-change:transform,opacity;
+  backface-visibility:hidden
+}
+.shatter-overlay .shard-edge {
+  fill:none;
+  stroke:rgba(150,190,235,.34);
+  stroke-width:.65;
+  vector-effect:non-scaling-stroke
 }
 @media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after {animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .ambient:before,.ambient:after {
+    animation:none!important
+  }
+}
+.heart-float {
+  position:fixed;
+  z-index:80;
+  pointer-events:none;
+  color:#d9d9d9;
+  font-size:20px;
+  animation:heart-rise .85s ease-out forwards
+}
+@keyframes heart-rise {
+  0% {
+    opacity:0;
+    transform:translateY(5px) scale(.6)
+  }
+  15% {
+    opacity:1
+  }
+  100% {
+    opacity:0;
+    transform:translateY(-70px) scale(1.35)
+  }
+}
+#scareMessage {
+  position:absolute;
+  z-index:10;
+  left:50%;
+  top:50%;
+  width:min(90vw,680px);
+  transform:translate(-50%,-50%);
+  text-align:center;
+  opacity:0;
+  pointer-events:none;
+  color:#e4e4e4;
+  text-shadow:0 0 22px #fff2
+}
+#scareMessage.show {
+  animation:scare-in 3.1s ease both
+}
+#scareMessage strong {
+  display:block;
+  font-size:clamp(20px,4vw,42px);
+  font-weight:450;
+  letter-spacing:.05em
+}
+#scareMessage span {
+  display:block;
+  margin-top:15px;
+  color:#9c9c9c;
+  font-size:clamp(11px,1.4vw,15px);
+  line-height:1.6
+}
+@keyframes scare-in {
+  0% {
+    opacity:0;
+    filter:blur(8px);
+    transform:translate(-50%,-48%)
+  }
+  12%,70% {
+    opacity:1;
+    filter:blur(0);
+    transform:translate(-50%,-50%)
+  }
+  85% {
+    opacity:.7
+  }
+  100% {
+    opacity:0;
+    filter:blur(5px)
+  }
+}
+#secretRoom.level-2 .secret-content {
+  animation:subtle-shake .7s ease
+}
+#secretRoom.level-3 .secret-content {
+  animation:subtle-shake .45s ease
+}
+#secretRoom.level-4 .secret-content {
+  animation:subtle-shake .32s ease
+}
+#secretRoom.level-5 .secret-content {
+  animation:climax .85s ease
+}
+@keyframes subtle-shake {
+  0%,100% {
+    transform:translateX(0)
+  }
+  20% {
+    transform:translateX(-2px)
+  }
+  40% {
+    transform:translateX(2px)
+  }
+  60% {
+    transform:translateX(-1px)
+  }
+  80% {
+    transform:translateX(1px)
+  }
+}
+@keyframes climax {
+  0%,100% {
+    transform:translateX(0);
+    filter:none
+  }
+  18% {
+    transform:translateX(-4px);
+    filter:contrast(1.8)
+  }
+  38% {
+    transform:translateX(3px);
+    filter:brightness(.55)
+  }
+  58% {
+    transform:translateX(-2px);
+    filter:contrast(1.5)
+  }
+  78% {
+    transform:translateX(2px);
+    filter:brightness(.7)
+  }
+}
+#finalReveal {
+  position:absolute;
+  inset:0;
+  z-index:20;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(0,0,0,.93);
+  text-align:center
+}
+#finalReveal.show {
+  display:flex;
+  animation:reveal-in 1.2s ease both
+}
+@keyframes reveal-in {
+  from {
+    opacity:0
+  }
+  to {
+    opacity:1
+  }
+}
+.reveal-box {
+  max-width:650px
+}
+.reveal-mark {
+  font-size:34px;
+  color:#92b9d7;
+  margin-bottom:22px
+}
+.reveal-box h2 {
+  font-size:clamp(24px,4vw,42px);
+  font-weight:450;
+  margin:0 0 20px;
+  letter-spacing:-.03em
+}
+.reveal-box p {
+  font-size:14px;
+  line-height:1.9;
+  color:#aeb8c5;
+  margin:0 auto 26px
+}
+.reveal-box button {
+  padding:11px 19px;
+  border:1px solid #ffffff30;
+  border-radius:12px;
+  background:#ffffff0b;
+  color:#e7edf5
+}
+.glitch-text {
+  animation:glitch .18s steps(2) 5
+}
+@keyframes glitch {
+  0% {
+    text-shadow:2px 0 #a44,-2px 0 #48a;
+    transform:translateX(0)
+  }
+  50% {
+    text-shadow:-2px 0 #a44,2px 0 #48a;
+    transform:translateX(1px)
+  }
+  100% {
+    text-shadow:none;
+    transform:translateX(0)
+  }
+}
+#youtubePlayers {
+  position:fixed;
+  width:200px;
+  height:200px;
+  left:-1000px;
+  top:-1000px;
+  overflow:hidden;
+  opacity:.001;
+  pointer-events:none
+}
+#youtubePlayers iframe {
+  width:200px;
+  height:200px
+}
+.modal-shade {
+  position:fixed;
+  inset:0;
+  z-index:70;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.66);
+  backdrop-filter:blur(8px)
+}
+.modal-shade.open {
+  display:flex
+}
+.modal {
+  width:min(100%,390px);
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:var(--panel-strong);
+  box-shadow:var(--shadow)
+}
+.modal h2 {
+  margin:0 0 10px;
+  font-size:20px;
+  font-weight:600
+}
+.modal p {
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7
+}
+.modal-actions {
+  display:flex;
+  gap:9px;
+  margin-top:20px
+}
+.modal-actions a,.modal-actions button {
+  flex:1;
+  text-align:center;
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--accent-soft);
+  font-size:12px
+}
+.modal-actions button {
+  background:transparent
+}
+.toast {
+  position:fixed;
+  z-index:100;
+  left:50%;
+  bottom:24px;
+  transform:translate(-50%,15px);
+  opacity:0;
+  pointer-events:none;
+  padding:10px 15px;
+  border-radius:12px;
+  background:#171c26;
+  border:1px solid #ffffff20;
+  color:#e7edf5;
+  font-size:12px;
+  transition:.25s
+}
+.toast.show {
+  opacity:1;
+  transform:translate(-50%,0)
+}
+@media(max-width:700px) {
+  #settingsPanel {
+    width:min(88vw,390px);
+    min-width:0;
+    padding:23px 19px
+  }
+  .music-card {
+    top:12px;
+    left:68px;
+    width:calc(100vw - 80px);
+    padding:9px 10px
+  }
+  #settingsOpen {
+    top:14px;
+    left:14px
+  }
+  .page {
+    padding:65px 13px 78px
+  }
+  .profile-card {
+    max-width:390px;
+    padding:22px 19px 18px;
+    border-radius:24px
+  }
+  .links {
+    gap:6px
+  }
+  .social-link {
+    min-height:54px
+  }
+  #secretOpen {
+    right:15px;
+    bottom:15px
+  }
+  .secret-content {
+    padding:18px 12px 16px
+  }
+  #quoteGrid {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-rows:repeat(4,minmax(70px,1fr));
+    gap:7px
+  }
+  .quote-card {
+    padding:9px 7px;
+    border-radius:10px
+  }
+  .quote-card p {
+    font-size:11px
+  }
+  .quote-card small {
+    font-size:8px;
+    margin-top:8px
+  }
+  .secret-heading {
+    margin:8px 0 12px
+  }
+}
+@media(max-height:680px) and (min-width:701px) {
+  .page {
+    padding:12px
+  }
+  .profile-card {
+    padding:17px 22px 14px;
+    transform:scale(.92)
+  }
+  .avatar-wrap {
+    width:78px;
+        height:78px;
+    margin-bottom:10px
+  }
+  .bio {
+    margin:10px auto 12px
+  }
+  .links {
+    margin-bottom:10px
+  }
+  .server-box {
+    margin-bottom:9px
+  }
+  .card-footer {
+    margin-top:10px
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after {
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important
+  }
 }
 </style>
 </head>
-
-<body>
-<video id="background-video" autoplay muted loop playsinline preload="auto">
-  <source src="https://www.shutterstock.com/shutterstock/videos/3806259979/preview/stock-footage-flickering-glitch-visuals-with-grungy-overlays-code-fragments-and-digital-static-ideal-for.webm" type="video/webm">
+<body class="theme-black accent-blue">
+<div class="topline">
+</div>
+<div id="mainBackground">
+<video autoplay muted loop playsinline aria-hidden="true">
+<source src="https://www.shutterstock.com/shutterstock/videos/3806259979/preview/stock-footage-flickering-glitch-visuals-with-grungy-overlays-code-fragments-and-digital-static-ideal-for.webm" type="video/webm">
 </video>
-<div class="bg-overlay"></div>
-<div id="youtube-player"></div>
-
-<button class="settings-trigger" id="open-settings">НАСТРОЙКИ ⚙</button>
-
-<section class="music-float" aria-label="Фоновая музыка">
-  <div class="music-symbol">♫</div>
-  <div class="music-content">
-    <div class="music-label">Фоновая музыка</div>
-    <div class="music-status" id="music-status">Загрузка плеера…</div>
-    <div class="music-progress">
-      <span class="music-time" id="current-time">0:00</span>
-      <input id="music-seek" type="range" min="0" max="100" value="0" step=".1" aria-label="Прогресс музыки">
-      <span class="music-time" id="total-time">--:--</span>
-    </div>
-  </div>
-  <button class="music-play" id="play-button" aria-label="Включить музыку">▶</button>
-</section>
-
-<main id="app">
-  <div class="profile-wrap">
-    <section class="profile-card">
-      <img class="avatar" src="avatar.jpg" alt="Аватар Nok"
-        onerror="this.onerror=null;this.src='https://placehold.co/200x200/101a29/7caeff?text=NOK'">
-      <h1 class="name">Nok</h1>
-      <p class="bio">Designer and developer. Creating things that reflect who I am.</p>
-
-      <div class="roles">
-        <button class="role" data-role="designer">DESIGNER</button>
-        <button class="role" data-role="developer">DEVELOPER</button>
-        <button class="role" data-role="founder">FOUNDER</button>
-      </div>
-
-      <div class="section-label">Мои ссылки</div>
-      <div class="links">
-        <a class="link" href="https://t.me/nok_w" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.6 18.2 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.3L5.6 13.5.7 12c-1.1-.3-1.1-1 .2-1.5L20 3c.9-.3 1.7.2 1.4 1.6Z"/></svg>
-        </a>
-        <a class="link" href="https://discord.com/users/1291423133789589581" target="_blank" rel="noopener" aria-label="Discord" title="Discord">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.7 5.3a18 18 0 0 0-4.4-1.4l-.5 1a16 16 0 0 0-5.6 0l-.5-1a18 18 0 0 0-4.4 1.4C1.5 9.5.7 13.6 1.1 17.6a18 18 0 0 0 5.4 2.7l1.2-2a12 12 0 0 1-1.9-.9l.5-.4a13 13 0 0 0 11.4 0l.5.4-1.9.9 1.2 2a18 18 0 0 0 5.4-2.7c.5-4.6-.8-8.7-3.2-12.3ZM8.8 14.8c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
-        </a>
-        <a class="link" href="https://www.tiktok.com/@nok_vast" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 7.3a7.2 7.2 0 0 1-4.4-1.5v8.1a6.1 6.1 0 1 1-5.3-6.1v3.9a2.3 2.3 0 1 0 1.5 2.2V2h3.8c.2 2.2 1.8 4 4.4 4.3v1Z"/></svg>
-        </a>
-        <a class="link" href="https://www.twitch.tv/nokyshka" target="_blank" rel="noopener" aria-label="Twitch" title="Twitch">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 2 1.5 6v14h5v3h3.5l3-3h4l5.5-5.5V2H4Zm16 11.5L17 16.5h-5l-3 3v-3H5V4h15v9.5ZM12 7h2v5h-2V7Zm4.5 0h2v5h-2V7Z"/></svg>
-        </a>
-      </div>
-
-      <section class="server">
-        <button class="server-head" id="server-toggle" aria-expanded="true">
-          <span class="server-title">VASTNESS</span>
-          <span class="server-subtitle">МОЙ СЕРВЕР</span>
-          <span class="server-arrow" id="server-arrow">−</span>
-        </button>
-        <div class="server-content" id="server-content">
-          <a class="server-link" href="https://discord.gg/t5F4gEDwRu" target="_blank" rel="noopener"><span>Discord-сервер</span><span>↗</span></a>
-          <a class="server-link" href="https://www.tiktok.com/@vastness_ds" target="_blank" rel="noopener"><span>TikTok-сервер</span><span>↗</span></a>
-          <a class="server-link" href="https://t.me/Vastness_ds" target="_blank" rel="noopener"><span>Telegram-канал</span><span>↗</span></a>
-        </div>
-      </section>
-      <div class="footer">EST. IN SILENCE · BUILT BY NOK</div>
-    </section>
-  </div>
-</main>
-
-<button class="secret-launcher" id="open-quotes" aria-label="Открыть секретную комнату">
-  <span class="little-person" aria-hidden="true">
-    <span class="person-head"></span><span class="person-body"></span>
-    <span class="person-arm"></span><span class="person-arm right"></span>
-    <span class="person-leg"></span><span class="person-leg right"></span>
-  </span>
-  <span class="secret-label">? СЕКРЕТ</span>
+</div>
+<div class="ambient">
+</div>
+<button id="settingsOpen" class="icon-button" aria-label="Open settings" title="Settings">
+<svg viewBox="0 0 24 24">
+<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/>
+<circle cx="15" cy="7" r="2"/>
+<circle cx="9" cy="17" r="2"/>
+</svg>
 </button>
-
-<div class="settings-backdrop" id="settings-backdrop"></div>
-<aside class="settings-panel" id="settings-panel" aria-label="Настройки">
-  <div class="settings-header"><h2>НАСТРОЙКИ</h2><button class="settings-close" id="close-settings" aria-label="Закрыть настройки">✕</button></div>
-
-  <section class="settings-group">
-    <h3>Основная тема</h3>
-    <p class="settings-description">Выбери основную тему интерфейса.</p>
-    <select class="setting-select" id="theme-select">
-      <option value="black">Чёрная</option><option value="gray">Серая</option><option value="white">Белая</option>
-    </select>
-  </section>
-
-  <section class="settings-group">
-    <h3>Цвет карточки профиля</h3>
-    <p class="settings-description">Измени фон профиля и музыкальной панели.</p>
-    <div class="swatches" id="surface-swatches">
-      <button class="swatch selected" data-surface="default" style="background:#101a29" title="По умолчанию" aria-label="Цвет по умолчанию"></button>
-      <button class="swatch" data-surface="#090909" style="background:#090909" title="Чёрный" aria-label="Чёрный цвет"></button>
-      <button class="swatch" data-surface="#252a31" style="background:#252a31" title="Серый" aria-label="Серый цвет"></button>
-      <button class="swatch" data-surface="#f3f4f6" style="background:#f3f4f6" title="Белый" aria-label="Белый цвет"></button>
-      <button class="swatch" data-surface="#10243c" style="background:#10243c" title="Тёмно-синий" aria-label="Тёмно-синий цвет"></button>
-      <button class="swatch" data-surface="#17132d" style="background:#17132d" title="Тёмно-фиолетовый" aria-label="Тёмно-фиолетовый цвет"></button>
-      <button class="swatch" data-surface="#32171d" style="background:#32171d" title="Тёмно-красный" aria-label="Тёмно-красный цвет"></button>
-      <button class="swatch" data-surface="#351d2b" style="background:#351d2b" title="Тёмно-розовый" aria-label="Тёмно-розовый цвет"></button>
-      <button class="swatch" data-surface="#142b22" style="background:#142b22" title="Тёмно-зелёный" aria-label="Тёмно-зелёный цвет"></button>
-      <button class="swatch" data-surface="#302819" style="background:#302819" title="Тёмно-коричневый" aria-label="Тёмно-коричневый цвет"></button>
-      <button class="swatch" data-surface="#24203c" style="background:#24203c" title="Сине-фиолетовый" aria-label="Сине-фиолетовый цвет"></button>
-    </div>
-  </section>
-
-  <section class="settings-group">
-    <h3>Цвет границ</h3>
-    <p class="settings-description">Настрой цвет обводки отдельно от фона.</p>
-    <div class="swatches" id="border-swatches">
-      <button class="swatch selected" data-border="default" style="background:#6683a9" title="По умолчанию" aria-label="Цвет границ по умолчанию"></button>
-      <button class="swatch" data-border="#111111" style="background:#111111" title="Чёрный" aria-label="Чёрные границы"></button>
-      <button class="swatch" data-border="#eeeeee" style="background:#eeeeee" title="Белый" aria-label="Белые границы"></button>
-      <button class="swatch" data-border="#8d969f" style="background:#8d969f" title="Серый" aria-label="Серые границы"></button>
-      <button class="swatch" data-border="#377bd4" style="background:#377bd4" title="Синий" aria-label="Синие границы"></button>
-      <button class="swatch" data-border="#7856bd" style="background:#7856bd" title="Фиолетовый" aria-label="Фиолетовые границы"></button>
-      <button class="swatch" data-border="#b34a55" style="background:#b34a55" title="Красный" aria-label="Красные границы"></button>
-      <button class="swatch" data-border="#b75b8b" style="background:#b75b8b" title="Розовый" aria-label="Розовые границы"></button>
-      <button class="swatch" data-border="#3b956d" style="background:#3b956d" title="Зелёный" aria-label="Зелёные границы"></button>
-    </div>
-  </section>
-
-  <section class="settings-group">
-    <h3>Фоновая музыка</h3>
-    <div class="setting-row"><span>Воспроизведение музыки</span><button class="small-toggle active" id="music-toggle">ВКЛ</button></div>
-    <div class="range-label"><label for="music-volume">Громкость музыки</label><span id="music-volume-value">35%</span></div>
-    <input class="settings-range" id="music-volume" type="range" min="0" max="100" value="35">
-    <p class="settings-hint">Громкость применяется к музыке на главном экране и в секретной комнате.</p>
-  </section>
-
-  <section class="settings-group">
-    <h3>Звук нажатий</h3>
-    <div class="setting-row"><span>Звуки интерфейса</span><button class="small-toggle active" id="click-toggle">ВКЛ</button></div>
-    <div class="range-label"><label for="click-volume">Громкость звуков</label><span id="click-volume-value">35%</span></div>
-    <input class="settings-range" id="click-volume" type="range" min="0" max="100" value="35">
-    <p class="settings-hint">Звук нажатий работает на кнопках и интерактивных элементах сайта.</p>
-  </section>
-</aside>
-
-<section id="quote-screen" aria-label="Секретная комната">
-  <video id="secret-background-video" autoplay muted loop playsinline preload="auto">
-    <source src="https://media.istockphoto.com/id/2169005361/ru/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/%D1%80%D0%B8%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F-%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F-%D0%B4%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B8-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%83%D1%8E-%D1%81%D0%B2%D0%B5%D1%80%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%B8-%D0%BF%D0%BE%D0%B4%D0%B2%D0%B5%D1%80%D0%B3%D0%B0%D1%8E%D1%82-%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BA%D0%B8%D0%B7%D0%BC%D1%83-%D0%BF%D0%BE-%D0%B4%D0%BE%D1%80%D0%BE%D0%B3%D0%B5-%D0%B2-%D1%88%D0%BA%D0%BE%D0%BB%D1%83-%D0%B8-%D0%B8%D0%B7.mp4?s=mp4-640x640-is&k=20&c=J8CLaP78MFmP5ZKQsltvQnU6F_V-KWTL6eWhHbf3kTo=" type="video/mp4">
-  </video>
-  <div class="secret-blue-overlay"></div>
-  <div class="quote-top"><div class="quote-heading">Фрагменты сознания</div><button class="close-quotes" id="close-quotes">✕ ЗАКРЫТЬ</button></div>
-  <div id="quote-stage"></div>
-  <div class="quote-counter" id="quote-counter">НАЖАТИЯ · 0</div>
+<div id="settingsShade">
+</div>
+<aside id="settingsPanel" aria-label="Website settings">
+<div class="settings-head">
+<div>
+<div class="eyebrow">PERSONAL SPACE</div>
+<h2>Settings</h2>
+</div>
+<button id="settingsClose" class="icon-button" aria-label="Close settings">
+<svg viewBox="0 0 24 24">
+<path d="m6 6 12 12M18 6 6 18"/>
+</svg>
+</button>
+</div>
+<section class="setting-group">
+<h3>Theme</h3>
+<div class="segmented" id="mainThemes">
+<button data-theme="black" class="active">Black</button>
+<button data-theme="gray">Gray</button>
+<button data-theme="white">White</button>
+</div>
+<p class="setting-note">Changes the overall site and card surfaces.</p>
 </section>
-
-<div class="modal-backdrop" id="role-modal">
-  <section class="modal" role="dialog" aria-modal="true">
-    <h2 id="role-title"></h2><p id="role-description"></p>
-    <div class="modal-actions">
-      <a class="modal-btn primary" href="https://t.me/nokyshka" target="_blank" rel="noopener">Написать Nok ↗</a>
-      <button class="modal-btn" data-close="role-modal">Закрыть</button>
-    </div>
-  </section>
+<section class="setting-group">
+<h3>Profile card</h3>
+<div class="setting-row">
+<span>Card opacity</span>
+<span id="surfaceOpacityLabel">100%</span>
 </div>
-
-<div class="modal-backdrop" id="secret-modal">
-  <section class="modal" role="dialog" aria-modal="true">
-    <div class="secret-count" id="secret-count">СИСТЕМНОЕ СООБЩЕНИЕ</div>
-    <h2 id="secret-title">...</h2><p id="secret-description"></p>
-    <div class="modal-actions">
-      <button class="modal-btn primary" id="secret-continue">Продолжить</button>
-      <button class="modal-btn" id="secret-close">Закрыть</button>
-    </div>
-  </section>
+<input id="surfaceOpacity" type="range" min="10" max="100" step="1" value="100" aria-label="Profile card opacity">
+<p class="setting-note">Only the card background changes. Text stays fully opaque.</p>
+</section>
+<section class="setting-group">
+<h3>Accent color</h3>
+<div class="swatches" id="accentThemes">
+<button class="swatch active" data-accent="blue" style="--swatch:#526f9e">
+<i>
+</i>Blue</button>
+<button class="swatch" data-accent="purple" style="--swatch:#72568f">
+<i>
+</i>Purple</button>
+<button class="swatch" data-accent="red" style="--swatch:#914d58">
+<i>
+</i>Red</button>
+<button class="swatch" data-accent="pink" style="--swatch:#93657e">
+<i>
+</i>Pink</button>
+<button class="swatch" data-accent="green" style="--swatch:#4f796e">
+<i>
+</i>Green</button>
+<button class="swatch" data-accent="cyan" style="--swatch:#4d7c88">
+<i>
+</i>Cyan</button>
+<button class="swatch" data-accent="orange" style="--swatch:#966e4d">
+<i>
+</i>Orange</button>
+<button class="swatch" data-accent="yellow" style="--swatch:#8c8252">
+<i>
+</i>Yellow</button>
+<button class="swatch" data-accent="indigo" style="--swatch:#555b91">
+<i>
+</i>Indigo</button>
+<button class="swatch" data-accent="white" style="--swatch:#aab5c7">
+<i>
+</i>White</button>
 </div>
+<p class="setting-note">Muted colors, without neon glow.</p>
+</section>
+<section class="setting-group">
+<h3>Profile text color</h3>
+<div class="swatches" id="textColors">
+<button class="swatch active" data-text-color="default" style="--swatch:#edf2fb">
+<i>
+</i>Default</button>
+<button class="swatch" data-text-color="#526f9e" style="--swatch:#526f9e">
+<i>
+</i>Blue</button>
+<button class="swatch" data-text-color="#72568f" style="--swatch:#72568f">
+<i>
+</i>Purple</button>
+<button class="swatch" data-text-color="#914d58" style="--swatch:#914d58">
+<i>
+</i>Red</button>
+<button class="swatch" data-text-color="#93657e" style="--swatch:#93657e">
+<i>
+</i>Pink</button>
+<button class="swatch" data-text-color="#4f796e" style="--swatch:#4f796e">
+<i>
+</i>Green</button>
+<button class="swatch" data-text-color="#4d7c88" style="--swatch:#4d7c88">
+<i>
+</i>Cyan</button>
+<button class="swatch" data-text-color="#966e4d" style="--swatch:#966e4d">
+<i>
+</i>Orange</button>
+<button class="swatch" data-text-color="#8c8252" style="--swatch:#8c8252">
+<i>
+</i>Yellow</button>
+<button class="swatch" data-text-color="#555b91" style="--swatch:#555b91">
+<i>
+</i>Indigo</button>
+<button class="swatch" data-text-color="#aab5c7" style="--swatch:#aab5c7">
+<i>
+</i>White</button>
+</div>
+<p class="setting-note">Changes profile text independently from the card color.</p>
+</section>
+<section class="setting-group">
+<h3>Background music</h3>
+<div class="setting-row">
+<span>Volume</span>
+<span id="musicVolumeLabel">35%</span>
+</div>
+<input id="musicVolume" type="range" min="0" max="100" value="35" aria-label="Background music volume">
+<div class="toggle-row">
+<span>Enable music on first interaction</span>
+<label class="switch">
+<input id="musicEnabled" type="checkbox" checked>
+<span>
+</span>
+</label>
+</div>
+<p class="setting-note">Your browser may block autoplay with sound. Press Play if music does not start.</p>
+</section>
+<section class="setting-group">
+<h3>Click sounds</h3>
+<div class="setting-row">
+<span>Click volume</span>
+<span id="clickVolumeLabel">30%</span>
+</div>
+<input id="clickVolume" type="range" min="0" max="100" value="30" aria-label="Click sound volume">
+<div class="toggle-row">
+<span>Interface sounds</span>
+<label class="switch">
+<input id="clickEnabled" type="checkbox" checked>
+<span>
+</span>
+</label>
+</div>
+<p class="setting-note">Sound is streamed from MyInstants; availability depends on the external server.</p>
+</section>
+<section class="setting-group">
+<h3>Secret room</h3>
+<div class="toggle-row">
+<span>Click sounds inside the room</span>
+<label class="switch">
+<input id="secretClickEnabled" type="checkbox" checked>
+<span>
+</span>
+</label>
+</div>
+<p class="setting-note">The room has its own soundtrack and darkened video background.</p>
+</section>
+</aside>
+<main class="page">
+<article class="profile-card">
+<div class="card-top">
+<span class="live-label">
+<i class="live-dot">
+</i>ONLINE / OFFLINE</span>
+<span class="location-label">VASTNESS · 01</span>
+</div>
+<div class="avatar-wrap">
+<img class="avatar" id="avatar" src="avatar.jpg" alt="Аватар Nok" onerror="this.style.display='none';document.getElementById('avatarFallback').style.display='flex'">
+<div class="avatar-fallback" id="avatarFallback">N.</div>
+</div>
+<h1>Nok</h1>
+<div class="status">Independent mind · Vastness</div>
+<p class="bio">Designer and developer. Creating things that reflect who I am.</p>
+<div class="roles">
+<button class="role" data-role="DESIGNER">DESIGNER</button>
+<button class="role" data-role="DEVELOPER">DEVELOPER</button>
+<button class="role" data-role="FOUNDER">FOUNDER</button>
+</div>
+<nav class="links" aria-label="Социальные сети">
+<a class="social-link" href="https://t.me/nok_w" target="_blank" rel="noopener" aria-label="Telegram">
+<svg viewBox="0 0 24 24">
+<path d="m21 3-7.2 18-4.1-7.1L3 10.2 21 3Z"/>
+<path d="m9.7 13.9 5.1-5.1"/>
+</svg>
+<span>Telegram</span>
+</a>
+<a class="social-link" href="https://discord.com/users/1291423133789589581" target="_blank" rel="noopener" aria-label="Discord profile">
+<svg viewBox="0 0 24 24">
+<path d="M7 7.5A13 13 0 0 1 17 7.5l2 10a14 14 0 0 1-4 1.5l-1-1.5M7 7.5l-2 10a14 14 0 0 0 4 1.5l1-1.5M7 7.5 5.5 6 4 9c-1.2 3-1.2 5.5-.7 7.5A17 17 0 0 0 8 19M17 7.5 18.5 6 20 9c1.2 3 1.2 5.5.7 7.5A17 17 0 0 1 16 19"/>
+<circle cx="9" cy="12" r="1"/>
+<circle cx="15" cy="12" r="1"/>
+</svg>
+<span>Discord</span>
+</a>
+<a class="social-link" href="https://www.tiktok.com/@nok_vast" target="_blank" rel="noopener" aria-label="TikTok">
+<svg viewBox="0 0 24 24">
+<path d="M14 4v10.2a4.3 4.3 0 1 1-4-4.3"/>
+<path d="M14 4c.5 3.1 2.4 4.8 5 5"/>
+</svg>
+<span>TikTok</span>
+</a>
+<a class="social-link" href="https://www.twitch.tv/nokyshka" target="_blank" rel="noopener" aria-label="Twitch">
+<svg viewBox="0 0 24 24">
+<path d="M5 3h16v12l-4 4h-4l-3 3v-3H6V6Z"/>
+<path d="M11 7v5M16 7v5"/>
+</svg>
+<span>Twitch</span>
+</a>
+</nav>
+<section class="server-box" id="serverBox">
+<button class="server-toggle" id="serverToggle" aria-expanded="false">
+<span>
+<span class="server-title">Vastness Community</span>
+<span class="server-sub">Discord · TikTok · Telegram</span>
+</span>
+<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+<path d="m6 9 6 6 6-6"/>
+</svg>
+</button>
+<div class="server-links">
+<a href="https://discord.gg/t5F4gEDwRu" target="_blank" rel="noopener">Discord</a>
+<a href="https://www.tiktok.com/@vastness_ds" target="_blank" rel="noopener">TikTok</a>
+<a href="https://t.me/Vastness_ds" target="_blank" rel="noopener">Telegram</a>
+</div>
+</section>
+<section class="music-card">
+<div class="music-heading">
+<div class="music-info">
+<span class="music-title" id="trackTitle">Загрузка названия…</span>
+<span class="music-author" id="trackAuthor">YouTube</span>
+<span class="music-caption" id="musicState">Фоновая музыка</span>
+</div>
+<div class="music-nav">
+<button class="music-skip" id="previousTrack" title="Предыдущая песня" aria-label="Предыдущая песня">‹</button>
+<button class="music-skip" id="nextTrack" title="Следующая песня" aria-label="Следующая песня">›</button>
+<button class="music-repeat" id="repeatButton" title="Повтор трека" aria-label="Повтор трека">↻</button>
+</div>
+</div>
+<div class="music-controls">
+<button class="music-play" id="musicPlay" aria-label="Воспроизвести музыку">
+<svg id="playIcon" viewBox="0 0 24 24">
+<path d="M7 4v16l13-8Z"/>
+</svg>
+</button>
+<div class="music-track">
+<div class="progress">
+<div class="progress-fill" id="progressFill">
+</div>
+</div>
+<div class="music-meta">
+<span id="currentTime">0:00</span>
+<span id="totalTime">—:—</span>
+</div>
+</div>
+</div>
+</section>
+<div class="card-footer">
+<span>MADE BY NOK · 2026</span>
+<span>STAY UNDEFINED</span>
+</div>
+</article>
+</main>
+<button id="secretOpen" aria-label="Открыть секретную комнату" title="...">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 9c.2-4.1 2.8-6.5 7-6.5s6.8 2.4 7 6.5H5Z"/>
+</svg>
+</button>
+<section id="secretRoom" aria-label="Секретная комната">
+<video id="secretBg" autoplay muted loop playsinline>
+<source src="https://media.istockphoto.com/id/2169005361/ru/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/%D1%80%D0%B8%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F-%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F-%D0%B4%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B8-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%83%D1%8E-%D1%81%D0%B2%D0%B5%D1%80%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%B8-%D0%BF%D0%BE%D0%B4%D0%B2%D0%B5%D1%80%D0%B3%D0%B0%D1%8E%D1%82-%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BA%D0%B8%D0%B7%D0%BC%D1%83-%D0%BF%D0%BE-%D0%B4%D0%BE%D1%80%D0%BE%D0%B3%D0%B5-%D0%B2-%D1%88%D0%BA%D0%BE%D0%BB%D1%83-%D0%B8-%D0%B8%D0%B7.mp4?s=mp4-640x640-is&k=20&c=J8CLaP78MFmP5ZKQsltvQnU6F_V-KWTL6eWhHbf3kTo=" type="video/mp4">
+</video>
+<div class="secret-grain">
+</div>
+<div class="secret-content">
+<div class="secret-top">
+<span class="secret-label">НЕИЗВЕСТНОЕ / КОМНАТА 00</span>
+<span class="secret-count" id="secretCount">CLICKS · 00</span>
+<button id="secretClose" class="secret-close" aria-label="Закрыть">×</button>
+</div>
+<div class="secret-heading">
+<h2 id="secretHeading">Ты здесь не случайно.</h2>
+<p id="secretSubheading">Нажми на карточки. Посмотрим, как далеко ты зайдёшь.</p>
+</div>
+<div id="quoteGrid">
+</div>
+</div>
+<div id="scareMessage">
+<strong id="scareTitle">
+</strong>
+<span id="scareText">
+</span>
+</div>
+<div id="finalReveal">
+<div class="reveal-box">
+<div class="reveal-mark">♡</div>
+<h2>Ты добрался до конца.</h2>
+<p>Я пошутил. Всё с тобой будет хорошо. ♡<br>
+<br>Спасибо, что дошёл до конца. Береги себя и не забывай: за любой тёмной атмосферой может скрываться что-то хорошее. 💙</p>
+<button id="revealClose">Вернуться</button>
+</div>
+</div>
+</section>
+<div id="roleModal" class="modal-shade">
+<div class="modal">
+<h2 id="roleTitle">DESIGNER</h2>
+<p id="roleText">Заказы и сотрудничество.</p>
+<div class="modal-actions">
+<a href="https://t.me/nokyshka" target="_blank" rel="noopener">Связаться в Telegram</a>
+<button id="roleClose">Закрыть</button>
+</div>
+</div>
+</div>
+<div id="toast" class="toast" role="status">
+</div>
+<div id="youtubePlayers" aria-hidden="true">
+<div id="mainYT">
+</div>
+<div id="secretYT">
+</div>
+</div>
+<script src="https://www.youtube.com/iframe_api">
 
+</script>
 <script>
-const MAIN_TRACK="yYrUpbK6_MI";
-const SECRET_TRACK="ea1Shogsk7k";
-const $=id=>document.getElementById(id);
-
-let player=null,playerReady=false,musicPlaying=false;
-let musicEnabled=true,musicVolume=35,clickEnabled=true,clickVolume=35;
-let currentTrack=MAIN_TRACK,trackBeforeSecret=MAIN_TRACK,shouldResumeAfterSecret=false;
-let seekDragging=false,gameStarted=false,totalClicks=0,finalRevealShown=false;
-let audioContext=null,layoutTimer=null;
-
-function formatTime(seconds) {
-  if(!Number.isFinite(seconds)||seconds<0)return "0:00";
-  seconds=Math.floor(seconds);
-  return Math.floor(seconds/60)+":"+String(seconds%60).padStart(2,"0");
+(() => {
+'use strict';
+const $ = (id) => document.getElementById(id);
+const STORE_KEY = 'nok-personal-space-settings-v2';
+const defaults = {mainTheme:'black',accent:'blue',textColor:'default',musicVolume:35,clickVolume:30,musicEnabled:true,clickEnabled:true,secretClickEnabled:true,surfaceOpacity:100};
+let settings = {...defaults};
+try { settings = {...defaults, ...JSON.parse(localStorage.getItem(STORE_KEY) || '{}')}; } catch(e) {}
+const saveSettings = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(settings)); } catch(e) {} };
+const clamp = (v,min,max) => Math.max(min,Math.min(max,v));
+let mainPlayer=null,secretPlayer=null,apiReady=false,userStartedMusic=false;
+let currentDuration=0, progressTimer=null, repeatMain=false, secretOpen=false;
+function applySettings(){
+document.body.classList.remove('theme-black','theme-gray','theme-white');
+document.body.classList.add('theme-' + settings.mainTheme);
+document.body.classList.forEach(c=>{if(c.startsWith('accent-'))document.body.classList.remove(c)});
+document.body.classList.add('accent-' + settings.accent);
+document.querySelectorAll('#mainThemes button').forEach(b=>b.classList.toggle('active',b.dataset.theme===settings.mainTheme));
+document.querySelectorAll('#accentThemes .swatch').forEach(b=>b.classList.toggle('active',b.dataset.accent===settings.accent));
+document.querySelectorAll('#textColors .swatch').forEach(b=>b.classList.toggle('active',b.dataset.textColor===settings.textColor));
+if(settings.textColor==='default')document.documentElement.style.removeProperty('--profile-text-color');else document.documentElement.style.setProperty('--profile-text-color',settings.textColor);
+$('musicVolume').value=settings.musicVolume; $('musicVolumeLabel').textContent=settings.musicVolume+'%';
+$('clickVolume').value=settings.clickVolume; $('clickVolumeLabel').textContent=settings.clickVolume+'%';
+$('musicEnabled').checked=settings.musicEnabled; $('clickEnabled').checked=settings.clickEnabled; $('secretClickEnabled').checked=settings.secretClickEnabled;
+settings.surfaceOpacity=clamp(Number(settings.surfaceOpacity)||100,10,100);document.documentElement.style.setProperty('--surface-opacity',settings.surfaceOpacity/100);$('surfaceOpacity').value=settings.surfaceOpacity;$('surfaceOpacityLabel').textContent=settings.surfaceOpacity+'%';
+if(mainPlayer && mainPlayer.setVolume) mainPlayer.setVolume(settings.musicVolume);
+if(secretPlayer && secretPlayer.setVolume) secretPlayer.setVolume(settings.musicVolume);
 }
-
-/* Звук нажатий */
-function playClickSound(intensity=1) {
-  if(!clickEnabled||clickVolume<=0)return;
-  try {
-    const AC=window.AudioContext||window.webkitAudioContext;
-    if(!AC)return;
-    if(!audioContext)audioContext=new AC();
-    if(audioContext.state==="suspended")audioContext.resume();
-    const now=audioContext.currentTime;
-    const osc=audioContext.createOscillator(),gain=audioContext.createGain();
-    osc.type="sine";
-    osc.frequency.setValueAtTime(760*intensity,now);
-    osc.frequency.exponentialRampToValueAtTime(280*intensity,now+.06);
-    gain.gain.setValueAtTime(clickVolume/100*.1,now);
-    gain.gain.exponentialRampToValueAtTime(.001,now+.08);
-    osc.connect(gain);gain.connect(audioContext.destination);
-    osc.start(now);osc.stop(now+.085);
-  } catch(e) {}
+applySettings();
+const panel = $('settingsPanel'), shade = $('settingsShade');
+function openSettings(){panel.classList.add('open');shade.classList.add('open')}
+function closeSettings(){panel.classList.remove('open');shade.classList.remove('open')}
+$('settingsOpen').addEventListener('click',openSettings);
+$('settingsClose').addEventListener('click',closeSettings);
+shade.addEventListener('click',closeSettings);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSettings();closeRoleModal();if($('secretRoom').classList.contains('active'))closeSecretRoom()}});
+document.querySelectorAll('#mainThemes button').forEach(b=>b.addEventListener('click',()=>{settings.mainTheme=b.dataset.theme;applySettings();saveSettings();clickSound()}));
+document.querySelectorAll('#accentThemes .swatch').forEach(b=>b.addEventListener('click',()=>{settings.accent=b.dataset.accent;applySettings();saveSettings();clickSound()}));
+document.querySelectorAll('#textColors .swatch').forEach(b=>b.addEventListener('click',()=>{settings.textColor=b.dataset.textColor;if(settings.textColor==='default')document.documentElement.style.removeProperty('--profile-text-color');else document.documentElement.style.setProperty('--profile-text-color',settings.textColor);document.querySelectorAll('#textColors .swatch').forEach(x=>x.classList.toggle('active',x===b));saveSettings();clickSound()}));
+$('surfaceOpacity').addEventListener('input',e=>{settings.surfaceOpacity=clamp(+e.target.value,10,100);document.documentElement.style.setProperty('--surface-opacity',settings.surfaceOpacity/100);$('surfaceOpacityLabel').textContent=settings.surfaceOpacity+'%';saveSettings()});
+$('musicVolume').addEventListener('input',e=>{settings.musicVolume=+e.target.value;$('musicVolumeLabel').textContent=settings.musicVolume+'%';if(mainPlayer?.setVolume)mainPlayer.setVolume(settings.musicVolume);if(secretPlayer?.setVolume)secretPlayer.setVolume(settings.musicVolume);saveSettings()});
+$('clickVolume').addEventListener('input',e=>{settings.clickVolume=+e.target.value;$('clickVolumeLabel').textContent=settings.clickVolume+'%';saveSettings()});
+$('musicEnabled').addEventListener('change',e=>{settings.musicEnabled=e.target.checked;if(!settings.musicEnabled)pauseActivePlayer();else if(userStartedMusic)playActivePlayer();saveSettings()});
+$('clickEnabled').addEventListener('change',e=>{settings.clickEnabled=e.target.checked;saveSettings()});
+$('secretClickEnabled').addEventListener('change',e=>{settings.secretClickEnabled=e.target.checked;saveSettings()});
+// External click audio; no local download required.
+const clickAudioUrl = 'https://www.myinstants.com/media/sounds/clicksoundeffect.mp3';
+let clickAudio = null;
+function clickSound(force=false){
+if(!force && (!settings.clickEnabled || settings.clickVolume<=0))return;
+if($('secretRoom').classList.contains('active') && !settings.secretClickEnabled)return;
+try{
+if(!clickAudio){clickAudio=new Audio(clickAudioUrl);clickAudio.preload='auto';}
+clickAudio.pause();clickAudio.currentTime=0;clickAudio.volume=clamp(settings.clickVolume/100,0,1);
+const p=clickAudio.play();if(p&&p.catch)p.catch(()=>{});
+}catch(e){}
 }
-
-/* Звук для кнопок, ссылок и других элементов управления */
-document.addEventListener("click",event=>{
-  const control=event.target.closest("button,a,.swatch");
-  if(control)playClickSound();
-},{capture:true});
-
-/* Панель настроек */
-const settingsPanel=$("settings-panel"),settingsBackdrop=$("settings-backdrop");
-function openSettings(){settingsPanel.classList.add("open");settingsBackdrop.classList.add("open")}
-function closeSettings(){settingsPanel.classList.remove("open");settingsBackdrop.classList.remove("open")}
-$("open-settings").addEventListener("click",openSettings);
-$("close-settings").addEventListener("click",closeSettings);
-settingsBackdrop.addEventListener("click",closeSettings);
-
-document.addEventListener("keydown",event=>{
-  if(event.key==="Escape"){
-    closeSettings();
-    document.querySelectorAll(".modal-backdrop.show").forEach(el=>el.classList.remove("show"));
-    if($("quote-screen").classList.contains("active"))closeQuoteScreen();
-  }
-});
-
-/* Основные темы */
-$("theme-select").addEventListener("change",event=>{
-  document.body.classList.remove("theme-white","theme-gray");
-  if(event.target.value==="white")document.body.classList.add("theme-white");
-  if(event.target.value==="gray")document.body.classList.add("theme-gray");
-  document.querySelector('meta[name="theme-color"]').content=
-    event.target.value==="white"?"#e9edf2":event.target.value==="gray"?"#252a31":"#080d14";
-});
-
-/* Цвета фона карточек */
-const surfaceColors={
-  default:"rgba(12,20,31,.91)",
-  "#090909":"rgba(9,9,9,.95)",
-  "#252a31":"rgba(37,42,49,.95)",
-  "#f3f4f6":"rgba(243,244,246,.96)",
-  "#10243c":"rgba(16,36,60,.95)",
-  "#17132d":"rgba(23,19,45,.95)",
-  "#32171d":"rgba(50,23,29,.95)",
-  "#351d2b":"rgba(53,29,43,.95)",
-  "#142b22":"rgba(20,43,34,.95)",
-  "#302819":"rgba(48,40,25,.95)",
-  "#24203c":"rgba(36,32,60,.95)"
-};
-const borderColors={
-  default:"rgba(130,170,220,.20)",
-  "#111111":"#111111","#eeeeee":"#eeeeee","#8d969f":"#8d969f",
-  "#377bd4":"#377bd4","#7856bd":"#7856bd","#b34a55":"#b34a55",
-  "#b75b8b":"#b75b8b","#3b956d":"#3b956d"
-};
-function markSelected(container,attribute,value) {
-  container.querySelectorAll(".swatch").forEach(btn=>btn.classList.toggle("selected",btn.dataset[attribute]===value));
-}
-function applySurfaceColor(value) {
-  const color=surfaceColors[value]||surfaceColors.default;
-  const light=value==="#f3f4f6";
-  document.documentElement.style.setProperty("--surface",color);
-  document.documentElement.style.setProperty("--surface-text",light?"#17202d":"#e8eef7");
-  document.querySelectorAll(".profile-card,.music-float").forEach(el=>{
-    el.style.background=color;
-    el.style.color=light?"#17202d":"";
-  });
-  document.querySelectorAll(".modal-backdrop:not(#secret-modal) .modal").forEach(el=>{
-    el.style.background=color;
-    el.style.color=light?"#17202d":"";
-  });
-}
-$("surface-swatches").addEventListener("click",event=>{
-  const btn=event.target.closest(".swatch");if(!btn)return;
-  applySurfaceColor(btn.dataset.surface);
-  markSelected($("surface-swatches"),"surface",btn.dataset.surface);
-});
-$("border-swatches").addEventListener("click",event=>{
-  const btn=event.target.closest(".swatch");if(!btn)return;
-  document.documentElement.style.setProperty("--border",borderColors[btn.dataset.border]||borderColors.default);
-  markSelected($("border-swatches"),"border",btn.dataset.border);
-});
-$("server-toggle").addEventListener("click",()=>{
-  const closed=$("server-content").classList.toggle("closed");
-  $("server-toggle").setAttribute("aria-expanded",String(!closed));
-  $("server-arrow").textContent=closed?"+":"−";
-});
-
-/* Диалоги ролей */
-const roleInfo={
-  designer:{
-    title:"Designer · Дизайнер",
-    description:"Я работаю над визуальной частью цифровых проектов: оформлением профилей, интерфейсами, графикой и общей атмосферой.\n\nЕсть идея для дизайна? Напиши мне, и мы обсудим задачу."
-  },
-  developer:{
-    title:"Developer · Разработчик",
-    description:"Я изучаю разработку и создаю цифровые проекты: сайты, небольшие инструменты и другие идеи, которые можно воплотить с помощью кода.\n\nДля разработки сайта или другого проекта напиши мне в Telegram."
-  },
-  founder:{
-    title:"Founder · Vastness",
-    description:"Vastness — сообщество со своей атмосферой, дизайном и мероприятиями. Я занимаюсь его развитием, концепцией и организацией.\n\nПо вопросам сотрудничества и проекта напиши мне в Telegram."
-  }
-};
-document.querySelectorAll("[data-role]").forEach(btn=>btn.addEventListener("click",()=>{
-  const info=roleInfo[btn.dataset.role];
-  $("role-title").textContent=info.title;
-  $("role-description").textContent=info.description;
-  $("role-modal").classList.add("show");
-}));
-document.querySelectorAll("[data-close]").forEach(btn=>btn.addEventListener("click",()=>$(btn.dataset.close).classList.remove("show")));
-document.querySelectorAll(".modal-backdrop").forEach(el=>el.addEventListener("click",event=>{
-  if(event.target===el)el.classList.remove("show");
-}));
-
-/* Музыка YouTube */
-function updatePlayButton(){
-  $("play-button").textContent=musicPlaying?"Ⅱ":"▶";
-  $("play-button").setAttribute("aria-label",musicPlaying?"Приостановить музыку":"Включить музыку");
-}
-function updateMusicToggle(){
-  $("music-toggle").textContent=musicEnabled?"ВКЛ":"ВЫКЛ";
-  $("music-toggle").classList.toggle("active",musicEnabled);
-}
-function setMusicVolume(){
-  if(playerReady&&player)try{player.setVolume(musicEnabled?musicVolume:0)}catch(e){}
-}
-
-window.onYouTubeIframeAPIReady=function(){
-  if(player)return;
-  player=new YT.Player("youtube-player",{
-    width:"2",height:"2",videoId:MAIN_TRACK,
-    playerVars:{autoplay:0,controls:0,disablekb:1,playsinline:1,rel:0},
-    events:{
-      onReady:()=>{
-        playerReady=true;
-        player.setVolume(musicEnabled?musicVolume:0);
-        $("music-status").textContent="Плеер готов";
-        $("music-status").title="Если музыка не запустилась автоматически, нажми кнопку воспроизведения";
-        try{
-          player.seekTo(0,true);
-          if(musicEnabled)player.playVideo();
-        }catch(e){}
-      },
-      onStateChange:event=>{
-        if(event.data===YT.PlayerState.PLAYING){
-          musicPlaying=true;updatePlayButton();
-          $("music-status").textContent=currentTrack===SECRET_TRACK?"Музыка секретной комнаты":"Музыка играет";
-        } else if(event.data===YT.PlayerState.PAUSED){
-          musicPlaying=false;updatePlayButton();
-          if(musicEnabled)$("music-status").textContent="Пауза";
-        } else if(event.data===YT.PlayerState.BUFFERING){
-          $("music-status").textContent="Загрузка…";
-        } else if(event.data===YT.PlayerState.ENDED){
-          try{
-            player.seekTo(0,true);
-            if(musicEnabled)player.playVideo();
-          }catch(e){}
-        }
-      },
-      onError:event=>{
-        $("music-status").textContent="Не удалось загрузить трек";
-        console.warn("YouTube player error:",event.data);
-      }
-    }
-  });
-};
-(function loadYouTubeAPI(){
-  if(window.YT&&window.YT.Player){window.onYouTubeIframeAPIReady();return}
-  if(document.querySelector('script[src="https://www.youtube.com/iframe_api"]'))return;
-  const script=document.createElement("script");
-  script.src="https://www.youtube.com/iframe_api";script.async=true;
-  document.head.appendChild(script);
-})();
-
-$("play-button").addEventListener("click",()=>{
-  if(!playerReady||!player){$("music-status").textContent="Загрузка плеера…";return}
-  if(musicPlaying)player.pauseVideo();
-  else {
-    musicEnabled=true;
-    updateMusicToggle();
-    setMusicVolume();
-    try{
-      if((player.getCurrentTime()||0)<.2)player.seekTo(0,true);
-      player.playVideo();
-    }catch(e){}
-  }
-});
-$("music-toggle").addEventListener("click",()=>{
-  musicEnabled=!musicEnabled;
-  updateMusicToggle();
-  if(!playerReady||!player)return;
-  player.setVolume(musicEnabled?musicVolume:0);
-  if(musicEnabled&&!musicPlaying){
-    try{player.playVideo()}catch(e){}
-  }
-});
-$("music-volume").addEventListener("input",event=>{
-  musicVolume=Number(event.target.value);
-  $("music-volume-value").textContent=musicVolume+"%";
-  setMusicVolume();
-});
-$("click-volume").addEventListener("input",event=>{
-  clickVolume=Number(event.target.value);
-  $("click-volume-value").textContent=clickVolume+"%";
-});
-$("click-toggle").addEventListener("click",()=>{
-  clickEnabled=!clickEnabled;
-  $("click-toggle").textContent=clickEnabled?"ВКЛ":"ВЫКЛ";
-  $("click-toggle").classList.toggle("active",clickEnabled);
-});
-$("music-seek").addEventListener("input",()=>{
-  seekDragging=true;
-  if(!playerReady||!player)return;
-  const duration=player.getDuration();
-  if(duration>0)$("current-time").textContent=formatTime(duration*Number($("music-seek").value)/100);
-});
-$("music-seek").addEventListener("change",()=>{
-  if(playerReady&&player){
-    const duration=player.getDuration();
-    if(duration>0)try{player.seekTo(duration*Number($("music-seek").value)/100,true)}catch(e){}
-  }
-  seekDragging=false;
-});
-setInterval(()=>{
-  if(!playerReady||!player)return;
-  try{
-    const duration=player.getDuration(),current=player.getCurrentTime();
-    $("current-time").textContent=formatTime(current);
-    if(duration>0){
-      $("total-time").textContent=formatTime(duration);
-      if(!seekDragging)$("music-seek").value=String(current/duration*100);
-    }
-  }catch(e){}
-},300);
-
-function switchTrack(trackId,autoplay=true){
-  if(!playerReady||!player)return;
-  currentTrack=trackId;
-  try{
-    player.setVolume(musicEnabled?musicVolume:0);
-    if(autoplay&&musicEnabled)player.loadVideoById({videoId:trackId,startSeconds:0});
-    else player.cueVideoById({videoId:trackId,startSeconds:0});
-    $("music-status").textContent=trackId===SECRET_TRACK?"Музыка секретной комнаты":"Фоновая музыка";
-    musicPlaying=Boolean(autoplay&&musicEnabled);
-    updatePlayButton();
-  }catch(e){}
-}
-
-/* Карточки секретной комнаты */
-const quoteData=[
-  ["БЛИЧ","Никто не стоит на вершине небес с самого начала."],
-  ["САГА О ВИНЛАНДЕ","У меня нет врагов."],
-  ["ТОКИЙСКИЙ ГУЛЬ","1000 − 7"],
-  ["ПСИХОЛОГИЯ","За спокойным лицом может скрываться сложный разум."],
-  ["АПАТИЯ","Иногда молчание говорит больше слов."],
-  ["ТЁМНАЯ ТРИАДА","Макиавеллизм. Нарциссизм. Психопатия."],
-  ["ДЕПРЕССИЯ","Не каждый молчаливый человек в порядке."],
-  ["АНИМЕ","В каждой истории есть целый мир."],
-  ["VASTNESS","Свобода начинается там, где страх теряет власть."],
-  ["НАБЛЮДАТЕЛЬ","Ты замечаешь лишь то, что готов увидеть."],
-  ["DOX / SNOS","Подпольная эстетика Telegram · вымышленный образ."],
-  ["ЛЮБОВЬ","Даже в тёмном мире доброта всё ещё имеет значение."],
-  ["NOK","Некоторые вещи лучше оставить без объяснений."],
-  ["МИРОВОЗЗРЕНИЕ","Не на всё нужно реагировать."],
-  ["НОЧЬ","Город становится тише, когда остальные спят."]
+document.addEventListener('click',e=>{
+const el=e.target.closest('button,a,.quote-card');
+if(el && !el.classList.contains('music-play') && !el.classList.contains('quote-card')) clickSound();
+},true);
+// YouTube IFrame API players: main playlist and separate secret-room track.
+const MAIN_TRACKS=[
+'__cFrzeIdfU','kmTWXxDHuqo','MucMIJJ1Dso','hM7n3TZ_cC0','SKjtvKDqYhA','pmTifnmXswI',
+'qpylrM5OMSE','GbzXNK1MJMM','a-x7Apy0RIA','Oud0Cy-WNDo','6BvJzsmcfy0','8gb1706XupY'
 ];
-const quoteScreen=$("quote-screen"),quoteStage=$("quote-stage");
-function cardWidth(){
-  if(innerWidth<=390)return Math.max(135,Math.floor(innerWidth*.42));
-  if(innerWidth<=700)return Math.min(190,Math.floor(innerWidth*.43));
-  return Math.min(230,Math.floor(innerWidth*.28));
+const SECRET_TRACK='ea1Shogsk7k';
+let currentTrackIndex=0;
+function updateTrackInfo(){
+if(!mainPlayer||!mainPlayer.getVideoData)return;
+try{const d=mainPlayer.getVideoData()||{};$('trackTitle').textContent=d.title||('Трек '+(currentTrackIndex+1));$('trackAuthor').textContent=d.author||'YouTube';}catch(e){}
+$('musicState').textContent='Background music';
+try{currentDuration=mainPlayer.getDuration()||0;$('totalTime').textContent=formatTime(currentDuration)}catch(e){}
 }
-function overlap(a,b,pad=10){
-  return !(a.x+a.w+pad<=b.x||b.x+b.w+pad<=a.x||a.y+a.h+pad<=b.y||b.y+b.h+pad<=a.y);
+function loadTrack(index,autoplay=true){
+currentTrackIndex=(index+MAIN_TRACKS.length)%MAIN_TRACKS.length;
+$('trackTitle').textContent='Loading track…';$('trackAuthor').textContent='YouTube';$('currentTime').textContent='0:00';$('totalTime').textContent='—:—';$('progressFill').style.width='0%';
+if(!mainPlayer||!apiReady)return;
+try{mainPlayer.setVolume(settings.musicVolume);if(autoplay&&settings.musicEnabled){mainPlayer.loadVideoById(MAIN_TRACKS[currentTrackIndex]);userStartedMusic=true}else{mainPlayer.cueVideoById(MAIN_TRACKS[currentTrackIndex]);}}catch(e){}
+setTimeout(updateTrackInfo,500);setTimeout(updateTrackInfo,1400);
 }
-function rects(except=null){
-  return [...quoteStage.querySelectorAll(".quote-card")]
-    .filter(el=>el!==except&&!el.classList.contains("shattering"))
-    .map(el=>({x:parseFloat(el.style.left)||0,y:parseFloat(el.style.top)||0,w:el.offsetWidth,h:el.offsetHeight}));
-}
-function randomPosition(w,h,used){
-  const margin=12,top=65,bottom=55;
-  const maxX=Math.max(margin,innerWidth-w-margin);
-  const maxY=Math.max(top,innerHeight-h-bottom);
-  for(let i=0;i<600;i++){
-    const p={x:margin+Math.random()*Math.max(1,maxX-margin),y:top+Math.random()*Math.max(1,maxY-top),w,h};
-    if(used.every(r=>!overlap(p,r,12)))return p;
-  }
-  const candidates=[];
-  const sx=Math.max(10,Math.floor(w*.38)),sy=Math.max(10,Math.floor(h*.42));
-  for(let y=top;y<=maxY;y+=sy)for(let x=margin;x<=maxX;x+=sx)candidates.push({x,y,w,h});
-  for(let i=candidates.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[candidates[i],candidates[j]]=[candidates[j],candidates[i]]}
-  return candidates.find(p=>used.every(r=>!overlap(p,r,8)))||{x:margin,y:top+Math.random()*Math.max(1,maxY-top),w,h};
-}
-function placeCard(card,used){
-  card.style.width=cardWidth()+"px";
-  card.style.left="0px";card.style.top="0px";card.style.visibility="hidden";
-  quoteStage.appendChild(card);
-  const p=randomPosition(card.offsetWidth,card.offsetHeight,used);
-  card.style.left=p.x+"px";card.style.top=p.y+"px";card.style.visibility="visible";
-  return {x:p.x,y:p.y,w:card.offsetWidth,h:card.offsetHeight};
-}
-function pickQuote(exclude=""){
-  const options=quoteData.filter(q=>q[1]!==exclude);
-  return (options.length?options:quoteData)[Math.floor(Math.random()*(options.length||quoteData.length))];
-}
-function createCard(data){
-  const card=document.createElement("article");
-  card.className="quote-card";card.tabIndex=0;card.setAttribute("role","button");
-  card.setAttribute("aria-label","Карточка с сообщением: "+data[0]);
-  card.dataset.tag=data[0];card.dataset.quote=data[1];
-  const tag=document.createElement("div");tag.className="tag";tag.textContent=data[0];
-  const quote=document.createElement("div");quote.className="quote-text";quote.textContent=data[1];
-  const hint=document.createElement("div");hint.className="hint";hint.textContent="нажми, чтобы открыть";
-  card.append(tag,quote,hint);
-  card.addEventListener("click",()=>clickCard(card));
-  card.addEventListener("keydown",event=>{
-    if(event.key==="Enter"||event.key===" "){event.preventDefault();clickCard(card)}
-  });
-  return card;
-}
-
-/* Разрушение карточки на отдельные движущиеся фрагменты */
-function explodeCard(card){
-  const r=card.getBoundingClientRect();
-  const cols=6,rows=5;
-  const fw=r.width/cols,fh=r.height/rows;
-  const tag=card.querySelector(".tag")?.textContent||"";
-  const quote=card.querySelector(".quote-text")?.textContent||"";
-  const hint=card.querySelector(".hint")?.textContent||"";
-
-  for(let row=0;row<rows;row++){
-    for(let col=0;col<cols;col++){
-      const piece=document.createElement("span");
-      piece.className="card-fragment";
-      const x=r.left+col*fw,y=r.top+row*fh;
-      piece.style.left=x+"px";piece.style.top=y+"px";
-      piece.style.width=(fw+1)+"px";piece.style.height=(fh+1)+"px";
-
-      const crop=document.createElement("span");
-      crop.style.cssText=
-        "position:absolute;inset:0;overflow:hidden;"+
-        "padding:10px;color:#e8eef7;font:11px/1.5 Segoe UI,Arial,sans-serif;"+
-        "background:rgba(8,18,33,.92);";
-      const fullText=tag+"\n"+quote+"\n"+hint;
-      crop.textContent=fullText;
-      crop.style.whiteSpace="pre-wrap";
-      crop.style.opacity=".9";
-      crop.style.transform=`translate(${-col*fw}px,${-row*fh}px)`;
-      crop.style.width=r.width+"px";
-      crop.style.height=r.height+"px";
-      piece.appendChild(crop);
-
-      const dx=(Math.random()-.5)*(140+Math.random()*180);
-      const dy=(Math.random()-.5)*(140+Math.random()*180);
-      const rot=(Math.random()-.5)*240;
-      piece.style.setProperty("--dx",dx+"px");
-      piece.style.setProperty("--dy",dy+"px");
-      piece.style.setProperty("--rot",rot+"deg");
-      document.body.appendChild(piece);
-      setTimeout(()=>piece.remove(),720);
-    }
-  }
-
-  for(let i=0;i<16;i++){
-    const shard=document.createElement("span");
-    shard.className="shard";
-    shard.style.left=(r.left+Math.random()*r.width)+"px";
-    shard.style.top=(r.top+Math.random()*r.height)+"px";
-    shard.style.setProperty("--dx",((Math.random()-.5)*220)+"px");
-    shard.style.setProperty("--dy",((Math.random()-.5)*200)+"px");
-    shard.style.setProperty("--rot",((Math.random()-.5)*420)+"deg");
-    document.body.appendChild(shard);
-    setTimeout(()=>shard.remove(),600);
-  }
-}
-function heartEffect(x,y){
-  const heart=document.createElement("div");
-  heart.className="heart";heart.textContent=["♥","♡","💙","♥"][Math.floor(Math.random()*4)];
-  heart.style.left=x+"px";heart.style.top=y+"px";
-  document.body.appendChild(heart);setTimeout(()=>heart.remove(),850);
-}
-function respawnCard(oldCard){
-  const oldText=oldCard.dataset.quote||"";
-  const replacement=createCard(pickQuote(oldText));
-  explodeCard(oldCard);
-  oldCard.classList.add("shattering");
-  setTimeout(()=>{
-    const used=rects(oldCard);
-    oldCard.remove();
-    placeCard(replacement,used);
-  },300);
-}
-function clickCard(card){
-  if(!card||card.classList.contains("shattering"))return;
-  playClickSound(1.2);
-  totalClicks++;
-  $("quote-counter").textContent="НАЖАТИЯ · "+totalClicks;
-  const r=card.getBoundingClientRect();
-  heartEffect(r.left+r.width/2,r.top+r.height/2);
-  respawnCard(card);
-  updateHorrorStage(totalClicks);
-  showMilestone(totalClicks);
-}
-function initialCount(){
-  return innerWidth<=430?8:12;
-}
-function startQuoteGame(){
-  if(gameStarted)return;
-  gameStarted=true;quoteStage.innerHTML="";
-  const used=[];
-  for(let i=0;i<initialCount();i++)used.push(placeCard(createCard(pickQuote()),used));
-}
-function repositionCards(){
-  if(!quoteScreen.classList.contains("active"))return;
-  const cards=[...quoteStage.querySelectorAll(".quote-card")];
-  const used=[];
-  cards.forEach(card=>{
-    card.style.width=cardWidth()+"px";
-    card.style.left="0px";card.style.top="0px";
-    used.push(placeCard(card,used));
-  });
-}
-window.addEventListener("resize",()=>{
-  clearTimeout(layoutTimer);
-  layoutTimer=setTimeout(repositionCards,180);
-});
-
-/* Открытие и закрытие секретной комнаты */
-function openQuoteScreen(){
-  quoteScreen.classList.add("active");
-  $("app").style.display="none";
-  $("open-settings").style.display="none";
-  $("open-quotes").style.display="none";
-  document.querySelector(".music-float").style.display="none";
-
-  shouldResumeAfterSecret=musicPlaying;
-  trackBeforeSecret=currentTrack;
-  if(playerReady&&player){
-    try{
-      if(musicPlaying)player.pauseVideo();
-      switchTrack(SECRET_TRACK,musicEnabled);
-    }catch(e){}
-  }
-  const video=$("secret-background-video");
-  try{const promise=video.play();if(promise?.catch)promise.catch(()=>{})}catch(e){}
-  startQuoteGame();
-  setTimeout(repositionCards,60);
-}
-function closeQuoteScreen(){
-  quoteScreen.classList.remove("active");
-  $("app").style.display="";
-  $("open-settings").style.display="";
-  $("open-quotes").style.display="";
-  document.querySelector(".music-float").style.display="flex";
-  $("secret-background-video").pause();
-
-  if(playerReady&&player){
-    const restore=trackBeforeSecret===SECRET_TRACK?MAIN_TRACK:trackBeforeSecret;
-    if(shouldResumeAfterSecret&&musicEnabled){
-      switchTrack(restore||MAIN_TRACK,true);
-    } else {
-      currentTrack=restore||MAIN_TRACK;
-      try{
-        player.pauseVideo();
-        player.cueVideoById({videoId:currentTrack,startSeconds:0});
-      }catch(e){}
-      musicPlaying=false;updatePlayButton();
-    }
-  }
-}
-$("open-quotes").addEventListener("click",openQuoteScreen);
-$("close-quotes").addEventListener("click",closeQuoteScreen);
-
-/* События при определённом количестве нажатий */
-const milestones={
-  3:{
-    title:"Остановись спокойно.",
-    description:"Ты просто нажал на карточки. Пока всё нормально.",
-    color:"#b4c7dd"
-  },
-  5:{
-    title:"Спокойно...",
-    description:"Ты ведь заметил, что сообщения меняются? Некоторые вещи лучше не трогать.",
-    color:"#a6b6cc"
-  },
-  10:{
-    title:"Я тебя умоляю, прекрати.",
-    description:"Зачем ты продолжаешь? Здесь больше нечего искать... наверное.\n\nТы ведь тоже чувствуешь, что что-то изменилось?",
-    color:"#a2a9c2"
-  },
-  20:{
-    title:"Остановись, а то будут последствия.",
-    description:"Ты уже зашёл дальше, чем большинство. Может, хватит?\n\nЯ больше не уверен, что это просто игра.",
-    color:"#c58d9c"
-  },
-  50:{
-    title:"Они тебя уже ждут. Ты умрёшь.",
-    description:"...Тишина.\n\nКажется, это конец.",
-    color:"#df6d7c"
-  },
-  100:{
-    title:"Всё с тобой будет хорошо. ♡",
-    description:"Я пошутил. Всё с тобой будет хорошо. ♡\n\nСпасибо, что дошёл до конца. Береги себя и не забывай: за любой тёмной атмосферой может скрываться что-то хорошее. 💙",
-    color:"#8bd6a8",
-    final:true
-  }
+function nextTrack(){loadTrack(currentTrackIndex+1,true)}
+function previousTrack(){loadTrack(currentTrackIndex-1,true)}
+window.onYouTubeIframeAPIReady=function(){
+mainPlayer=new YT.Player('mainYT',{height:'1',width:'1',videoId:MAIN_TRACKS[currentTrackIndex],playerVars:{autoplay:0,controls:0,disablekb:1,playsinline:1,rel:0,modestbranding:1},events:{
+onReady:e=>{apiReady=true;e.target.setVolume(settings.musicVolume);try{e.target.setPlaybackQuality('small')}catch(_){};updateTrackInfo();},
+onStateChange:e=>{if(!secretOpen)updateMainState(e.data);if(e.data===YT.PlayerState.PLAYING){updateTrackInfo()}if(e.data===YT.PlayerState.ENDED&&!secretOpen){if(repeatMain){mainPlayer.seekTo(0,true);mainPlayer.playVideo()}else{loadTrack(currentTrackIndex+1,true)}}},
+onError:e=>{ $('trackTitle').textContent='Track unavailable';$('trackAuthor').textContent='Try the next track'; }
+}});
+secretPlayer=new YT.Player('secretYT',{height:'1',width:'1',videoId:SECRET_TRACK,playerVars:{autoplay:0,controls:0,disablekb:1,playsinline:1,rel:0,modestbranding:1},events:{
+onReady:e=>{e.target.setVolume(settings.musicVolume);try{e.target.setPlaybackQuality('small')}catch(_){}},
+onStateChange:e=>{if(secretOpen && e.data===YT.PlayerState.ENDED){try{e.target.seekTo(0,true);e.target.playVideo()}catch(_){} }}
+}});
 };
-function updateHorrorStage(count){
-  quoteScreen.classList.remove("stage-3","stage-5","stage-10","stage-20","stage-50");
-  if(count>=50)quoteScreen.classList.add("stage-50");
-  else if(count>=20)quoteScreen.classList.add("stage-20");
-  else if(count>=10)quoteScreen.classList.add("stage-10");
-  else if(count>=5)quoteScreen.classList.add("stage-5");
-  else if(count>=3)quoteScreen.classList.add("stage-3");
+function activePlayer(){return secretOpen?secretPlayer:mainPlayer}
+function pauseActivePlayer(){try{if(mainPlayer)mainPlayer.pauseVideo();if(secretPlayer)secretPlayer.pauseVideo()}catch(e){}}
+function playActivePlayer(){if(!settings.musicEnabled)return;const p=activePlayer();try{if(p&&p.playVideo)p.playVideo();userStartedMusic=true}catch(e){}}
+function startMainTrack(){if(!settings.musicEnabled)return;try{if(mainPlayer){mainPlayer.setVolume(settings.musicVolume);mainPlayer.playVideo();userStartedMusic=true}}catch(e){}}
+function updateMainState(state){
+if(!window.YT)return;
+const playing=state===YT.PlayerState.PLAYING;
+$('playIcon').innerHTML=playing?'<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>':'<path d="M7 4v16l13-8Z"/>';
+$('musicPlay').setAttribute('aria-label',playing?'Pause music':'Play music');
+if(playing){try{currentDuration=mainPlayer.getDuration()||0;$('totalTime').textContent=formatTime(currentDuration);updateTrackInfo()}catch(e){}startProgressTimer()}
+else if(state===YT.PlayerState.PAUSED||state===YT.PlayerState.ENDED){stopProgressTimer()}
 }
-function showMilestone(count){
-  const info=milestones[count];if(!info)return;
-  $("secret-count").textContent="СИСТЕМНОЕ СООБЩЕНИЕ · "+count;
-  $("secret-title").textContent=info.title;
-  $("secret-title").style.color=info.color;
-  $("secret-title").classList.remove("glitch-text");
-  void $("secret-title").offsetWidth;
-  $("secret-title").classList.add("glitch-text");
-  $("secret-description").textContent=info.description;
-
-  const continueBtn=$("secret-continue"),closeBtn=$("secret-close");
-  continueBtn.style.display=info.final?"none":"inline-block";
-  closeBtn.textContent=info.final?"Всё хорошо 💙":"Закрыть";
-  continueBtn.onclick=()=> $("secret-modal").classList.remove("show");
-  closeBtn.onclick=()=> $("secret-modal").classList.remove("show");
-  $("secret-modal").classList.add("show");
-
-  if(count===100){
-    finalRevealShown=true;
-    quoteScreen.classList.remove("stage-50");
-    quoteScreen.classList.remove("stage-20");
-  }
-}
-
-window.addEventListener("pagehide",()=>{
-  try{if(player&&typeof player.pauseVideo==="function")player.pauseVideo()}catch(e){}
+function formatTime(sec){if(!Number.isFinite(sec)||sec<0)return '0:00';return Math.floor(sec/60)+':'+String(Math.floor(sec%60)).padStart(2,'0')}
+function startProgressTimer(){stopProgressTimer();progressTimer=setInterval(()=>{const p=secretOpen?secretPlayer:mainPlayer;if(!p||!p.getCurrentTime)return;try{let t=p.getCurrentTime()||0,d=p.getDuration()||0;if(!secretOpen){$('currentTime').textContent=formatTime(t);$('totalTime').textContent=formatTime(d);$('progressFill').style.width=(d?100*t/d:0)+'%'}}catch(e){}},700)}
+function stopProgressTimer(){if(progressTimer){clearInterval(progressTimer);progressTimer=null}}
+$('musicPlay').addEventListener('click',()=>{
+if(!apiReady){showToast('Music player is loading');return}
+const p=activePlayer();
+try{const state=p.getPlayerState();if(state===YT.PlayerState.PLAYING){p.pauseVideo();if(!secretOpen)$('musicState').textContent='Paused'}else{userStartedMusic=true;p.setVolume(settings.musicVolume);p.playVideo()}}catch(e){startMainTrack()}
 });
+$('previousTrack').addEventListener('click',previousTrack);
+$('nextTrack').addEventListener('click',nextTrack);
+$('repeatButton').addEventListener('click',()=>{repeatMain=!repeatMain;$('repeatButton').classList.toggle('active',repeatMain);showToast(repeatMain?'Повтор включён':'Повтор выключен')});
+document.addEventListener('pointerdown',()=>{
+if(!userStartedMusic && settings.musicEnabled && !secretOpen && apiReady){try{mainPlayer.setVolume(settings.musicVolume);mainPlayer.playVideo();userStartedMusic=true}catch(e){}}
+},{once:true});
+// Role info dialogs.
+const roleCopy={
+DESIGNER:['DESIGNER','Дизайн аватарок, баннеров и визуального оформления. По заказам и сотрудничеству напиши в Telegram.'],
+DEVELOPER:['DEVELOPER','Разработка сайтов, Discord-ботов и небольших проектов. По вопросам сотрудничества — Telegram.'],
+FOUNDER:['FOUNDER','Создатель Vastness. Идеи, организация сообщества и работа над проектами.']
+};
+const roleModal=$('roleModal');
+function openRoleModal(key){const [title,txt]=roleCopy[key];$('roleTitle').textContent=title;$('roleText').textContent=txt;roleModal.classList.add('open')}
+function closeRoleModal(){roleModal.classList.remove('open')}
+document.querySelectorAll('[data-role]').forEach(b=>b.addEventListener('click',()=>openRoleModal(b.dataset.role)));
+$('roleClose').addEventListener('click',closeRoleModal);
+roleModal.addEventListener('click',e=>{if(e.target===roleModal)closeRoleModal()});
+$('serverToggle').addEventListener('click',()=>{const open=$('serverBox').classList.toggle('open');$('serverToggle').setAttribute('aria-expanded',String(open))});
+// Secret room: exactly 12 non-overlapping cards in a responsive grid.
+const quoteData=[
+['Тишина тоже ответ.','МЫСЛЬ'],['Не всё нужно объяснять.','ФРАГМЕНТ'],['Некоторые двери открываются внутрь.','ЗАМЕТКА'],['Ты здесь не случайно.','НЕИЗВЕСТНО'],
+['Смотри внимательнее.','СИГНАЛ'],['У каждого есть своя темнота.','МЫСЛЬ'],['Не торопись уходить.','ФРАГМЕНТ'],['Ты уже заметил перемены?','СИГНАЛ'],
+['Иногда вопрос важнее ответа.','ЗАМЕТКА'],['Никто не видит всю картину.','МЫСЛЬ'],['Продолжай, если уверен.','НЕИЗВЕСТНО'],['Не забывай дышать.','НАПОМИНАНИЕ'],
+['Ты всё ещё здесь.','СИГНАЛ'],['Память меняет детали.','ФРАГМЕНТ'],['В тишине слышно больше.','МЫСЛЬ'],['Не каждый след ведёт назад.','ЗАМЕТКА'],
+['Ты сам выбрал нажать.','НЕИЗВЕСТНО'],['Иногда выход ближе, чем кажется.','НАПОМИНАНИЕ'],['Не принимай темноту за конец.','МЫСЛЬ'],['Что именно ты ищешь?','СИГНАЛ']
+];
+const milestones={
+3:{title:'Остановись спокойно.',text:'Ты просто нажал на карточки. Пока всё нормально.',level:1},
+5:{title:'Спокойно…',text:'Ты ведь заметил, что сообщения меняются?',level:1},
+10:{title:'Зачем ты продолжаешь?',text:'Здесь больше нечего искать… наверное.',level:2},
+20:{title:'Остановись.',text:'Ты зашёл дальше, чем большинство. Может, хватит?',level:3},
+50:{title:'ОНИ УЖЕ ЗНАЮТ.',text:'Ты дошёл до конца. Не оборачивайся.',level:5}
+};
+let clicks=0, cardOrder=[], quotePool=[], currentLevel=0;
+const grid=$('quoteGrid'), room=$('secretRoom');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function renderCards(){
+grid.innerHTML='';cardOrder=shuffle(Array.from({length:12},(_,i)=>i));quotePool=shuffle([...quoteData]);
+for(let i=0;i<12;i++){
+const item=quotePool[i%quotePool.length],card=document.createElement('button');
+card.className='quote-card';card.type='button';card.dataset.slot=String(cardOrder[i]);
+card.innerHTML='<p></p><small></small>';card.querySelector('p').textContent=item[0];card.querySelector('small').textContent=item[1];
+card.style.animationDelay=(Math.random()*.45)+'s';card.addEventListener('click',onQuoteClick);grid.appendChild(card);
+}
+}
+function resetSecret(){clicks=0;currentLevel=0;$('secretCount').textContent='КЛИКИ · 00';room.className='active';$('finalReveal').classList.remove('show');$('scareMessage').classList.remove('show');$('secretHeading').textContent='Ты здесь не случайно.';$('secretSubheading').textContent='Нажми на карточки. Посмотрим, как далеко ты зайдёшь.';renderCards()}
+function openSecretRoom(){
+secretOpen=true;room.className='active';resetSecret();
+$('secretBg').play().catch(()=>{});
+try{if(mainPlayer){mainPlayer.pauseVideo()}if(secretPlayer){secretPlayer.setVolume(settings.musicVolume);if(settings.musicEnabled)secretPlayer.playVideo()}}catch(e){}
+$('musicState').textContent='Secret room soundtrack';$('playIcon').innerHTML='<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+}
+function closeSecretRoom(){
+secretOpen=false;room.className='';$('finalReveal').classList.remove('show');$('scareMessage').classList.remove('show');
+try{if(secretPlayer)secretPlayer.pauseVideo();if(mainPlayer&&settings.musicEnabled&&userStartedMusic)mainPlayer.playVideo()}catch(e){}
+$('musicState').textContent='Background music';stopProgressTimer();
+}
+$('secretOpen').addEventListener('click',openSecretRoom);
+$('secretClose').addEventListener('click',closeSecretRoom);
+$('revealClose').addEventListener('click',closeSecretRoom);
+function showScare(item,level){
+currentLevel=Math.max(currentLevel,level);
+room.classList.remove('level-1','level-2','level-3','level-4','level-5');
+room.classList.add('level-'+currentLevel);
+$('scareTitle').textContent=item.title;$('scareText').textContent=item.text;
+const message=$('scareMessage');message.classList.remove('show');void message.offsetWidth;message.classList.add('show');
+$('scareTitle').classList.toggle('glitch-text',level>=2);
+if(level>=2){const content=room.querySelector('.secret-content');content.style.animation='none';void content.offsetWidth;content.style.animation='';}
+if(level>=4)$('secretHeading').style.opacity='.3';
+if(level>=5){$('secretHeading').style.opacity='.12';$('secretSubheading').textContent='';}
+}
+function createCardShatter(card, rect){
+const w=Math.max(1,rect.width),h=Math.max(1,rect.height);
+const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
+svg.setAttribute('viewBox',`0 0 ${w} ${h}`);svg.setAttribute('width',w);svg.setAttribute('height',h);
+svg.classList.add('shatter-overlay');svg.style.left=rect.left+'px';svg.style.top=rect.top+'px';svg.style.width=w+'px';svg.style.height=h+'px';
+const defs=document.createElementNS(ns,'defs');svg.appendChild(defs);
+const cols=Math.max(6,Math.min(10,Math.round(w/22))),rows=Math.max(4,Math.min(7,Math.round(h/19)));
+const xCuts=Array.from({length:cols+1},(_,i)=>i*w/cols),yCuts=Array.from({length:rows+1},(_,i)=>i*h/rows);
+const jitter=(v,limit)=>Math.max(0,Math.min(limit,v+(Math.random()-.5)*Math.min(12,limit/3)));
+const source=document.createElement('div');source.className='quote-card';source.style.cssText=`position:absolute;inset:0;width:${w}px;height:${h}px;min-height:0;margin:0;box-sizing:border-box;pointer-events:none;animation:none!important;transform:none!important;transition:none!important;`;
+source.innerHTML='<p></p><small></small>';source.querySelector('p').textContent=card.querySelector('p').textContent;source.querySelector('small').textContent=card.querySelector('small').textContent;
+const fo=document.createElementNS(ns,'foreignObject');fo.setAttribute('x','0');fo.setAttribute('y','0');fo.setAttribute('width',w);fo.setAttribute('height',h);fo.appendChild(source);
+for(let row=0;row<rows;row++)for(let col=0;col<cols;col++){
+const x0=xCuts[col],x1=xCuts[col+1],y0=yCuts[row],y1=yCuts[row+1];
+const inset=Math.min(3,Math.min(x1-x0,y1-y0)*.12);
+const pts=[
+[jitter(x0+inset,w),jitter(y0+inset,h)],
+[jitter((x0+x1)/2,w),jitter(y0-inset,h)],
+[jitter(x1-inset,w),jitter(y0+inset,h)],
+[jitter(x1+inset,w),jitter((y0+y1)/2,h)],
+[jitter(x1-inset,w),jitter(y1-inset,h)],
+[jitter((x0+x1)/2,w),jitter(y1+inset,h)],
+[jitter(x0+inset,w),jitter(y1-inset,h)],
+[jitter(x0-inset,w),jitter((y0+y1)/2,h)]
+];
+const id='shard-clip-'+Math.random().toString(36).slice(2);
+const clip=document.createElementNS(ns,'clipPath');clip.setAttribute('id',id);clip.setAttribute('clipPathUnits','userSpaceOnUse');
+const polygon=document.createElementNS(ns,'polygon');polygon.setAttribute('points',pts.map(p=>p.join(',')).join(' '));clip.appendChild(polygon);defs.appendChild(clip);
+const group=document.createElementNS(ns,'g');group.classList.add('shard');group.setAttribute('clip-path',`url(#${id})`);
+group.appendChild(fo.cloneNode(true));
+const edge=document.createElementNS(ns,'polygon');edge.setAttribute('points',pts.map(p=>p.join(',')).join(' '));edge.classList.add('shard-edge');group.appendChild(edge);svg.appendChild(group);
+const dx=(Math.random()-.5)*Math.max(180,w*1.8),dy=(Math.random()-.42)*Math.max(220,h*2.1)+30;
+const rotation=(Math.random()-.5)*680,scale=.08+Math.random()*.25,duration=650+Math.random()*650,delay=Math.random()*180;
+group.animate([
+{transform:'translate(0px, 0px) rotate(0deg) scale(1)',opacity:1,offset:0},
+{transform:`translate(${dx*.24}px, ${dy*.18}px) rotate(${rotation*.25}deg) scale(.96)`,opacity:1,offset:.18},
+{transform:`translate(${dx}px, ${dy}px) rotate(${rotation}deg) scale(${scale})`,opacity:0}
+],{duration,delay,easing:'cubic-bezier(.18,.72,.18,1)',fill:'forwards'});
+}
+document.body.appendChild(svg);
+window.setTimeout(()=>svg.remove(),1550);
+}
+function onQuoteClick(e){
+if(clicks>=50)return;
+const card=e.currentTarget;
+if(card.dataset.shattering==='true')return;
+card.dataset.shattering='true';card.disabled=true;
+clicks++;$('secretCount').textContent='НАЖАТИЯ · '+String(clicks).padStart(2,'0');
+const rect=card.getBoundingClientRect();
+const heart=document.createElement('span');heart.className='heart-float';heart.textContent='♡';heart.style.left=(rect.left+rect.width/2)+'px';heart.style.top=(rect.top+rect.height/2)+'px';document.body.appendChild(heart);setTimeout(()=>heart.remove(),900);
+createCardShatter(card,rect);card.classList.add('shattering');
+const item=quoteData[Math.floor(Math.random()*quoteData.length)];
+setTimeout(()=>{
+if(!room.classList.contains('active'))return;
+card.querySelector('p').textContent=item[0];card.querySelector('small').textContent=item[1];
+card.classList.remove('shattering','popped');card.style.animationDelay='0s';
+card.dataset.shattering='false';card.disabled=false;
+card.animate([{opacity:0,transform:'scale(.86) rotate(-2deg)',filter:'blur(4px)'},{opacity:1,transform:'scale(1) rotate(0deg)',filter:'blur(0)'}],{duration:420,easing:'cubic-bezier(.16,1,.3,1)'});
+},720);
+if(milestones[clicks])showScare(milestones[clicks],milestones[clicks].level);
+if(clicks===50){setTimeout(()=>{$('finalReveal').classList.add('show');},2900)}
+}
+// Toasts
+let toastTimer;
+function showToast(text){$('toast').textContent=text;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),1800)}
+})();
 </script>
 </body>
 </html>
