@@ -25,6 +25,7 @@ body {
   margin:0; min-height:100vh; min-height:100svh;
   background:var(--bg); color:var(--text);
   font-family:Inter,Segoe UI,Arial,sans-serif; overflow-x:hidden;
+  isolation:isolate;
 }
 body.theme-white {--bg:#e9edf2;--card:rgba(255,255,255,.94);--text:#17202d;--muted:#5f6d7d;--accent:#2467bd;--border:#cbd4e0;--surface:rgba(255,255,255,.94);--surface-text:#17202d}
 body.theme-gray {--bg:#252a31;--card:rgba(36,43,53,.94);--text:#e5e8ed;--muted:#a0a9b6;--accent:#81b8ff;--border:#444e5c;--surface:rgba(36,43,53,.94);--surface-text:#e5e8ed}
@@ -36,11 +37,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible {o
 #bg-canvas {position:fixed;inset:0;width:100%;height:100%;z-index:-6;pointer-events:none}
 #background-video {
   position:fixed;inset:0;width:100%;height:100%;object-fit:cover;
-  z-index:-5;filter:brightness(.62) contrast(1.15) saturate(.72);
+  z-index:-5;filter:brightness(.9) contrast(1.1) saturate(1.05);
   opacity:0;transition:opacity 1.2s
 }
 #background-video.ready {opacity:1}
-.bg-overlay {position:fixed;inset:0;z-index:-4;pointer-events:none;background:linear-gradient(135deg,#060b12a0,#07111dc0),radial-gradient(ellipse at 50% 40%,transparent,#03060bd0)}
+.bg-overlay {position:fixed;inset:0;z-index:-4;pointer-events:none;background:repeating-linear-gradient(0deg,#00000026 0 1px,transparent 1px 3px),linear-gradient(135deg,#060b1245,#07111d60),radial-gradient(ellipse at 50% 40%,transparent,#03060b80)}
 body.theme-white .bg-overlay {background:#e9edf2df}
 body.theme-gray .bg-overlay {background:#141a23c8}
 #youtube-player {position:fixed;width:2px;height:2px;right:0;bottom:0;opacity:.01;pointer-events:none;z-index:-10}
@@ -281,8 +282,6 @@ body.theme-gray .bg-overlay {background:#141a23c8}
 <canvas id="bg-canvas"></canvas>
 <video id="background-video" autoplay muted loop playsinline preload="auto">
   <source src="bg.webm" type="video/webm">
-  <source src="bg.mp4" type="video/mp4">
-  <source src="https://www.shutterstock.com/shutterstock/videos/3806259979/preview/stock-footage-flickering-glitch-visuals-with-grungy-overlays-code-fragments-and-digital-static-ideal-for.webm" type="video/webm">
 </video>
 <div class="bg-overlay"></div>
 <div id="youtube-player"></div>
@@ -450,9 +449,7 @@ body.theme-gray .bg-overlay {background:#141a23c8}
   </video>
   <video id="happy-background-video" class="happy-bg" loop muted playsinline preload="auto">
     <source src="happy.mp4" type="video/mp4">
-    <source src="happy.webm" type="video/webm">
   </video>
-  <img id="happy-background-img" class="happy-bg" src="happy.gif" alt="">
   <div class="secret-blue-overlay"></div>
   <div class="quote-top"><div class="quote-heading">Фрагменты сознания</div><button class="close-quotes" id="close-quotes">✕ ЗАКРЫТЬ</button></div>
   <div id="quote-stage"></div>
@@ -528,40 +525,70 @@ document.addEventListener("click",event=>{
   if(event.target.closest("button,a,.swatch"))playClickSound();
 },{capture:true});
 
-/* Animated main background: digital rain + glitch bars (always works, video fades in on top if it loads) */
+/* Animated main background:
+   - canvas fallback (digital rain, code fragments, glitch slices, static noise)
+   - bg.webm fades in on top once it starts playing */
 (function(){
   const cv=$("bg-canvas"),ctx=cv.getContext("2d");
   const glyphs="01アイウエオカキクケコ<>/{}[]#$%&=+*";
-  const fs=16;let cols=0,drops=[],last=0;
+  const frags=["0x7F","<div>","void","ERR_404","null","sys.exit()","0110","/dev/null","glitch","SIGKILL","[OK]","undefined","#!/bin/sh","NaN","0xFF00","404","while(1)"];
+  const fs=16;let cols=0,drops=[],last=0,w=0,h=0;
   const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const noise=document.createElement("canvas");noise.width=noise.height=96;
+  const nctx=noise.getContext("2d"),nimg=nctx.createImageData(96,96);
+  function makeNoise(){
+    const d=nimg.data;
+    for(let i=0;i<d.length;i+=4){const v=Math.random()*255|0;d[i]=d[i+1]=d[i+2]=v;d[i+3]=Math.random()<.5?0:90}
+    nctx.putImageData(nimg,0,0);
+  }
   function size(){
-    cv.width=innerWidth;cv.height=innerHeight;
-    cols=Math.ceil(innerWidth/fs);
-    drops=Array.from({length:cols},()=>Math.random()*innerHeight/fs);
-    ctx.fillStyle="#080d14";ctx.fillRect(0,0,cv.width,cv.height);
+    w=cv.width=innerWidth;h=cv.height=innerHeight;
+    cols=Math.ceil(w/fs);
+    drops=Array.from({length:cols},()=>Math.random()*h/fs);
+    ctx.fillStyle="#080d14";ctx.fillRect(0,0,w,h);
   }
   function frame(t){
     requestAnimationFrame(frame);
     if(reduce||document.hidden||$("quote-screen").classList.contains("active"))return;
-    if(t-last<55)return;last=t;
-    ctx.fillStyle="rgba(8,13,20,.14)";ctx.fillRect(0,0,cv.width,cv.height);
+    if(t-last<45)return;last=t;
+    ctx.fillStyle="rgba(8,13,20,.14)";ctx.fillRect(0,0,w,h);
     ctx.font=fs+"px monospace";
     for(let i=0;i<cols;i++){
       const bright=Math.random()>.975;
-      ctx.fillStyle=bright?"rgba(190,220,255,.85)":"rgba(91,157,255,.45)";
+      ctx.fillStyle=bright?"rgba(190,220,255,.9)":"rgba(91,157,255,.5)";
       ctx.fillText(glyphs[Math.floor(Math.random()*glyphs.length)],i*fs,drops[i]*fs);
-      if(drops[i]*fs>cv.height&&Math.random()>.975)drops[i]=0;
+      if(drops[i]*fs>h&&Math.random()>.975)drops[i]=0;
       drops[i]+=.6+(i%5)*.12;
     }
-    if(Math.random()<.12){
-      ctx.fillStyle="rgba(91,157,255,.09)";
-      ctx.fillRect(0,Math.random()*cv.height,cv.width,2+Math.random()*14);
+    if(Math.random()<.2){
+      ctx.font="12px monospace";
+      ctx.fillStyle="rgba(150,200,255,"+(.25+Math.random()*.35)+")";
+      ctx.fillText(frags[Math.floor(Math.random()*frags.length)],Math.random()*w,Math.random()*h);
     }
+    if(Math.random()<.14){
+      const n=1+(Math.random()*3|0);
+      for(let i=0;i<n;i++){
+        const sy=Math.random()*h|0,sh=6+(Math.random()*50|0),dx=(Math.random()-.5)*90;
+        ctx.drawImage(cv,0,sy,w,sh,dx,sy,w,sh);
+      }
+    }
+    if(Math.random()<.12){
+      ctx.fillStyle=Math.random()<.5?"rgba(91,157,255,.10)":"rgba(255,70,110,.07)";
+      ctx.fillRect(0,Math.random()*h,w,2+Math.random()*14);
+    }
+    makeNoise();
+    ctx.globalAlpha=.07;ctx.imageSmoothingEnabled=false;
+    ctx.drawImage(noise,0,0,w,h);
+    ctx.globalAlpha=1;
+    if(Math.random()<.02){ctx.fillStyle="rgba(180,210,255,.06)";ctx.fillRect(0,0,w,h)}
   }
   size();addEventListener("resize",size);requestAnimationFrame(frame);
+
   const v=$("background-video");
   v.addEventListener("playing",()=>v.classList.add("ready"));
-  try{const p=v.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
+  const start=()=>{try{const p=v.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}};
+  start();
+  ["click","touchstart","keydown","pointerdown"].forEach(e=>addEventListener(e,()=>{if(v.paused)start()},{passive:true}));
 })();
 
 /* Settings panel */
@@ -968,9 +995,8 @@ window.addEventListener("resize",()=>{
 });
 
 /* Open / close the secret room */
-const happyVideo=$("happy-background-video"),happyImg=$("happy-background-img");
+const happyVideo=$("happy-background-video");
 happyVideo.addEventListener("playing",()=>happyVideo.classList.add("ready"));
-happyImg.addEventListener("load",()=>happyImg.classList.add("ready"));
 function playHappyBg(){
   if(totalClicks<100)return;
   try{const p=happyVideo.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
@@ -1076,257 +1102,3 @@ window.addEventListener("pagehide",()=>{
 </script>
 </body>
 </html>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-<style>
-/* шрифт имени */
-.name{font-family:'Cinzel',Georgia,'Times New Roman',serif;font-size:36px;letter-spacing:7px;font-weight:700;text-shadow:0 0 22px color-mix(in srgb,var(--accent) 35%,transparent)}
-@media(max-width:700px){.name{font-size:30px}}
-@media(max-height:760px) and (min-width:701px){.name{font-size:30px}}
-
-/* секрет: мрачнее с каждым этапом, на 100 весело */
-#quote-screen.stage-10 #secret-background-video{filter:brightness(.26) contrast(1.15) saturate(.5)}
-#quote-screen.stage-20 #secret-background-video{filter:brightness(.2) contrast(1.25) saturate(.25) hue-rotate(-15deg)}
-#quote-screen.stage-50 #secret-background-video{filter:brightness(.14) contrast(1.4) saturate(.6) sepia(.6) hue-rotate(-30deg)}
-#quote-screen.stage-10 .quote-card{border-color:#7a6aa255}
-#quote-screen.stage-20 .quote-card{border-color:#a04a5e88;background:rgba(14,8,16,.93)}
-#quote-screen.stage-20 .quote-card .tag{color:#c0607a}
-#quote-screen.stage-50 .quote-card{border-color:#c0283c;background:rgba(18,3,7,.96);box-shadow:0 0 22px #a0102855}
-#quote-screen.stage-50 .quote-card .tag{color:#e0505f}
-#quote-screen.stage-50 .quote-card .quote-text{color:#e8b8bf}
-#quote-screen.stage-20 #quote-stage{animation:shakeA .6s infinite}
-#quote-screen.stage-50 #quote-stage{animation:shakeB .25s infinite}
-#quote-screen.stage-20 .quote-heading{animation:flicker 3s infinite}
-#quote-screen.stage-50 .quote-heading{color:#d0505f;animation:flicker 1s infinite}
-#quote-screen.stage-50::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at center,transparent 35%,#5a000088);animation:pulseRed 2.2s ease-in-out infinite}
-@keyframes shakeA{0%,100%{transform:translate(0,0)}25%{transform:translate(1px,-1px)}50%{transform:translate(-1px,1px)}75%{transform:translate(1px,1px)}}
-@keyframes shakeB{0%,100%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-2px)}60%{transform:translate(-1px,2px)}80%{transform:translate(2px,1px)}}
-@keyframes flicker{0%,100%{opacity:1}45%{opacity:1}50%{opacity:.3}55%{opacity:1}70%{opacity:.6}}
-@keyframes pulseRed{0%,100%{opacity:.5}50%{opacity:1}}
-#quote-screen.stage-100{background:#bfe3ff}
-.happy-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;opacity:0;pointer-events:none;transition:opacity 1.4s}
-#quote-screen.stage-100 .happy-bg.ready{opacity:1}
-#quote-screen.stage-100 #secret-background-video{filter:brightness(.95) saturate(1.3)}
-#quote-screen.stage-100 .secret-blue-overlay{background:linear-gradient(135deg,#8fd0ff40,#ffc4e740),radial-gradient(ellipse at 50% 48%,#ffffff55,#3d8be833)}
-#quote-screen.stage-100 .quote-card{background:rgba(255,255,255,.93);border-color:#8ec5ff;color:#1b2a44;box-shadow:0 10px 30px #3d8be833}
-#quote-screen.stage-100 .quote-card .tag{color:#2f7fe0}
-#quote-screen.stage-100 .quote-card .hint{color:#5a6c88}
-#quote-screen.stage-100 .quote-heading{color:#1f4f8f}
-#quote-screen.stage-100 .close-quotes,#quote-screen.stage-100 .quote-counter{background:#ffffffcc;color:#1b2a44;border-color:#8ec5ff}
-#secret-modal.happy{background:#dff0ff99}
-#secret-modal.happy .modal{background:rgba(244,250,255,.98);color:#1b2a44;border-color:#8ec5ff}
-#secret-modal.happy .modal p{color:#3b4d6b}
-#secret-modal.happy .secret-count{color:#5a7db0}
-#secret-modal.happy .modal-btn{color:#1b2a44}
-</style>
-<script>
-(function(){
-  const HAPPY_TRACK="nU7UdahsChg";
-
-  /* 1. Фон главного экрана: сначала свои файлы bg.webm / bg.mp4 */
-  const bgv=$("background-video");
-  bgv.insertAdjacentHTML("afterbegin",'<source src="bg.webm" type="video/webm"><source src="bg.mp4" type="video/mp4">');
-  bgv.load();try{const p=bgv.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
-
-  /* 2. Весёлый фон после 100 нажатий: happy.mp4 / happy.webm / happy.gif */
-  quoteScreen.querySelector(".secret-blue-overlay").insertAdjacentHTML("beforebegin",
-    '<video id="happy-background-video" class="happy-bg" loop muted playsinline preload="auto"><source src="happy.mp4" type="video/mp4"><source src="happy.webm" type="video/webm"></video><img id="happy-background-img" class="happy-bg" src="happy.gif" alt="">');
-  const hv=$("happy-background-video"),hi=$("happy-background-img");
-  hv.addEventListener("playing",()=>hv.classList.add("ready"));
-  hi.addEventListener("load",()=>hi.classList.add("ready"));
-  const playHappy=()=>{if(totalClicks<100)return;try{const p=hv.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}};
-
-  /* 3. Тексты: кнопка секрета на английском, секретная комната на русском */
-  document.querySelector(".secret-label").textContent="? SECRET";
-  $("open-quotes").setAttribute("aria-label","Open the secret room");
-  quoteScreen.setAttribute("aria-label","Секретная комната");
-  document.querySelector(".quote-heading").textContent="Фрагменты сознания";
-  $("close-quotes").textContent="✕ ЗАКРЫТЬ";
-  $("quote-counter").textContent="НАЖАТИЯ · 0";
-  $("secret-count").textContent="СИСТЕМНОЕ СООБЩЕНИЕ";
-  $("secret-continue").textContent="Продолжить";
-  $("secret-close").textContent="Закрыть";
-
-  quoteData.splice(0,quoteData.length,
-    ["БЛИЧ","Никто не стоит на вершине небес с самого начала."],
-    ["САГА О ВИНЛАНДЕ","У меня нет врагов."],
-    ["ТОКИЙСКИЙ ГУЛЬ","1000 − 7"],
-    ["ПСИХОЛОГИЯ","За спокойным лицом может скрываться сложный разум."],
-    ["АПАТИЯ","Иногда молчание говорит больше слов."],
-    ["ТЁМНАЯ ТРИАДА","Макиавеллизм. Нарциссизм. Психопатия."],
-    ["ДЕПРЕССИЯ","Не каждый молчаливый человек в порядке."],
-    ["АНИМЕ","В каждой истории есть целый мир."],
-    ["VASTNESS","Свобода начинается там, где страх теряет власть."],
-    ["НАБЛЮДАТЕЛЬ","Ты замечаешь лишь то, что готов увидеть."],
-    ["DOX / SNOS","Подпольная эстетика Telegram · вымышленный образ."],
-    ["ЛЮБОВЬ","Даже в тёмном мире доброта всё ещё имеет значение."],
-    ["NOK","Некоторые вещи лучше оставить без объяснений."],
-    ["МИРОВОЗЗРЕНИЕ","Не на всё нужно реагировать."],
-    ["НОЧЬ","Город становится тише, когда остальные спят."]
-  );
-
-  Object.assign(milestones,{
-    3:{title:"Остановись спокойно.",description:"Ты просто нажал на карточки. Пока всё нормально.",color:"#b4c7dd"},
-    5:{title:"Спокойно...",description:"Ты ведь заметил, что сообщения меняются? Некоторые вещи лучше не трогать.",color:"#a6b6cc"},
-    10:{title:"Я тебя умоляю, прекрати.",description:"Зачем ты продолжаешь? Здесь больше нечего искать... наверное.\n\nТы ведь тоже чувствуешь, что что-то изменилось?",color:"#a69ac8"},
-    20:{title:"Остановись, а то будут последствия.",description:"Ты уже зашёл дальше, чем большинство. Может, хватит?\n\nЯ больше не уверен, что это просто игра.",color:"#c58d9c"},
-    50:{title:"Они тебя уже ждут. Ты умрёшь.",description:"...Тишина.\n\nКажется, это конец.",color:"#df4f61"},
-    100:{title:"Всё с тобой будет хорошо. ♡",description:"Я пошутил. Всё с тобой будет хорошо. ♡\n\nСпасибо, что дошёл до конца. Береги себя и не забывай: за любой тёмной атмосферой может скрываться что-то хорошее. 💙",color:"#2f7fe0",final:true}
-  });
-
-  createCard=function(data){
-    const card=document.createElement("article");
-    card.className="quote-card";card.tabIndex=0;card.setAttribute("role","button");
-    card.setAttribute("aria-label","Карточка с сообщением: "+data[0]);
-    card.dataset.tag=data[0];card.dataset.quote=data[1];
-    const tag=document.createElement("div");tag.className="tag";tag.textContent=data[0];
-    const quote=document.createElement("div");quote.className="quote-text";quote.textContent=data[1];
-    const hint=document.createElement("div");hint.className="hint";hint.textContent="нажми, чтобы открыть";
-    card.append(tag,quote,hint);
-    card.addEventListener("click",()=>clickCard(card));
-    card.addEventListener("keydown",event=>{
-      if(event.key==="Enter"||event.key===" "){event.preventDefault();clickCard(card)}
-    });
-    return card;
-  };
-
-  clickCard=function(card){
-    if(!card||card.classList.contains("shattering"))return;
-    playClickSound(1.2);
-    totalClicks++;
-    $("quote-counter").textContent="НАЖАТИЯ · "+totalClicks;
-    const r=card.getBoundingClientRect();
-    heartEffect(r.left+r.width/2,r.top+r.height/2);
-    respawnCard(card);
-    updateHorrorStage(totalClicks);
-    showMilestone(totalClicks);
-  };
-
-  /* 4. Мрачнее с каждым этапом, на 100 весело */
-  updateHorrorStage=function(count){
-    quoteScreen.classList.remove("stage-3","stage-5","stage-10","stage-20","stage-50","stage-100");
-    if(count>=100)quoteScreen.classList.add("stage-100");
-    else if(count>=50)quoteScreen.classList.add("stage-50");
-    else if(count>=20)quoteScreen.classList.add("stage-20");
-    else if(count>=10)quoteScreen.classList.add("stage-10");
-    else if(count>=5)quoteScreen.classList.add("stage-5");
-    else if(count>=3)quoteScreen.classList.add("stage-3");
-  };
-  const confettiHearts=()=>{
-    for(let i=0;i<40;i++)setTimeout(()=>heartEffect(Math.random()*innerWidth,innerHeight*(.3+Math.random()*.6)),i*70);
-  };
-  showMilestone=function(count){
-    const info=milestones[count];if(!info)return;
-    const modal=$("secret-modal"),box=modal.querySelector(".modal");
-    modal.classList.toggle("happy",!!info.final);
-    box.style.borderColor=info.final?"":info.color+"88";
-    box.style.boxShadow=info.final?"":"0 0 40px "+info.color+"33";
-    box.style.background=info.final?"":count>=50?"rgba(16,3,6,.98)":count>=20?"rgba(10,6,14,.98)":"";
-    $("secret-count").textContent="СИСТЕМНОЕ СООБЩЕНИЕ · "+count;
-    $("secret-title").textContent=info.title;
-    $("secret-title").style.color=info.color;
-    $("secret-title").style.animationIterationCount=count>=50?6:count>=20?4:2;
-    $("secret-title").classList.remove("glitch-text");
-    void $("secret-title").offsetWidth;
-    if(!info.final)$("secret-title").classList.add("glitch-text");
-    $("secret-description").textContent=info.description;
-    const continueBtn=$("secret-continue"),closeBtn=$("secret-close");
-    continueBtn.style.display=info.final?"none":"inline-block";
-    closeBtn.textContent=info.final?"Всё хорошо 💙":"Закрыть";
-    continueBtn.onclick=()=>modal.classList.remove("show");
-    closeBtn.onclick=()=>{modal.classList.remove("show");if(info.final){confettiHearts();switchTrack(HAPPY_TRACK,musicEnabled)}};
-    modal.classList.add("show");
-    if(info.final){finalRevealShown=true;playHappy()}
-  };
-
-  /* 5. Музыка: только название из YouTube, без «Track N» и счётчика; весёлый трек после 100 */
-  trackCounter=function(){return ""};
-  updateTrackInfo=function(){
-    let title="";
-    try{title=(player.getVideoData()||{}).title||""}catch(e){}
-    const label=$("music-label");
-    if(currentTrack===SECRET_TRACK||currentTrack===HAPPY_TRACK)label.textContent="Secret room";
-    else if(title)label.textContent=title;
-    else if(label.textContent==="Secret room")label.textContent="Background music";
-  };
-  switchTrack=function(trackId,autoplay=true){
-    if(!playerReady||!player)return;
-    currentTrack=trackId;
-    const idx=PLAYLIST.indexOf(trackId);if(idx>=0)trackIndex=idx;
-    try{
-      player.setVolume(musicEnabled?musicVolume:0);
-      if(autoplay&&musicEnabled)player.loadVideoById({videoId:trackId,startSeconds:0});
-      else player.cueVideoById({videoId:trackId,startSeconds:0});
-      $("music-status").textContent="Loading…";
-      $("music-label").textContent="Loading…";
-      musicPlaying=Boolean(autoplay&&musicEnabled);
-      updatePlayButton();
-    }catch(e){}
-  };
-  changeTrack=function(step){
-    if(!playerReady||!player)return;
-    if(currentTrack===HAPPY_TRACK){try{player.seekTo(0,true);if(musicEnabled)player.playVideo()}catch(e){}return}
-    if(currentTrack===SECRET_TRACK)return;
-    const idx=(trackIndex+step+PLAYLIST.length)%PLAYLIST.length;
-    musicEnabled=true;updateMusicToggle();
-    switchTrack(PLAYLIST[idx],true);
-  };
-  window.__nokCued=function(e){if(e&&e.data===5)updateTrackInfo()};
-  const waitPlayer=setInterval(()=>{
-    if(player&&player.addEventListener){
-      try{player.addEventListener("onStateChange","__nokCued")}catch(e){}
-      clearInterval(waitPlayer);
-    }
-  },400);
-
-  /* 6. Вход и выход из секретной комнаты */
-  $("open-quotes").removeEventListener("click",openQuoteScreen);
-  $("close-quotes").removeEventListener("click",closeQuoteScreen);
-  openQuoteScreen=function(){
-    quoteScreen.classList.add("active");
-    $("app").style.display="none";
-    $("open-settings").style.display="none";
-    $("open-quotes").style.display="none";
-    document.querySelector(".music-float").style.display="none";
-    shouldResumeAfterSecret=musicPlaying;
-    trackBeforeSecret=currentTrack;
-    if(playerReady&&player){
-      try{
-        if(musicPlaying)player.pauseVideo();
-        switchTrack(totalClicks>=100?HAPPY_TRACK:SECRET_TRACK,musicEnabled);
-      }catch(e){}
-    }
-    playHappy();
-    try{const p=$("secret-background-video").play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
-    startQuoteGame();
-    setTimeout(repositionCards,60);
-  };
-  closeQuoteScreen=function(){
-    quoteScreen.classList.remove("active");
-    $("app").style.display="";
-    $("open-settings").style.display="";
-    $("open-quotes").style.display="";
-    document.querySelector(".music-float").style.display="flex";
-    $("secret-background-video").pause();
-    try{hv.pause()}catch(e){}
-    if(playerReady&&player){
-      const inRoom=trackBeforeSecret===SECRET_TRACK||trackBeforeSecret===HAPPY_TRACK;
-      const restore=inRoom?MAIN_TRACK:trackBeforeSecret;
-      if(shouldResumeAfterSecret&&musicEnabled){
-        switchTrack(restore||MAIN_TRACK,true);
-      } else {
-        currentTrack=restore||MAIN_TRACK;
-        const idx=PLAYLIST.indexOf(currentTrack);if(idx>=0)trackIndex=idx;
-        try{
-          player.pauseVideo();
-          player.cueVideoById({videoId:currentTrack,startSeconds:0});
-        }catch(e){}
-        musicPlaying=false;updatePlayButton();
-        $("music-label").textContent="Loading…";
-        $("music-status").textContent="Paused";
-      }
-    }
-  };
-  $("open-quotes").addEventListener("click",openQuoteScreen);
-  $("close-quotes").addEventListener("click",closeQuoteScreen);
-})();
-</script>
