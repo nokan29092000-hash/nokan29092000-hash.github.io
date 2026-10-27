@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080d14">
 <title>Nok — Personal Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#080d14;
@@ -53,7 +56,7 @@ body.theme-gray .bg-overlay {background:#141a23c8}
   backdrop-filter:blur(20px);box-shadow:0 20px 70px #0008;text-align:center
 }
 .avatar {width:100px;height:100px;object-fit:cover;border-radius:50%;border:2px solid var(--accent);padding:4px;background:var(--bg)}
-.name {font-size:34px;letter-spacing:5px;margin:12px 0 5px;font-weight:750}
+.name {font-family:'Cinzel',Georgia,'Times New Roman',serif;font-size:36px;letter-spacing:7px;margin:12px 0 5px;font-weight:700;text-shadow:0 0 22px color-mix(in srgb,var(--accent) 35%,transparent)}
 .bio {font-size:13px;line-height:1.7;color:var(--muted);margin:12px auto 15px;max-width:350px}
 .roles {display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin:16px 0}
 .role {background:transparent;color:inherit;border:1px solid var(--border);border-radius:9px;padding:9px 13px;font-size:10px;letter-spacing:1.7px;transition:.2s}
@@ -161,6 +164,40 @@ body.theme-gray .bg-overlay {background:#141a23c8}
 .quote-card .quote-text {font-size:12px;line-height:1.55}
 .quote-card .hint {font-size:9px;color:#7f90a6;margin-top:10px;letter-spacing:.5px}
 .quote-card.shattering {visibility:hidden;pointer-events:none}
+/* Progressive mood: darker with every stage, cheerful at 100 */
+#quote-screen.stage-10 #secret-background-video{filter:brightness(.26) contrast(1.15) saturate(.5)}
+#quote-screen.stage-20 #secret-background-video{filter:brightness(.2) contrast(1.25) saturate(.25) hue-rotate(-15deg)}
+#quote-screen.stage-50 #secret-background-video{filter:brightness(.14) contrast(1.4) saturate(.6) sepia(.6) hue-rotate(-30deg)}
+#quote-screen.stage-10 .quote-card{border-color:#7a6aa255}
+#quote-screen.stage-20 .quote-card{border-color:#a04a5e88;background:rgba(14,8,16,.93)}
+#quote-screen.stage-20 .quote-card .tag{color:#c0607a}
+#quote-screen.stage-50 .quote-card{border-color:#c0283c;background:rgba(18,3,7,.96);box-shadow:0 0 22px #a0102855}
+#quote-screen.stage-50 .quote-card .tag{color:#e0505f}
+#quote-screen.stage-50 .quote-card .quote-text{color:#e8b8bf}
+#quote-screen.stage-20 #quote-stage{animation:shakeA .6s infinite}
+#quote-screen.stage-50 #quote-stage{animation:shakeB .25s infinite}
+#quote-screen.stage-20 .quote-heading{animation:flicker 3s infinite}
+#quote-screen.stage-50 .quote-heading{color:#d0505f;animation:flicker 1s infinite}
+#quote-screen.stage-50::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at center,transparent 35%,#5a000088);animation:pulseRed 2.2s ease-in-out infinite}
+@keyframes shakeA{0%,100%{transform:translate(0,0)}25%{transform:translate(1px,-1px)}50%{transform:translate(-1px,1px)}75%{transform:translate(1px,1px)}}
+@keyframes shakeB{0%,100%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-2px)}60%{transform:translate(-1px,2px)}80%{transform:translate(2px,1px)}}
+@keyframes flicker{0%,100%{opacity:1}45%{opacity:1}50%{opacity:.3}55%{opacity:1}70%{opacity:.6}}
+@keyframes pulseRed{0%,100%{opacity:.5}50%{opacity:1}}
+#quote-screen.stage-100{background:#bfe3ff}
+.happy-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;opacity:0;pointer-events:none;transition:opacity 1.4s}
+#quote-screen.stage-100 .happy-bg.ready{opacity:1}
+#quote-screen.stage-100 #secret-background-video{filter:brightness(.95) saturate(1.3)}
+#quote-screen.stage-100 .secret-blue-overlay{background:linear-gradient(135deg,#8fd0ff40,#ffc4e740),radial-gradient(ellipse at 50% 48%,#ffffff55,#3d8be833)}
+#quote-screen.stage-100 .quote-card{background:rgba(255,255,255,.93);border-color:#8ec5ff;color:#1b2a44;box-shadow:0 10px 30px #3d8be833}
+#quote-screen.stage-100 .quote-card .tag{color:#2f7fe0}
+#quote-screen.stage-100 .quote-card .hint{color:#5a6c88}
+#quote-screen.stage-100 .quote-heading{color:#1f4f8f}
+#quote-screen.stage-100 .close-quotes,#quote-screen.stage-100 .quote-counter{background:#ffffffcc;color:#1b2a44;border-color:#8ec5ff}
+#secret-modal.happy{background:#dff0ff99}
+#secret-modal.happy .modal{background:rgba(244,250,255,.98);color:#1b2a44;border-color:#8ec5ff}
+#secret-modal.happy .modal p{color:#3b4d6b}
+#secret-modal.happy .secret-count{color:#5a7db0}
+#secret-modal.happy .modal-btn{color:#1b2a44}
 /* Crumbling pieces (clones of the card clipped into triangles) */
 .quote-card.crumb {position:fixed;z-index:60;margin:0;pointer-events:none;animation:none;backdrop-filter:none;background:rgba(9,21,39,.97);border-color:#5b9dff;will-change:transform,opacity}
 @keyframes cardIn {from{opacity:0;transform:scale(.86) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
@@ -243,6 +280,8 @@ body.theme-gray .bg-overlay {background:#141a23c8}
 <body>
 <canvas id="bg-canvas"></canvas>
 <video id="background-video" autoplay muted loop playsinline preload="auto">
+  <source src="bg.webm" type="video/webm">
+  <source src="bg.mp4" type="video/mp4">
   <source src="https://www.shutterstock.com/shutterstock/videos/3806259979/preview/stock-footage-flickering-glitch-visuals-with-grungy-overlays-code-fragments-and-digital-static-ideal-for.webm" type="video/webm">
 </video>
 <div class="bg-overlay"></div>
@@ -315,13 +354,13 @@ body.theme-gray .bg-overlay {background:#141a23c8}
   </div>
 </main>
 
-<button class="secret-launcher" id="open-quotes" aria-label="Открыть секретную комнату">
+<button class="secret-launcher" id="open-quotes" aria-label="Open the secret room">
   <span class="little-person" aria-hidden="true">
     <span class="person-head"></span><span class="person-body"></span>
     <span class="person-arm"></span><span class="person-arm right"></span>
     <span class="person-leg"></span><span class="person-leg right"></span>
   </span>
-  <span class="secret-label">? СЕКРЕТ</span>
+  <span class="secret-label">? SECRET</span>
 </button>
 
 <div class="settings-backdrop" id="settings-backdrop"></div>
@@ -405,14 +444,19 @@ body.theme-gray .bg-overlay {background:#141a23c8}
   </section>
 </aside>
 
-<section id="quote-screen" aria-label="Secret room">
+<section id="quote-screen" aria-label="Секретная комната">
   <video id="secret-background-video" autoplay muted loop playsinline preload="auto">
     <source src="https://media.istockphoto.com/id/2169005361/ru/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/%D1%80%D0%B8%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F-%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F-%D0%B4%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B8-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%83%D1%8E-%D1%81%D0%B2%D0%B5%D1%80%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%B8-%D0%BF%D0%BE%D0%B4%D0%B2%D0%B5%D1%80%D0%B3%D0%B0%D1%8E%D1%82-%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BA%D0%B8%D0%B7%D0%BC%D1%83-%D0%BF%D0%BE-%D0%B4%D0%BE%D1%80%D0%BE%D0%B3%D0%B5-%D0%B2-%D1%88%D0%BA%D0%BE%D0%BB%D1%83-%D0%B8-%D0%B8%D0%B7.mp4?s=mp4-640x640-is&k=20&c=J8CLaP78MFmP5ZKQsltvQnU6F_V-KWTL6eWhHbf3kTo=" type="video/mp4">
   </video>
+  <video id="happy-background-video" class="happy-bg" loop muted playsinline preload="auto">
+    <source src="happy.mp4" type="video/mp4">
+    <source src="happy.webm" type="video/webm">
+  </video>
+  <img id="happy-background-img" class="happy-bg" src="happy.gif" alt="">
   <div class="secret-blue-overlay"></div>
-  <div class="quote-top"><div class="quote-heading">Fragments of the mind</div><button class="close-quotes" id="close-quotes">✕ CLOSE</button></div>
+  <div class="quote-top"><div class="quote-heading">Фрагменты сознания</div><button class="close-quotes" id="close-quotes">✕ ЗАКРЫТЬ</button></div>
   <div id="quote-stage"></div>
-  <div class="quote-counter" id="quote-counter">CLICKS · 0</div>
+  <div class="quote-counter" id="quote-counter">НАЖАТИЯ · 0</div>
 </section>
 
 <div class="modal-backdrop" id="role-modal">
@@ -427,11 +471,11 @@ body.theme-gray .bg-overlay {background:#141a23c8}
 
 <div class="modal-backdrop" id="secret-modal">
   <section class="modal" role="dialog" aria-modal="true">
-    <div class="secret-count" id="secret-count">SYSTEM MESSAGE</div>
+    <div class="secret-count" id="secret-count">СИСТЕМНОЕ СООБЩЕНИЕ</div>
     <h2 id="secret-title">...</h2><p id="secret-description"></p>
     <div class="modal-actions">
-      <button class="modal-btn primary" id="secret-continue">Continue</button>
-      <button class="modal-btn" id="secret-close">Close</button>
+      <button class="modal-btn primary" id="secret-continue">Продолжить</button>
+      <button class="modal-btn" id="secret-close">Закрыть</button>
     </div>
   </section>
 </div>
@@ -444,6 +488,8 @@ const PLAYLIST=[
 ];
 const MAIN_TRACK=PLAYLIST[0];
 const SECRET_TRACK="ea1Shogsk7k";
+const HAPPY_TRACK="nU7UdahsChg"; /* plays in the secret room after 100 clicks */
+const isRoomTrack=t=>t===SECRET_TRACK||t===HAPPY_TRACK;
 const $=id=>document.getElementById(id);
 
 let player=null,playerReady=false,musicPlaying=false;
@@ -628,10 +674,13 @@ function setMusicVolume(){
 }
 function updateTrackInfo(){
   let title="";
-  try{title=player.getVideoData().title||""}catch(e){}
-  $("music-label").textContent=currentTrack===SECRET_TRACK?"Secret room":(title||"Track "+(trackIndex+1));
+  try{title=(player.getVideoData()||{}).title||""}catch(e){}
+  const label=$("music-label");
+  if(isRoomTrack(currentTrack))label.textContent="Secret room";
+  else if(title)label.textContent=title;
+  else if(label.textContent==="Secret room")label.textContent="Background music";
 }
-function trackCounter(){return currentTrack===SECRET_TRACK?"":" · "+(trackIndex+1)+"/"+PLAYLIST.length}
+function trackCounter(){return ""}
 
 window.onYouTubeIframeAPIReady=function(){
   if(player)return;
@@ -652,10 +701,12 @@ window.onYouTubeIframeAPIReady=function(){
         } else if(event.data===YT.PlayerState.PAUSED){
           musicPlaying=false;updatePlayButton();
           if(musicEnabled)$("music-status").textContent="Paused"+trackCounter();
+        } else if(event.data===YT.PlayerState.CUED){
+          updateTrackInfo();
         } else if(event.data===YT.PlayerState.BUFFERING){
           $("music-status").textContent="Loading…";
         } else if(event.data===YT.PlayerState.ENDED){
-          if(currentTrack===SECRET_TRACK){
+          if(isRoomTrack(currentTrack)){
             try{player.seekTo(0,true);if(musicEnabled)player.playVideo()}catch(e){}
           } else changeTrack(1);
         }
@@ -663,7 +714,7 @@ window.onYouTubeIframeAPIReady=function(){
       onError:event=>{
         console.warn("YouTube player error:",event.data);
         $("music-status").textContent="Track unavailable, skipping…";
-        if(currentTrack!==SECRET_TRACK&&++errorStreak<PLAYLIST.length)setTimeout(()=>changeTrack(1),1200);
+        if(!isRoomTrack(currentTrack)&&++errorStreak<PLAYLIST.length)setTimeout(()=>changeTrack(1),1200);
       }
     }
   });
@@ -685,13 +736,13 @@ function switchTrack(trackId,autoplay=true){
     if(autoplay&&musicEnabled)player.loadVideoById({videoId:trackId,startSeconds:0});
     else player.cueVideoById({videoId:trackId,startSeconds:0});
     $("music-status").textContent="Loading…";
-    updateTrackInfo();
+    $("music-label").textContent="Loading…";
     musicPlaying=Boolean(autoplay&&musicEnabled);
     updatePlayButton();
   }catch(e){}
 }
 function changeTrack(step){
-  if(!playerReady||!player||currentTrack===SECRET_TRACK)return;
+  if(!playerReady||!player||isRoomTrack(currentTrack))return;
   const idx=(trackIndex+step+PLAYLIST.length)%PLAYLIST.length;
   musicEnabled=true;updateMusicToggle();
   switchTrack(PLAYLIST[idx],true);
@@ -757,21 +808,21 @@ setInterval(()=>{
 
 /* Secret room cards */
 const quoteData=[
-  ["BLEACH","No one has stood at the top of the heavens from the very beginning."],
-  ["VINLAND SAGA","I have no enemies."],
-  ["TOKYO GHOUL","1000 − 7"],
-  ["PSYCHOLOGY","A calm face can hide a complex mind."],
-  ["APATHY","Sometimes silence says more than words."],
-  ["DARK TRIAD","Machiavellianism. Narcissism. Psychopathy."],
-  ["DEPRESSION","Not every quiet person is okay."],
-  ["ANIME","Every story holds a whole world."],
-  ["VASTNESS","Freedom begins where fear loses its power."],
-  ["OBSERVER","You only notice what you are ready to see."],
-  ["DOX / SNOS","Underground Telegram aesthetic · a fictional image."],
-  ["LOVE","Even in a dark world, kindness still matters."],
-  ["NOK","Some things are better left unexplained."],
-  ["WORLDVIEW","Not everything needs a reaction."],
-  ["NIGHT","The city gets quieter when everyone else sleeps."]
+  ["БЛИЧ","Никто не стоит на вершине небес с самого начала."],
+  ["САГА О ВИНЛАНДЕ","У меня нет врагов."],
+  ["ТОКИЙСКИЙ ГУЛЬ","1000 − 7"],
+  ["ПСИХОЛОГИЯ","За спокойным лицом может скрываться сложный разум."],
+  ["АПАТИЯ","Иногда молчание говорит больше слов."],
+  ["ТЁМНАЯ ТРИАДА","Макиавеллизм. Нарциссизм. Психопатия."],
+  ["ДЕПРЕССИЯ","Не каждый молчаливый человек в порядке."],
+  ["АНИМЕ","В каждой истории есть целый мир."],
+  ["VASTNESS","Свобода начинается там, где страх теряет власть."],
+  ["НАБЛЮДАТЕЛЬ","Ты замечаешь лишь то, что готов увидеть."],
+  ["DOX / SNOS","Подпольная эстетика Telegram · вымышленный образ."],
+  ["ЛЮБОВЬ","Даже в тёмном мире доброта всё ещё имеет значение."],
+  ["NOK","Некоторые вещи лучше оставить без объяснений."],
+  ["МИРОВОЗЗРЕНИЕ","Не на всё нужно реагировать."],
+  ["НОЧЬ","Город становится тише, когда остальные спят."]
 ];
 const quoteScreen=$("quote-screen"),quoteStage=$("quote-stage");
 function cardWidth(){
@@ -816,11 +867,11 @@ function pickQuote(exclude=""){
 function createCard(data){
   const card=document.createElement("article");
   card.className="quote-card";card.tabIndex=0;card.setAttribute("role","button");
-  card.setAttribute("aria-label","Message card: "+data[0]);
+  card.setAttribute("aria-label","Карточка с сообщением: "+data[0]);
   card.dataset.tag=data[0];card.dataset.quote=data[1];
   const tag=document.createElement("div");tag.className="tag";tag.textContent=data[0];
   const quote=document.createElement("div");quote.className="quote-text";quote.textContent=data[1];
-  const hint=document.createElement("div");hint.className="hint";hint.textContent="tap to open";
+  const hint=document.createElement("div");hint.className="hint";hint.textContent="нажми, чтобы открыть";
   card.append(tag,quote,hint);
   card.addEventListener("click",()=>clickCard(card));
   card.addEventListener("keydown",event=>{
@@ -888,7 +939,7 @@ function clickCard(card){
   if(!card||card.classList.contains("shattering"))return;
   playClickSound(1.2);
   totalClicks++;
-  $("quote-counter").textContent="CLICKS · "+totalClicks;
+  $("quote-counter").textContent="НАЖАТИЯ · "+totalClicks;
   const r=card.getBoundingClientRect();
   heartEffect(r.left+r.width/2,r.top+r.height/2);
   respawnCard(card);
@@ -917,6 +968,13 @@ window.addEventListener("resize",()=>{
 });
 
 /* Open / close the secret room */
+const happyVideo=$("happy-background-video"),happyImg=$("happy-background-img");
+happyVideo.addEventListener("playing",()=>happyVideo.classList.add("ready"));
+happyImg.addEventListener("load",()=>happyImg.classList.add("ready"));
+function playHappyBg(){
+  if(totalClicks<100)return;
+  try{const p=happyVideo.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
+}
 function openQuoteScreen(){
   quoteScreen.classList.add("active");
   $("app").style.display="none";
@@ -929,9 +987,10 @@ function openQuoteScreen(){
   if(playerReady&&player){
     try{
       if(musicPlaying)player.pauseVideo();
-      switchTrack(SECRET_TRACK,musicEnabled);
+      switchTrack(totalClicks>=100?HAPPY_TRACK:SECRET_TRACK,musicEnabled);
     }catch(e){}
   }
+  playHappyBg();
   const video=$("secret-background-video");
   try{const promise=video.play();if(promise?.catch)promise.catch(()=>{})}catch(e){}
   startQuoteGame();
@@ -944,9 +1003,10 @@ function closeQuoteScreen(){
   $("open-quotes").style.display="";
   document.querySelector(".music-float").style.display="flex";
   $("secret-background-video").pause();
+  try{$("happy-background-video").pause()}catch(e){}
 
   if(playerReady&&player){
-    const restore=trackBeforeSecret===SECRET_TRACK?MAIN_TRACK:trackBeforeSecret;
+    const restore=isRoomTrack(trackBeforeSecret)?MAIN_TRACK:trackBeforeSecret;
     if(shouldResumeAfterSecret&&musicEnabled){
       switchTrack(restore||MAIN_TRACK,true);
     } else {
@@ -956,7 +1016,7 @@ function closeQuoteScreen(){
         player.pauseVideo();
         player.cueVideoById({videoId:currentTrack,startSeconds:0});
       }catch(e){}
-      musicPlaying=false;updatePlayButton();updateTrackInfo();
+      musicPlaying=false;updatePlayButton();$("music-label").textContent="Loading…";
       $("music-status").textContent="Paused"+trackCounter();
     }
   }
@@ -966,68 +1026,48 @@ $("close-quotes").addEventListener("click",closeQuoteScreen);
 
 /* Click milestones */
 const milestones={
-  3:{
-    title:"Take it easy.",
-    description:"You just clicked some cards. Everything's fine so far.",
-    color:"#b4c7dd"
-  },
-  5:{
-    title:"Easy...",
-    description:"You noticed the messages are changing, didn't you? Some things are better left untouched.",
-    color:"#a6b6cc"
-  },
-  10:{
-    title:"I'm begging you, stop.",
-    description:"Why do you keep going? There's nothing left to find here... probably.\n\nYou feel it too, don't you? Something has changed.",
-    color:"#a2a9c2"
-  },
-  20:{
-    title:"Stop, or there will be consequences.",
-    description:"You've already gone further than most. Maybe that's enough?\n\nI'm no longer sure this is just a game.",
-    color:"#c58d9c"
-  },
-  50:{
-    title:"They're already waiting for you. You will die.",
-    description:"...Silence.\n\nIt seems this is the end.",
-    color:"#df6d7c"
-  },
-  100:{
-    title:"You'll be okay. ♡",
-    description:"I was joking. You'll be okay. ♡\n\nThanks for making it to the end. Take care of yourself, and remember: behind any dark atmosphere something good may be hiding. 💙",
-    color:"#8bd6a8",
-    final:true
-  }
+  3:{title:"Остановись спокойно.",description:"Ты просто нажал на карточки. Пока всё нормально.",color:"#b4c7dd"},
+  5:{title:"Спокойно...",description:"Ты ведь заметил, что сообщения меняются? Некоторые вещи лучше не трогать.",color:"#a6b6cc"},
+  10:{title:"Я тебя умоляю, прекрати.",description:"Зачем ты продолжаешь? Здесь больше нечего искать... наверное.\n\nТы ведь тоже чувствуешь, что что-то изменилось?",color:"#a69ac8"},
+  20:{title:"Остановись, а то будут последствия.",description:"Ты уже зашёл дальше, чем большинство. Может, хватит?\n\nЯ больше не уверен, что это просто игра.",color:"#c58d9c"},
+  50:{title:"Они тебя уже ждут. Ты умрёшь.",description:"...Тишина.\n\nКажется, это конец.",color:"#df4f61"},
+  100:{title:"Всё с тобой будет хорошо. ♡",description:"Я пошутил. Всё с тобой будет хорошо. ♡\n\nСпасибо, что дошёл до конца. Береги себя и не забывай: за любой тёмной атмосферой может скрываться что-то хорошее. 💙",color:"#2f7fe0",final:true}
 };
 function updateHorrorStage(count){
-  quoteScreen.classList.remove("stage-3","stage-5","stage-10","stage-20","stage-50");
-  if(count>=50)quoteScreen.classList.add("stage-50");
+  quoteScreen.classList.remove("stage-3","stage-5","stage-10","stage-20","stage-50","stage-100");
+  if(count>=100)quoteScreen.classList.add("stage-100");
+  else if(count>=50)quoteScreen.classList.add("stage-50");
   else if(count>=20)quoteScreen.classList.add("stage-20");
   else if(count>=10)quoteScreen.classList.add("stage-10");
   else if(count>=5)quoteScreen.classList.add("stage-5");
   else if(count>=3)quoteScreen.classList.add("stage-3");
 }
+function confettiHearts(){
+  for(let i=0;i<40;i++)setTimeout(()=>heartEffect(Math.random()*innerWidth,innerHeight*(.3+Math.random()*.6)),i*70);
+}
 function showMilestone(count){
   const info=milestones[count];if(!info)return;
-  $("secret-count").textContent="SYSTEM MESSAGE · "+count;
+  const modal=$("secret-modal"),box=modal.querySelector(".modal");
+  modal.classList.toggle("happy",!!info.final);
+  box.style.borderColor=info.final?"":info.color+"88";
+  box.style.boxShadow=info.final?"":"0 0 40px "+info.color+"33";
+  box.style.background=info.final?"":count>=50?"rgba(16,3,6,.98)":count>=20?"rgba(10,6,14,.98)":"";
+  $("secret-count").textContent="СИСТЕМНОЕ СООБЩЕНИЕ · "+count;
   $("secret-title").textContent=info.title;
   $("secret-title").style.color=info.color;
+  $("secret-title").style.animationIterationCount=count>=50?6:count>=20?4:2;
   $("secret-title").classList.remove("glitch-text");
   void $("secret-title").offsetWidth;
-  $("secret-title").classList.add("glitch-text");
+  if(!info.final)$("secret-title").classList.add("glitch-text");
   $("secret-description").textContent=info.description;
 
   const continueBtn=$("secret-continue"),closeBtn=$("secret-close");
   continueBtn.style.display=info.final?"none":"inline-block";
-  closeBtn.textContent=info.final?"All good 💙":"Close";
-  continueBtn.onclick=()=>$("secret-modal").classList.remove("show");
-  closeBtn.onclick=()=>$("secret-modal").classList.remove("show");
-  $("secret-modal").classList.add("show");
-
-  if(count===100){
-    finalRevealShown=true;
-    quoteScreen.classList.remove("stage-50");
-    quoteScreen.classList.remove("stage-20");
-  }
+  closeBtn.textContent=info.final?"Всё хорошо 💙":"Закрыть";
+  continueBtn.onclick=()=>modal.classList.remove("show");
+  closeBtn.onclick=()=>{modal.classList.remove("show");if(info.final){confettiHearts();switchTrack(HAPPY_TRACK,musicEnabled)}};
+  modal.classList.add("show");
+  if(info.final){finalRevealShown=true;playHappyBg()}
 }
 
 window.addEventListener("pagehide",()=>{
