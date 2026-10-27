@@ -1,462 +1,744 @@
 
 <!DOCTYPE html>
-<html lang="ru" data-theme="black">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b10">
-<meta name="description" content="Nok — designer, developer and creator.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d14">
 <title>Nok — Personal Space</title>
+<meta name="description" content="Nok — designer, developer and founder of Vastness.">
 <style>
 :root {
-  color-scheme: dark;
-  --bg:#080b10; --panel:rgba(12,17,24,.88);
-  --solid:rgba(12,17,24,.97); --text:#edf3fa;
-  --muted:#a5b1bf; --accent:#83b8e8;
-  --border:rgba(164,193,222,.24); --glow:rgba(86,158,226,.2);
-  --button:rgba(255,255,255,.045); --shadow:rgba(0,0,0,.35);
+  --bg:#080d14;
+  --card:rgba(12,20,31,.84);
+  --text:#e8eef7;
+  --muted:#8999ad;
+  --accent:#5b9dff;
+  --border:rgba(130,170,220,.20);
+  --shadow:0 20px 70px #0008;
 }
-html[data-theme="white"] {
-  color-scheme:light; --bg:#e9edf1;
-  --panel:rgba(249,251,253,.91); --solid:rgba(249,251,253,.98);
-  --text:#17212b; --muted:#657381; --accent:#376b9d;
-  --border:rgba(54,81,107,.23); --glow:rgba(91,140,184,.16);
-  --button:rgba(35,61,86,.055); --shadow:rgba(15,31,47,.14);
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;background:var(--bg);color:var(--text);
+  font-family:Inter,Segoe UI,Arial,sans-serif;overflow-x:hidden;
+  transition:background .3s,color .3s;
 }
-html[data-theme="gray"] {
-  color-scheme:dark; --bg:#252a30;
-  --panel:rgba(39,45,52,.9); --solid:rgba(39,45,52,.98);
-  --text:#edf0f3; --muted:#b0bac4; --accent:#a5c5e3;
-  --border:rgba(192,207,222,.23); --glow:rgba(144,174,204,.15);
-  --button:rgba(255,255,255,.055); --shadow:rgba(0,0,0,.25);
+body.white{
+  --bg:#e9edf2;--card:rgba(255,255,255,.91);--text:#17202d;
+  --muted:#5f6d7d;--accent:#2467bd;--border:#cbd4e0;
 }
-* { box-sizing:border-box; }
-body {
-  margin:0; min-height:100vh; min-height:100dvh;
-  overflow-x:hidden; background:var(--bg); color:var(--text);
-  font-family:Inter,"Segoe UI",Arial,sans-serif;
-  transition:background .4s,color .4s;
+body.gray{
+  --bg:#252a31;--card:rgba(36,43,53,.92);--text:#e5e8ed;
+  --muted:#a0a9b6;--accent:#81b8ff;--border:#444e5c;
 }
-button,a { font:inherit; }
-button:focus-visible,a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
-.background { position:fixed; inset:0; z-index:-5; overflow:hidden; background:#080d14; }
-.background video {
-  width:100%; height:100%; object-fit:cover;
-  opacity:.78; filter:grayscale(.35) saturate(.85) contrast(1.08);
+#background-video{
+  position:fixed;inset:0;width:100%;height:100%;object-fit:cover;
+  z-index:-3;filter:brightness(.62) contrast(1.16) saturate(.72);
 }
-.background::after {
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(110deg,rgba(4,9,16,.38),rgba(8,13,21,.2)),
-  radial-gradient(ellipse at center,transparent 15%,rgba(0,0,0,.2));
+.bg-overlay{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:linear-gradient(135deg,#060b12a8,#07111dd9),
+    radial-gradient(ellipse at 50% 40%,transparent,#03060be8);
 }
-html[data-theme="white"] .background video { opacity:.48; filter:grayscale(.8) brightness(1.15); }
-html[data-theme="white"] .background::after { background:rgba(224,233,241,.48); }
-html[data-theme="gray"] .background video { opacity:.55; filter:grayscale(.65) brightness(.9); }
-html[data-theme="gray"] .background::after { background:rgba(25,31,38,.4); }
-.grain,.scanlines { position:fixed; inset:0; pointer-events:none; }
-.grain { z-index:-4; opacity:.1; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E"); }
-.scanlines { z-index:-3; opacity:.1; background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(130,180,220,.12) 4px); animation:scan 12s linear infinite; }
-@keyframes scan { to { transform:translateY(12px); } }
-.layout {
-  min-height:100vh; min-height:100dvh; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:15px;
-  padding:40px 290px 90px;
+body.white .bg-overlay{background:#e9edf2b8}
+body.gray .bg-overlay{background:#141a23c9}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+#app{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:64px 18px 85px;transition:opacity .25s;
 }
-.profile {
-  position:relative; width:min(100%,390px); padding:30px;
-  text-align:center; background:var(--panel); border:1px solid var(--border);
-  border-radius:22px; box-shadow:0 25px 80px var(--shadow),0 0 40px var(--glow);
-  backdrop-filter:blur(17px); -webkit-backdrop-filter:blur(17px);
-  animation:appear .7s both; transition:background .4s,border-color .4s;
+.profile-wrap{width:min(100%,480px)}
+.profile-card{
+  padding:30px;border:1px solid var(--border);border-radius:24px;
+  background:var(--card);backdrop-filter:blur(20px);
+  box-shadow:var(--shadow);text-align:center;
 }
-.profile::before {
-  content:""; position:absolute; top:-1px; left:22%; width:56%; height:1px;
-  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+.avatar{
+  width:112px;height:112px;object-fit:cover;border-radius:50%;
+  border:2px solid var(--accent);padding:4px;
+  background:var(--bg);box-shadow:0 0 35px #559cff24;
 }
-@keyframes appear { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-.avatar-wrap {
-  width:108px; height:108px; margin:0 auto 20px; padding:4px;
-  border:1px solid var(--border); border-radius:50%;
-  background:var(--button); box-shadow:0 0 25px var(--glow);
-  animation:float 5s ease-in-out infinite;
+.name{font-size:34px;letter-spacing:5px;margin:16px 0 7px;font-weight:750}
+.status{font-size:12px;color:var(--muted);letter-spacing:3px;text-transform:uppercase}
+.bio{font-size:14px;line-height:1.7;color:var(--muted);margin:18px auto 20px;max-width:330px}
+.roles{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin:20px 0}
+.role{
+  background:transparent;border:1px solid var(--border);border-radius:9px;
+  padding:9px 13px;font-size:10px;letter-spacing:1.7px;
+  transition:.2s;
 }
-@keyframes float { 50% { transform:translateY(-4px); } }
-.avatar {
-  display:grid; place-items:center; overflow:hidden; width:100%; height:100%;
-  border-radius:50%; background:linear-gradient(145deg,#354656,#111923);
-  color:#d8e7f5; font-size:39px; font-weight:300;
+.role:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.section-label{
+  text-align:left;font-size:10px;color:var(--muted);
+  letter-spacing:2.4px;text-transform:uppercase;margin:25px 0 10px;
 }
-.avatar img { width:100%; height:100%; display:block; object-fit:cover; }
-.eyebrow { margin:0 0 7px; color:var(--accent); font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; }
-h1 { margin:0; font-size:40px; font-weight:600; letter-spacing:-1.8px; }
-.description { max-width:290px; margin:12px auto 17px; color:var(--muted); font-size:13px; line-height:1.7; }
-.roles { display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin-bottom:22px; }
-.role { padding:6px 9px; border:1px solid var(--border); border-radius:6px; color:var(--muted); font-size:9px; letter-spacing:1px; }
-.socials { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
-.social {
-  display:flex; align-items:center; justify-content:center; gap:8px;
-  min-height:44px; padding:10px 8px; border:1px solid var(--border);
-  border-radius:10px; background:var(--button); color:var(--text);
-  text-decoration:none; font-size:12px; cursor:pointer;
-  transition:transform .2s,border-color .2s,box-shadow .2s;
+.links{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.link{
+  border:1px solid var(--border);border-radius:10px;padding:12px 10px;
+  font-size:12px;background:#789acb08;transition:.2s;
 }
-.social:hover { transform:translateY(-3px); border-color:var(--accent); box-shadow:0 5px 20px var(--glow); }
-.symbol { color:var(--accent); font-size:15px; }
-.divider { height:1px; margin:22px 0 15px; background:var(--border); }
-.status { display:flex; align-items:center; justify-content:center; gap:8px; color:var(--muted); font-size:10px; letter-spacing:1.2px; text-transform:uppercase; }
-.status-dot { width:6px; height:6px; border-radius:50%; background:#85b9e7; box-shadow:0 0 10px #85b9e7; animation:blink 2s infinite; }
-@keyframes blink { 50% { opacity:.35; } }
-
-/* Compact music players */
-.music-stack { display:grid; gap:10px; width:min(100%,390px); animation:appear .8s .1s both; }
-.music-card {
-  padding:15px 17px; border:1px solid var(--border); border-radius:15px;
-  background:var(--panel); box-shadow:0 12px 35px var(--shadow);
-  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-  transition:background .4s,border-color .4s;
+.link:hover{border-color:var(--accent);background:#5b9dff12;transform:translateY(-2px)}
+.server{
+  margin-top:20px;border:1px solid var(--border);border-radius:13px;overflow:hidden;
+  text-align:left;
 }
-.music-top { display:flex; align-items:center; gap:12px; }
-.album {
-  width:46px; height:46px; flex:0 0 46px; display:grid; place-items:center;
-  border:1px solid var(--border); border-radius:9px;
-  background:linear-gradient(145deg,#344e65,#111923);
-  color:#d8e7f5; font-size:19px; box-shadow:0 0 16px var(--glow);
+.server-head{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  border:0;background:#5b9dff0b;padding:15px 16px;font-size:13px;
 }
-.track-info { min-width:0; flex:1; }
-.track-name { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-size:12px; font-weight:600; }
-.track-sub { margin-top:5px; color:var(--muted); font-size:10px; }
-.play-btn {
-  width:38px; height:38px; flex:0 0 38px; border:0; border-radius:50%;
-  background:var(--accent); color:#0b1118; font-size:15px; cursor:pointer;
-  transition:transform .2s,filter .2s;
+.server-head strong{letter-spacing:1.3px}
+.server-content{padding:0 12px 12px;display:grid;gap:8px}
+.server-content.closed{display:none}
+.server-link{
+  display:flex;justify-content:space-between;gap:10px;
+  padding:11px 12px;border:1px solid var(--border);border-radius:8px;
+  font-size:12px;color:var(--muted);transition:.2s;
 }
-.play-btn:hover { transform:scale(1.07); filter:brightness(1.1); }
-.progress-wrap { margin-top:13px; }
-.progress {
-  width:100%; height:5px; display:block; margin:0;
-  accent-color:var(--accent); cursor:pointer;
+.server-link:hover{color:var(--text);border-color:var(--accent)}
+.server-link span:last-child{color:var(--accent)}
+.music{
+  margin-top:15px;border:1px solid var(--border);border-radius:16px;
+  padding:15px;background:var(--card);backdrop-filter:blur(16px);
+  box-shadow:var(--shadow);text-align:left;
 }
-.times { display:flex; justify-content:space-between; gap:10px; margin-top:6px; color:var(--muted); font-size:9px; font-variant-numeric:tabular-nums; }
-.music-caption { margin-top:8px; color:var(--muted); font-size:9px; line-height:1.5; }
-.quotes { position:fixed; top:28px; right:28px; z-index:3; display:grid; gap:12px; width:230px; }
-.quote { padding:15px 16px; border:1px solid var(--border); border-radius:12px; background:var(--panel); box-shadow:0 8px 30px var(--shadow); backdrop-filter:blur(15px); animation:slideIn .7s both; transition:background .4s,transform .25s; }
-.quote:nth-child(2) { animation-delay:.12s; } .quote:nth-child(3) { animation-delay:.24s; }
-.quote:hover { transform:translateX(-4px); }
-@keyframes slideIn { from { opacity:0; transform:translateX(12px); } to { opacity:1; transform:translateX(0); } }
-.quote-label { margin-bottom:7px; color:var(--accent); font-size:9px; letter-spacing:2px; text-transform:uppercase; }
-.quote-text { margin:0; font-size:12px; line-height:1.6; }
-.quote-source { display:block; margin-top:7px; color:var(--muted); font-size:10px; }
-.controls { position:fixed; z-index:5; left:20px; bottom:20px; display:flex; flex-wrap:wrap; gap:8px; max-width:min(550px,calc(100vw - 40px)); }
-.control { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:41px; padding:0 13px; border:1px solid var(--border); border-radius:10px; background:var(--solid); color:var(--text); font-size:11px; cursor:pointer; backdrop-filter:blur(14px); transition:border-color .2s,transform .2s,background .4s; }
-.control:hover { transform:translateY(-2px); border-color:var(--accent); }
-.control-icon { color:var(--accent); font-size:14px; }
-.notice { position:fixed; left:50%; bottom:78px; z-index:10; max-width:calc(100vw - 32px); padding:11px 16px; border:1px solid var(--border); border-radius:10px; background:var(--solid); color:var(--text); font-size:12px; text-align:center; opacity:0; pointer-events:none; transform:translate(-50%,8px); transition:opacity .2s,transform .2s; }
-.notice.show { opacity:1; transform:translate(-50%,0); }
-.copyright { position:fixed; right:22px; bottom:24px; color:var(--muted); font-size:10px; letter-spacing:1px; }
-#musicPlayers { position:fixed; left:-10000px; top:0; width:1px; height:1px; overflow:hidden; }
-@media(max-width:900px) {
-  .layout { padding:35px 20px 245px; }
-  .quotes { position:relative; top:auto; right:auto; width:min(100%,560px); margin:0 auto 100px; grid-template-columns:1fr; }
-  .copyright { right:16px; bottom:77px; }
-  .controls { left:12px; bottom:12px; max-width:calc(100vw - 24px); }
-  .control { min-height:39px; padding:0 10px; font-size:10px; }
+.music-top{display:flex;align-items:center;gap:12px}
+.music-art{
+  flex:0 0 43px;height:43px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#1d4169,#080d14);font-size:20px;
 }
-@media(max-width:420px) {
-  .layout { padding:24px 14px 220px; }
-  .profile { padding:25px 20px; }
-  .avatar-wrap { width:98px; height:98px; }
-  .music-card { padding:13px; }
-  .quotes { margin-top:0; }
-  .controls { gap:6px; }
-  .control { gap:5px; padding:0 8px; }
-  .copyright { display:none; }
+.music-info{min-width:0;flex:1}
+.music-title{font-size:12px;font-weight:650}
+.music-sub{font-size:10px;color:var(--muted);margin-top:5px}
+.play{
+  width:38px;height:38px;border-radius:50%;border:0;
+  background:var(--accent);color:#08111e;font-weight:bold;
 }
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
+.track-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.track-row input{width:100%;accent-color:var(--accent);cursor:pointer}
+.time{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
+.music-note{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5}
+.footer{margin-top:15px;color:var(--muted);font-size:10px;letter-spacing:2px}
+#youtube-player{
+  position:fixed;width:2px;height:2px;right:0;bottom:0;
+  opacity:.01;pointer-events:none;z-index:-5;
+}
+.corner-btn{
+  position:fixed;z-index:20;bottom:20px;left:20px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:11px;padding:11px 14px;font-size:11px;
+  backdrop-filter:blur(14px);box-shadow:var(--shadow);
+}
+.side-toggle{left:auto;right:20px}
+#quote-screen{
+  display:none;position:fixed;inset:0;z-index:15;overflow:hidden;
+  background:var(--bg);
+  background-image:radial-gradient(ellipse at center,#162a4160,transparent 70%);
+}
+#quote-screen.active{display:block}
+.quote-top{
+  position:absolute;top:18px;left:18px;right:18px;
+  display:flex;justify-content:space-between;align-items:center;z-index:4;
+  pointer-events:none;
+}
+.quote-top>*{pointer-events:auto}
+.quote-heading{
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);
+}
+.close-quotes{
+  border:1px solid var(--border);background:var(--card);border-radius:10px;
+  padding:10px 14px;font-size:12px;
+}
+.quote-counter{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  font-size:11px;color:var(--muted);letter-spacing:2px;z-index:4;
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:9px 14px;white-space:nowrap;
+}
+.quote-card{
+  position:absolute;width:min(240px,calc(100vw - 32px));min-height:90px;
+  padding:16px 17px;border:1px solid var(--border);border-radius:15px;
+  background:var(--card);backdrop-filter:blur(15px);box-shadow:var(--shadow);
+  text-align:left;cursor:pointer;user-select:none;
+  animation:cardIn .35s ease both;transition:border-color .2s;
+}
+.quote-card:hover{border-color:var(--accent)}
+.quote-card .tag{
+  font-size:9px;letter-spacing:2px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px;
+}
+.quote-card .quote-text{font-size:13px;line-height:1.5}
+.quote-card .hint{font-size:10px;color:var(--muted);margin-top:10px}
+@keyframes cardIn{
+  from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}
+}
+@keyframes cardOut{to{opacity:0;transform:scale(.65) rotate(5deg)}}
+@keyframes heartPop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}
+  35%{opacity:1;transform:translate(-50%,-75%) scale(1.3)}
+  100%{opacity:0;transform:translate(-50%,-140%) scale(1)}
+}
+.heart{
+  position:fixed;z-index:30;pointer-events:none;font-size:28px;
+  animation:heartPop .8s ease forwards;
+}
+.modal-backdrop{
+  position:fixed;inset:0;z-index:40;display:none;align-items:center;
+  justify-content:center;padding:20px;background:#03070bd9;backdrop-filter:blur(9px);
+}
+.modal-backdrop.show{display:flex}
+.modal{
+  width:min(100%,410px);border:1px solid var(--border);border-radius:18px;
+  padding:25px;background:var(--card);box-shadow:var(--shadow);
+  animation:cardIn .25s ease;
+}
+.modal h2{font-size:18px;margin:0 0 13px;letter-spacing:1px}
+.modal p{font-size:13px;line-height:1.8;color:var(--muted);white-space:pre-line}
+.modal-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.modal-btn{
+  border:1px solid var(--border);background:#5b9dff10;border-radius:9px;
+  padding:11px 14px;font-size:12px;
+}
+.modal-btn.primary{background:var(--accent);color:#08111e;border-color:var(--accent)}
+#secret-modal .modal{text-align:center}
+#secret-modal h2{font-size:19px;letter-spacing:1px}
+#secret-modal .modal p{font-size:14px}
+.secret-count{font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:16px}
+@media(max-width:500px){
+  #app{padding:62px 12px 80px}
+  .profile-card{padding:23px 17px}
+  .name{font-size:29px}
+  .corner-btn{bottom:12px;left:12px}
+  .side-toggle{left:auto;right:12px}
+  .quote-card{width:min(205px,calc(100vw - 24px));padding:13px}
+  .quote-card .quote-text{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
 <body>
-<div class="background" aria-hidden="true">
-  <video autoplay muted loop playsinline preload="auto">
-    <source src="https://www.shutterstock.com/shutterstock/videos/3806259979/preview/stock-footage-flickering-glitch-visuals-with-grungy-overlays-code-fragments-and-digital-static-ideal-for.webm" type="video/webm">
-  </video>
-</div>
-<div class="grain" aria-hidden="true"></div>
-<div class="scanlines" aria-hidden="true"></div>
 
-<main class="layout">
-  <section class="profile" aria-label="Nok profile">
-    <div class="avatar-wrap"><div class="avatar" id="avatar"><span id="avatarFallback">N</span></div></div>
-    <p class="eyebrow">Personal space</p>
-    <h1>Nok</h1>
-    <p class="description">Designer and developer. Creating things that reflect who I am.</p>
-    <div class="roles">
-      <span class="role">DESIGNER</span><span class="role">DEVELOPER</span><span class="role">FOUNDER</span>
-    </div>
-    <nav class="socials" aria-label="Social links">
-      <a class="social" href="https://t.me/nok_w" target="_blank" rel="noopener noreferrer"><span class="symbol">↗</span>Telegram</a>
-      <a class="social" href="https://discord.com/users/1291423133789589581" target="_blank" rel="noopener noreferrer"><span class="symbol">◈</span>Discord</a>
-      <a class="social" href="https://www.tiktok.com/@nok_vast" target="_blank" rel="noopener noreferrer"><span class="symbol">♪</span>TikTok</a>
-      <a class="social" href="https://discord.gg/t5F4gEDwRu" target="_blank" rel="noopener noreferrer"><span class="symbol">⌁</span>My server</a>
-    </nav>
-    <div class="divider"></div>
-    <div class="status"><span class="status-dot"></span><span>Creating my own world</span></div>
-  </section>
+<video id="background-video" autoplay muted loop playsinline preload="auto">
+  <source src="https://www.shutterstock.com/shutterstock/videos/3806259979/preview/stock-footage-flickering-glitch-visuals-with-grungy-overlays-code-fragments-and-digital-static-ideal-for.webm" type="video/webm">
+</video>
+<div class="bg-overlay"></div>
 
-  <section class="music-stack" aria-label="Music players">
-    <article class="music-card">
-      <div class="music-top">
-        <div class="album">♫</div>
-        <div class="track-info">
-          <div class="track-name">Background Music</div>
-          <div class="track-sub" id="mainStatus">Long track · Loop enabled</div>
+<!-- YouTube background music: long track only -->
+<div id="youtube-player"></div>
+
+<main id="app">
+  <div class="profile-wrap">
+    <section class="profile-card">
+      <img class="avatar" src="avatar.jpg" alt="Nok avatar"
+        onerror="this.onerror=null;this.src='https://placehold.co/200x200/101a29/7caeff?text=NOK';">
+
+      <h1 class="name">Nok</h1>
+      <div class="status">Independent mind · Vastness</div>
+      <p class="bio">
+        Designer and developer. Creating things that reflect who I am.
+      </p>
+
+      <div class="roles">
+        <button class="role" data-role="designer">DESIGNER</button>
+        <button class="role" data-role="developer">DEVELOPER</button>
+        <button class="role" data-role="founder">FOUNDER</button>
+      </div>
+
+      <div class="section-label">Personal links</div>
+      <div class="links">
+        <a class="link" href="https://t.me/nok_w" target="_blank" rel="noopener">Telegram ↗</a>
+        <a class="link" href="https://discord.com/users/1291423133789589581" target="_blank" rel="noopener">Discord ↗</a>
+        <a class="link" href="https://www.tiktok.com/@nok_vast" target="_blank" rel="noopener">TikTok ↗</a>
+        <a class="link" href="https://www.twitch.tv/nokyshka" target="_blank" rel="noopener">Twitch ↗</a>
+      </div>
+
+      <section class="server">
+        <button class="server-head" id="server-toggle" aria-expanded="true">
+          <strong>VASTNESS · MY SERVER</strong>
+          <span id="server-arrow">−</span>
+        </button>
+        <div class="server-content" id="server-content">
+          <a class="server-link" href="https://discord.gg/t5F4gEDwRu" target="_blank" rel="noopener">
+            <span>Discord server</span><span>↗</span>
+          </a>
+          <a class="server-link" href="https://www.tiktok.com/@vastness_ds" target="_blank" rel="noopener">
+            <span>TikTok server</span><span>↗</span>
+          </a>
+          <a class="server-link" href="https://t.me/Vastness_ds" target="_blank" rel="noopener">
+            <span>Telegram server</span><span>↗</span>
+          </a>
         </div>
-        <button class="play-btn" id="mainPlay" type="button" aria-label="Play background music">▶</button>
-      </div>
-      <div class="progress-wrap">
-        <input class="progress" id="mainProgress" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek background music">
-        <div class="times"><span id="mainCurrent">0:00</span><span id="mainDuration">--:--</span></div>
-      </div>
-      <div class="music-caption">Background track · Repeat automatically</div>
-    </article>
+      </section>
 
-    <article class="music-card">
+      <div class="footer">EST. IN SILENCE · BUILT BY NOK</div>
+    </section>
+
+    <section class="music">
       <div class="music-top">
-        <div class="album">◷</div>
-        <div class="track-info">
-          <div class="track-name">Second Track</div>
-          <div class="track-sub" id="secondStatus">Starts at 5:33</div>
+        <div class="music-art">♫</div>
+        <div class="music-info">
+          <div class="music-title">Background soundtrack</div>
+          <div class="music-sub" id="music-status">Nok · Ambient / YouTube</div>
         </div>
-        <button class="play-btn" id="secondPlay" type="button" aria-label="Play second track">▶</button>
+        <button class="play" id="play-button" aria-label="Play music">▶</button>
       </div>
-      <div class="progress-wrap">
-        <input class="progress" id="secondProgress" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek second track">
-        <div class="times"><span id="secondCurrent">5:33</span><span id="secondDuration">--:--</span></div>
+      <div class="track-row">
+        <span class="time" id="current-time">0:00</span>
+        <input id="music-seek" type="range" min="0" max="100" value="0" aria-label="Music progress">
+        <span class="time" id="total-time">--:--</span>
       </div>
-      <div class="music-caption">Separate track · Playing it pauses the background music</div>
-    </article>
-  </section>
+      <div class="music-note" id="music-note">
+        Нажми ▶, чтобы включить музыку. Автовоспроизведение со звуком может блокироваться браузером.
+      </div>
+    </section>
+  </div>
 </main>
 
-<aside class="quotes" aria-label="Favourite quotes">
-  <article class="quote"><div class="quote-label">Bleach</div><p class="quote-text">No one stands at the top of the heavens from the very beginning.</p><span class="quote-source">Sōsuke Aizen · translation varies</span></article>
-  <article class="quote"><div class="quote-label">Vinland Saga</div><p class="quote-text">I have no enemies.</p><span class="quote-source">Thorfinn</span></article>
-  <article class="quote"><div class="quote-label">Tokyo Ghoul</div><p class="quote-text">1000 − 7</p><span class="quote-source">A number that says enough.</span></article>
-</aside>
+<button class="corner-btn" id="theme-toggle">THEME · BLACK</button>
+<button class="corner-btn side-toggle" id="open-quotes">✦ EXPLORE</button>
 
-<div class="controls">
-  <button class="control" id="themeButton" type="button"><span class="control-icon">◐</span><span id="themeLabel">Theme: Black</span></button>
+<section id="quote-screen" aria-label="Interactive quote cards">
+  <div class="quote-top">
+    <div class="quote-heading">Fragments of a mind</div>
+    <button class="close-quotes" id="close-quotes">✕ CLOSE</button>
+  </div>
+  <div id="quote-stage"></div>
+  <div class="quote-counter" id="quote-counter">CLICKS · 0</div>
+</section>
+
+<div class="modal-backdrop" id="role-modal">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="role-title">
+    <h2 id="role-title"></h2>
+    <p id="role-description"></p>
+    <div class="modal-actions">
+      <a class="modal-btn primary" id="role-contact" href="https://t.me/nokyshka" target="_blank" rel="noopener">Nok Developer ↗</a>
+      <button class="modal-btn" data-close="role-modal">Close</button>
+    </div>
+  </section>
 </div>
-<div class="copyright">NOK © <span id="year"></span></div>
-<div class="notice" id="notice" role="status" aria-live="polite"></div>
-<div id="musicPlayers" aria-hidden="true"><div id="playerOne"></div><div id="playerTwo"></div></div>
+
+<div class="modal-backdrop" id="secret-modal">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="secret-title">
+    <div class="secret-count" id="secret-count">SYSTEM MESSAGE</div>
+    <h2 id="secret-title">...</h2>
+    <p id="secret-description"></p>
+    <div class="modal-actions" style="justify-content:center">
+      <button class="modal-btn primary" id="secret-continue">Continue</button>
+      <button class="modal-btn" id="secret-close">Close</button>
+    </div>
+  </section>
+</div>
 
 <script>
-(() => {
-  "use strict";
-  const $ = id => document.getElementById(id);
-  const notice = $("notice");
-  let noticeTimer;
-  function say(message) {
-    notice.textContent = message;
-    notice.classList.add("show");
-    clearTimeout(noticeTimer);
-    noticeTimer = setTimeout(() => notice.classList.remove("show"), 2800);
+/* ---------- THEME ---------- */
+const themes = [
+  {name:"BLACK",className:""},
+  {name:"WHITE",className:"white"},
+  {name:"GRAY",className:"gray"}
+];
+let themeIndex = 0;
+document.getElementById("theme-toggle").addEventListener("click",()=>{
+  document.body.classList.remove("white","gray");
+  themeIndex = (themeIndex + 1) % themes.length;
+  if(themes[themeIndex].className){
+    document.body.classList.add(themes[themeIndex].className);
   }
+  document.getElementById("theme-toggle").textContent =
+    "THEME · " + themes[themeIndex].name;
+});
 
-  // Place avatar.jpg in the repository root to show your own image.
-  const avatarImage = new Image();
-  avatarImage.alt = "Nok avatar";
-  avatarImage.src = "avatar.jpg";
-  avatarImage.onload = () => $("avatar").replaceChildren(avatarImage);
-  avatarImage.onerror = () => { $("avatarFallback").textContent = "N"; };
+/* ---------- VASTNESS SERVER BOX ---------- */
+const serverToggle = document.getElementById("server-toggle");
+const serverContent = document.getElementById("server-content");
+serverToggle.addEventListener("click",()=>{
+  const closed = serverContent.classList.toggle("closed");
+  serverToggle.setAttribute("aria-expanded",String(!closed));
+  document.getElementById("server-arrow").textContent = closed ? "+" : "−";
+});
 
-  $("year").textContent = new Date().getFullYear();
-
-  // Theme cycling
-  const themes = ["black", "white", "gray"];
-  const themeNames = { black:"Black", white:"White", gray:"Gray" };
-  let themeIndex = 0;
-  $("themeButton").addEventListener("click", () => {
-    themeIndex = (themeIndex + 1) % themes.length;
-    const theme = themes[themeIndex];
-    document.documentElement.dataset.theme = theme;
-    $("themeLabel").textContent = "Theme: " + themeNames[theme];
-    document.querySelector('meta[name="theme-color"]').content =
-      theme === "white" ? "#e9edf1" : theme === "gray" ? "#252a30" : "#080b10";
+/* ---------- ROLE MODALS ---------- */
+const roleInfo = {
+  designer:{
+    title:"Designer",
+    description:"Я занимаюсь визуальной частью цифровых проектов: оформлением профилей, интерфейсов, графикой и общей атмосферой проекта.\n\nЕсть идея для дизайна? Можешь написать мне, обсудим задачу и возможность заказа."
+  },
+  developer:{
+    title:"Developer",
+    description:"Я изучаю разработку и создаю цифровые проекты: сайты, небольшие инструменты и другие идеи, которые можно реализовать с помощью кода.\n\nПо поводу разработки сайта или другого проекта напиши мне в Telegram."
+  },
+  founder:{
+    title:"Founder · Vastness",
+    description:"Vastness — сообщество со своей атмосферой, оформлением и внутренними событиями. Я занимаюсь его развитием, концепцией и организацией.\n\nДля сотрудничества и вопросов о проектах — Telegram."
+  }
+};
+const roleModal = document.getElementById("role-modal");
+document.querySelectorAll("[data-role]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const info = roleInfo[button.dataset.role];
+    document.getElementById("role-title").textContent = info.title;
+    document.getElementById("role-description").textContent = info.description;
+    roleModal.classList.add("show");
   });
+});
 
-  // YouTube IFrame API: controls, seeking and repeat.
-  let mainPlayer = null, secondPlayer = null, apiLoading = false;
-  let mainReady = false, secondReady = false;
-  let seekingMain = false, seekingSecond = false;
-  let ticker = null;
+/* ---------- MODAL CLOSES ---------- */
+document.querySelectorAll("[data-close]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.getElementById(button.dataset.close).classList.remove("show");
+  });
+});
+document.querySelectorAll(".modal-backdrop").forEach(backdrop=>{
+  backdrop.addEventListener("click",event=>{
+    if(event.target===backdrop)backdrop.classList.remove("show");
+  });
+});
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"){
+    document.querySelectorAll(".modal-backdrop.show").forEach(el=>el.classList.remove("show"));
+  }
+});
 
-  const tracks = {
-    main: {
-      player: () => mainPlayer, id: "main",
-      play: $("mainPlay"), progress: $("mainProgress"),
-      current: $("mainCurrent"), duration: $("mainDuration"),
-      status: $("mainStatus"), start: 0
+/* ---------- YOUTUBE MUSIC ---------- */
+/* Only the long track is used. No second music player. */
+const TRACK_ID = "yYrUpbK6_MI";
+let player = null;
+let playerReady = false;
+let musicPlaying = false;
+let seekDragging = false;
+const playButton = document.getElementById("play-button");
+const musicStatus = document.getElementById("music-status");
+const musicNote = document.getElementById("music-note");
+const seek = document.getElementById("music-seek");
+
+function loadYouTubeAPI(){
+  const script = document.createElement("script");
+  script.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(script);
+}
+window.onYouTubeIframeAPIReady = function(){
+  player = new YT.Player("youtube-player",{
+    width:"2",height:"2",
+    videoId:TRACK_ID,
+    playerVars:{
+      autoplay:0,controls:0,disablekb:1,playsinline:1,
+      rel:0,loop:1,playlist:TRACK_ID
     },
-    second: {
-      player: () => secondPlayer, id: "second",
-      play: $("secondPlay"), progress: $("secondProgress"),
-      current: $("secondCurrent"), duration: $("secondDuration"),
-      status: $("secondStatus"), start: 333
+    events:{
+      onReady:()=>{
+        playerReady = true;
+        musicStatus.textContent = "Ready · Long background track";
+        musicNote.textContent = "Нажми ▶ для воспроизведения. Если трек недоступен, проверь настройки видео на YouTube.";
+      },
+      onStateChange:event=>{
+        if(event.data===YT.PlayerState.PLAYING){
+          musicPlaying = true;
+          playButton.textContent = "Ⅱ";
+          playButton.setAttribute("aria-label","Pause music");
+          musicStatus.textContent = "Now playing";
+        }else if(event.data===YT.PlayerState.PAUSED){
+          musicPlaying = false;
+          playButton.textContent = "▶";
+          playButton.setAttribute("aria-label","Play music");
+          musicStatus.textContent = "Paused";
+        }else if(event.data===YT.PlayerState.ENDED){
+          player.seekTo(0,true);
+          player.playVideo();
+        }else if(event.data===YT.PlayerState.BUFFERING){
+          musicStatus.textContent = "Loading…";
+        }
+      },
+      onError:()=>{
+        musicStatus.textContent = "Track unavailable";
+        musicNote.textContent = "YouTube не разрешил воспроизведение этого видео. Возможно, владелец ограничил встраивание.";
+      }
+    }
+  });
+};
+loadYouTubeAPI();
+
+playButton.addEventListener("click",()=>{
+  if(!playerReady || !player){
+    musicNote.textContent = "Плеер загружается. Подожди несколько секунд и нажми ещё раз.";
+    return;
+  }
+  if(musicPlaying){
+    player.pauseVideo();
+  }else{
+    player.playVideo();
+  }
+});
+
+function formatTime(seconds){
+  if(!Number.isFinite(seconds)||seconds<0)return "0:00";
+  seconds=Math.floor(seconds);
+  const mins=Math.floor(seconds/60);
+  const secs=seconds%60;
+  return mins+":"+String(secs).padStart(2,"0");
+}
+seek.addEventListener("input",()=>{
+  seekDragging=true;
+});
+seek.addEventListener("change",()=>{
+  if(playerReady&&player){
+    const duration=player.getDuration();
+    if(duration>0)player.seekTo(duration*(Number(seek.value)/100),true);
+  }
+  seekDragging=false;
+});
+setInterval(()=>{
+  if(!playerReady||!player||typeof player.getCurrentTime!=="function")return;
+  try{
+    const current=player.getCurrentTime();
+    const duration=player.getDuration();
+    if(!seekDragging&&duration>0)seek.value=String((current/duration)*100);
+    document.getElementById("current-time").textContent=formatTime(current);
+    document.getElementById("total-time").textContent=formatTime(duration);
+  }catch(e){}
+},500);
+
+/* ---------- FULLSCREEN RANDOM QUOTE GAME ---------- */
+const quoteData = [
+  ["BLEACH","No one stands at the top of the heavens from the very beginning."],
+  ["VINLAND SAGA","I have no enemies."],
+  ["TOKYO GHOUL","1000 − 7"],
+  ["PSYCHOPATHY","A calm face can hide a complicated mind."],
+  ["APATHY","Sometimes silence says more than words."],
+  ["DARK TRIAD","Machiavellianism. Narcissism. Psychopathy."],
+  ["DEPRESSION","Not every quiet person is okay."],
+  ["ANIME","I love anime. There is a world in every story."],
+  ["VASTNESS","Freedom begins where fear loses control."],
+  ["OBSERVER","You see what you are ready to notice."],
+  ["DOX / SNOS","Telegram underground aesthetic · fictional persona."],
+  ["LOVE","Even in a dark world, kindness still matters."],
+  ["NOK","Some things are better left unexplained."],
+  ["MINDSET","Not everything needs a reaction."],
+  ["NIGHT","The city is quieter when everyone else sleeps."]
+];
+
+const quoteScreen = document.getElementById("quote-screen");
+const quoteStage = document.getElementById("quote-stage");
+const quoteCounter = document.getElementById("quote-counter");
+const cardWidth = ()=>Math.min(240,window.innerWidth-32);
+let totalClicks = 0;
+let gameStarted = false;
+let quoteCards = [];
+let layoutTimer = null;
+
+function rectsOverlap(a,b,pad=12){
+  return !(a.x+a.w+pad<=b.x || b.x+b.w+pad<=a.x ||
+           a.y+a.h+pad<=b.y || b.y+b.h+pad<=a.y);
+}
+function randomPosition(w,h,existing){
+  const margin=12;
+  const topReserve=68,bottomReserve=62;
+  const maxX=Math.max(margin,window.innerWidth-w-margin);
+  const maxY=Math.max(topReserve,window.innerHeight-h-bottomReserve);
+  for(let attempt=0;attempt<180;attempt++){
+    const x=margin+Math.random()*(maxX-margin);
+    const y=topReserve+Math.random()*(maxY-topReserve);
+    const rect={x,y,w,h};
+    if(existing.every(other=>!rectsOverlap(rect,other,14)))return rect;
+  }
+  /* If the viewport is too small for every card, use a non-overlapping grid. */
+  const cols=Math.max(1,Math.floor((window.innerWidth-margin*2)/(w+10)));
+  const index=existing.length;
+  return {
+    x:margin+(index%cols)*(w+10),
+    y:topReserve+Math.floor(index/cols)*(h+10),
+    w,h
+  };
+}
+function placeCard(card,existing){
+  const width=cardWidth();
+  card.style.width=width+"px";
+  card.style.left="0px";
+  card.style.top="0px";
+  card.style.visibility="hidden";
+  quoteStage.appendChild(card);
+  const h=card.offsetHeight;
+  const pos=randomPosition(width,h,existing);
+  card.style.left=pos.x+"px";
+  card.style.top=pos.y+"px";
+  card.style.visibility="visible";
+  return pos;
+}
+function createQuoteCard(data){
+  const card=document.createElement("article");
+  card.className="quote-card";
+  card.tabIndex=0;
+  card.setAttribute("role","button");
+  card.setAttribute("aria-label","Quote card: "+data[0]);
+  const tag=document.createElement("div");
+  tag.className="tag";tag.textContent=data[0];
+  const quote=document.createElement("div");
+  quote.className="quote-text";quote.textContent=data[1];
+  const hint=document.createElement("div");
+  hint.className="hint";hint.textContent="click to reveal";
+  card.append(tag,quote,hint);
+  card.addEventListener("click",()=>clickQuoteCard(card));
+  card.addEventListener("keydown",event=>{
+    if(event.key==="Enter"||event.key===" "){
+      event.preventDefault();clickQuoteCard(card);
+    }
+  });
+  return card;
+}
+function heartEffect(x,y){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.textContent=["♥","♡","💙","♥"][Math.floor(Math.random()*4)];
+  heart.style.left=x+"px";heart.style.top=y+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),850);
+}
+function currentRects(except=null){
+  return [...quoteStage.querySelectorAll(".quote-card")]
+    .filter(card=>card!==except)
+    .map(card=>({
+      x:parseFloat(card.style.left)||0,
+      y:parseFloat(card.style.top)||0,
+      w:card.offsetWidth,h:card.offsetHeight
+    }));
+}
+function respawnCard(oldCard){
+  const data=quoteData[Math.floor(Math.random()*quoteData.length)];
+  const replacement=createQuoteCard(data);
+  oldCard.style.animation="cardOut .22s ease forwards";
+  setTimeout(()=>{
+    const rects=currentRects(oldCard);
+    oldCard.remove();
+    placeCard(replacement,rects);
+  },220);
+}
+function clickQuoteCard(card){
+  totalClicks++;
+  quoteCounter.textContent="CLICKS · "+totalClicks;
+  const rect=card.getBoundingClientRect();
+  heartEffect(rect.left+rect.width/2,rect.top+rect.height/2);
+  respawnCard(card);
+  showSecretAtMilestone(totalClicks);
+}
+function startQuoteGame(){
+  if(gameStarted)return;
+  gameStarted=true;
+  quoteStage.innerHTML="";
+  quoteCards=[];
+  /* Start with a modest number; respawning keeps the game endless. */
+  const count=Math.min(8,Math.max(4,Math.floor((window.innerWidth*window.innerHeight)/85000)));
+  const used=[];
+  for(let i=0;i<count;i++){
+    const data=quoteData[Math.floor(Math.random()*quoteData.length)];
+    const card=createQuoteCard(data);
+    const rect=placeCard(card,used);
+    used.push(rect);
+    quoteCards.push(card);
+  }
+}
+function openQuoteScreen(){
+  quoteScreen.classList.add("active");
+  document.getElementById("app").style.display="none";
+  document.getElementById("theme-toggle").style.display="none";
+  document.getElementById("open-quotes").style.display="none";
+  startQuoteGame();
+  setTimeout(repositionCards,50);
+}
+function closeQuoteScreen(){
+  quoteScreen.classList.remove("active");
+  document.getElementById("app").style.display="";
+  document.getElementById("theme-toggle").style.display="";
+  document.getElementById("open-quotes").style.display="";
+}
+document.getElementById("open-quotes").addEventListener("click",openQuoteScreen);
+document.getElementById("close-quotes").addEventListener("click",closeQuoteScreen);
+
+function repositionCards(){
+  if(!quoteScreen.classList.contains("active"))return;
+  const cards=[...quoteStage.querySelectorAll(".quote-card")];
+  const used=[];
+  cards.forEach(card=>{
+    card.style.width=cardWidth()+"px";
+    const rect=placeCard(card,used);
+    used.push(rect);
+  });
+}
+window.addEventListener("resize",()=>{
+  clearTimeout(layoutTimer);
+  layoutTimer=setTimeout(repositionCards,100);
+});
+
+/* ---------- SECRET MESSAGES ---------- */
+const milestones={
+  3:{
+    title:"Остановись спокойно.",
+    description:"Ты просто нажал на карточки. Пока всё нормально.",
+    color:"#b4c7dd"
+  },
+  5:{
+    title:"Спокойно...",
+    description:"Ты ведь заметил, что сообщения меняются?",
+    color:"#d7a8a8"
+  },
+  10:{
+    title:"Я тебя умоляю, прекрати.",
+    description:"Зачем ты продолжаешь? Здесь больше нечего искать... наверное.",
+    color:"#ed7777"
+  },
+  20:{
+    title:"Остановись, а то будут последствия.",
+    description:"Ты уже зашёл дальше, чем большинство. Может, хватит?",
+    color:"#ff4545"
+  },
+  50:{
+    title:"Они тебя уже ждут. Ты умрёшь.",
+    description:"...Тишина. Кажется, это конец.",
+    color:"#ff1717",
+    final:true
+  }
+};
+let finalRevealStage=0;
+const secretModal=document.getElementById("secret-modal");
+const secretTitle=document.getElementById("secret-title");
+const secretDescription=document.getElementById("secret-description");
+const secretCount=document.getElementById("secret-count");
+const secretContinue=document.getElementById("secret-continue");
+const secretClose=document.getElementById("secret-close");
+
+function showSecretAtMilestone(count){
+  const info=milestones[count];
+  if(!info)return;
+  secretTitle.textContent=info.title;
+  secretDescription.textContent=info.description;
+  secretTitle.style.color=info.color;
+  secretCount.textContent="SYSTEM MESSAGE · "+count;
+  secretContinue.textContent=info.final?"...":"Continue";
+  secretContinue.style.display="inline-block";
+  secretClose.style.display="inline-block";
+  secretContinue.onclick=()=>{
+    if(info.final){
+      showFinalReveal();
+    }else{
+      secretModal.classList.remove("show");
     }
   };
-
-  function fmt(seconds) {
-    if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
-    seconds = Math.floor(seconds);
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = seconds % 60;
-    return h ? `${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}` :
-      `${m}:${String(s).padStart(2,"0")}`;
-  }
-
-  function stateChange(track, event) {
-    const Y = window.YT;
-    if (!Y) return;
-    const player = track.player();
-    if (!player) return;
-    const state = event.data;
-    if (state === Y.PlayerState.PLAYING) {
-      track.play.textContent = "Ⅱ";
-      track.play.setAttribute("aria-label", "Pause " + track.id + " track");
-      track.status.textContent = track.id === "main" ? "Playing · Loop enabled" : "Playing · Starts at 5:33";
-      if (track.id === "main" && secondPlayer) secondPlayer.pauseVideo();
-      if (track.id === "second" && mainPlayer) mainPlayer.pauseVideo();
-      startTicker();
-    } else if (state === Y.PlayerState.PAUSED || state === Y.PlayerState.ENDED) {
-      track.play.textContent = "▶";
-      track.play.setAttribute("aria-label", "Play " + track.id + " track");
-      track.status.textContent = track.id === "main" ? "Paused · Loop enabled" : "Paused · Starts at 5:33";
-    }
-
-    if (state === Y.PlayerState.ENDED && track.id === "main") {
-      player.seekTo(0, true);
-      player.playVideo();
-    }
-    if (state === Y.PlayerState.ENDED && track.id === "second") {
-      player.seekTo(track.start, true);
-      player.playVideo();
-    }
-  }
-
-  function makePlayer(element, videoId, track) {
-    return new YT.Player(element, {
-      width:"1", height:"1", videoId,
-      playerVars: {
-        autoplay:0, controls:0, disablekb:1, fs:0,
-        playsinline:1, rel:0, start:track.start,
-        origin: location.origin
-      },
-      events: {
-        onReady: event => {
-          if (track.id === "main") mainReady = true;
-          else secondReady = true;
-          const dur = event.target.getDuration();
-          if (dur > 0) track.duration.textContent = fmt(dur);
-          if (track.id === "second") track.current.textContent = fmt(track.start);
-        },
-        onStateChange: event => stateChange(track, event),
-        onError: () => say("This track could not be embedded by YouTube.")
-      }
-    });
-  }
-
-  function loadApi() {
-    if (window.YT && window.YT.Player) { createPlayers(); return; }
-    if (apiLoading) return;
-    apiLoading = true;
-    window.onYouTubeIframeAPIReady = createPlayers;
-    const script = document.createElement("script");
-    script.src = "https://www.youtube.com/iframe_api";
-    script.async = true;
-    script.onerror = () => { apiLoading = false; say("Could not load the YouTube player."); };
-    document.head.appendChild(script);
-  }
-
-  function createPlayers() {
-    if (mainPlayer || !window.YT || !window.YT.Player) return;
-    mainPlayer = makePlayer("playerOne", "yYrUpbK6_MI", tracks.main);
-    secondPlayer = makePlayer("playerTwo", "IEqIS84uyz4", tracks.second);
-  }
-
-  function startTicker() {
-    if (ticker) return;
-    ticker = setInterval(() => {
-      updateProgress(tracks.main, seekingMain);
-      updateProgress(tracks.second, seekingSecond);
-    }, 500);
-  }
-
-  function updateProgress(track, seeking) {
-    const p = track.player();
-    if (!p || seeking) return;
-    try {
-      const current = p.getCurrentTime();
-      const duration = p.getDuration();
-      if (Number.isFinite(current)) track.current.textContent = fmt(current);
-      if (Number.isFinite(duration) && duration > 0) {
-        track.duration.textContent = fmt(duration);
-        track.progress.value = String(Math.round(current / duration * 1000));
-      }
-    } catch {}
-  }
-
-  function toggle(track, ready, other) {
-    if (!track.player()) {
-      loadApi();
-      say("Loading music player. Tap Play again in a moment.");
-      return;
-    }
-    if (!ready) {
-      say("The player is still loading. Try again shortly.");
-      return;
-    }
-    const p = track.player();
-    try {
-      if (p.getPlayerState() === YT.PlayerState.PLAYING) {
-        p.pauseVideo();
-      } else {
-        if (other.player()) other.player().pauseVideo();
-        if (track.id === "second" && p.getCurrentTime() < track.start) {
-          p.seekTo(track.start, true);
-        }
-        p.playVideo();
-      }
-    } catch { say("The player is temporarily unavailable."); }
-  }
-
-  $("mainPlay").addEventListener("click", () => toggle(tracks.main, mainReady, tracks.second));
-  $("secondPlay").addEventListener("click", () => toggle(tracks.second, secondReady, tracks.main));
-
-  tracks.main.progress.addEventListener("input", () => { seekingMain = true; });
-  tracks.main.progress.addEventListener("change", () => {
-    if (mainPlayer && mainReady) {
-      const duration = mainPlayer.getDuration();
-      mainPlayer.seekTo(duration * Number(tracks.main.progress.value) / 1000, true);
-    }
-    seekingMain = false;
-  });
-  tracks.second.progress.addEventListener("input", () => { seekingSecond = true; });
-  tracks.second.progress.addEventListener("change", () => {
-    if (secondPlayer && secondReady) {
-      const duration = secondPlayer.getDuration();
-      secondPlayer.seekTo(duration * Number(tracks.second.progress.value) / 1000, true);
-    }
-    seekingSecond = false;
-  });
-
-  // Load the YouTube API only after the visitor requests playback.
-  $("mainPlay").addEventListener("pointerdown", () => { if (!mainPlayer) loadApi(); }, { once:true });
-  $("secondPlay").addEventListener("pointerdown", () => { if (!secondPlayer) loadApi(); }, { once:true });
-})();
+  secretClose.onclick=()=>secretModal.classList.remove("show");
+  secretModal.classList.add("show");
+}
+function showFinalReveal(){
+  secretTitle.textContent="Ты добрался до секретного текста";
+  secretTitle.style.color="#8bd6a8";
+  secretCount.textContent="SECRET UNLOCKED · 50+";
+  secretDescription.textContent="Я пошутил. Всё с тобой будет хорошо. ♡\n\nСпасибо, что дошёл до конца. Береги себя и не забывай: за любой тёмной атмосферой может скрываться что-то хорошее. 💙☺️";
+  secretContinue.style.display="none";
+  secretClose.textContent="Всё хорошо 💙";
+  secretClose.style.display="inline-block";
+  secretClose.onclick=()=>{
+    secretModal.classList.remove("show");
+    secretClose.textContent="Close";
+  };
+}
 </script>
 </body>
 </html>
