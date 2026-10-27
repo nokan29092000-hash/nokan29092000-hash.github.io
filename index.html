@@ -1,94 +1,105 @@
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080d14">
 <title>Nok — Personal Space</title>
 <meta name="description" content="Nok — designer, developer and founder of Vastness.">
+
 <style>
 :root {
   --bg:#080d14;
-  --card:rgba(12,20,31,.84);
+  --card:rgba(12,20,31,.88);
   --text:#e8eef7;
   --muted:#8999ad;
   --accent:#5b9dff;
   --border:rgba(130,170,220,.20);
   --shadow:0 20px 70px #0008;
+  --profile-border:rgba(130,170,220,.3);
 }
 *{box-sizing:border-box}
+html{min-height:100%;background:var(--bg)}
 body{
   margin:0;min-height:100vh;background:var(--bg);color:var(--text);
   font-family:Inter,Segoe UI,Arial,sans-serif;overflow-x:hidden;
   transition:background .3s,color .3s;
 }
-body.white{
-  --bg:#e9edf2;--card:rgba(255,255,255,.91);--text:#17202d;
-  --muted:#5f6d7d;--accent:#2467bd;--border:#cbd4e0;
+button,input,select{font:inherit}
+button{color:inherit;cursor:pointer}
+a{color:inherit;text-decoration:none}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{
+  outline:2px solid var(--accent);outline-offset:4px
 }
-body.gray{
-  --bg:#252a31;--card:rgba(36,43,53,.92);--text:#e5e8ed;
+body.theme-white{
+  --bg:#e9edf2;--card:rgba(255,255,255,.93);--text:#17202d;
+  --muted:#5f6d7d;--accent:#2467bd;--border:#cbd4e0;
+  --profile-border:#cbd4e0;
+}
+body.theme-gray{
+  --bg:#252a31;--card:rgba(36,43,53,.94);--text:#e5e8ed;
   --muted:#a0a9b6;--accent:#81b8ff;--border:#444e5c;
+  --profile-border:#444e5c;
 }
 #background-video{
   position:fixed;inset:0;width:100%;height:100%;object-fit:cover;
-  z-index:-3;filter:brightness(.62) contrast(1.16) saturate(.72);
+  z-index:-3;filter:brightness(.62) contrast(1.16) saturate(.72)
 }
 .bg-overlay{
   position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:linear-gradient(135deg,#060b12a8,#07111dd9),
-    radial-gradient(ellipse at 50% 40%,transparent,#03060be8);
+  background:linear-gradient(135deg,#060b12b8,#07111de8),
+  radial-gradient(ellipse at 50% 40%,transparent,#03060bf0);
 }
-body.white .bg-overlay{background:#e9edf2b8}
-body.gray .bg-overlay{background:#141a23c9}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+body.theme-white .bg-overlay{background:#e9edf2c7}
+body.theme-gray .bg-overlay{background:#141a23d4}
+
 #app{
   min-height:100vh;display:flex;align-items:center;justify-content:center;
-  padding:64px 18px 85px;transition:opacity .25s;
+  padding:32px 18px 36px;transition:opacity .25s;
 }
-.profile-wrap{width:min(100%,480px)}
+.profile-wrap{width:min(100%,540px)}
 .profile-card{
-  padding:30px;border:1px solid var(--border);border-radius:24px;
+  padding:34px;border:1px solid var(--profile-border);border-radius:24px;
   background:var(--card);backdrop-filter:blur(20px);
-  box-shadow:var(--shadow);text-align:center;
+  box-shadow:var(--shadow);text-align:center;transition:background .25s,border-color .25s;
 }
 .avatar{
-  width:112px;height:112px;object-fit:cover;border-radius:50%;
-  border:2px solid var(--accent);padding:4px;
-  background:var(--bg);box-shadow:0 0 35px #559cff24;
+  width:118px;height:118px;object-fit:cover;border-radius:50%;
+  border:2px solid var(--accent);padding:4px;background:var(--bg);
+  box-shadow:0 0 35px #559cff24;
 }
-.name{font-size:34px;letter-spacing:5px;margin:16px 0 7px;font-weight:750}
-.status{font-size:12px;color:var(--muted);letter-spacing:3px;text-transform:uppercase}
-.bio{font-size:14px;line-height:1.7;color:var(--muted);margin:18px auto 20px;max-width:330px}
+.name{font-size:36px;letter-spacing:5px;margin:16px 0 7px;font-weight:750}
+.bio{font-size:14px;line-height:1.7;color:var(--muted);margin:18px auto 20px;max-width:350px}
 .roles{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin:20px 0}
 .role{
   background:transparent;border:1px solid var(--border);border-radius:9px;
-  padding:9px 13px;font-size:10px;letter-spacing:1.7px;
-  transition:.2s;
+  padding:10px 14px;font-size:10px;letter-spacing:1.7px;transition:.2s;
 }
 .role:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
 .section-label{
-  text-align:left;font-size:10px;color:var(--muted);
-  letter-spacing:2.4px;text-transform:uppercase;margin:25px 0 10px;
+  text-align:left;font-size:10px;color:var(--muted);letter-spacing:2.4px;
+  text-transform:uppercase;margin:25px 0 10px;
 }
-.links{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.links{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .link{
-  border:1px solid var(--border);border-radius:10px;padding:12px 10px;
-  font-size:12px;background:#789acb08;transition:.2s;
+  display:grid;place-items:center;min-height:48px;
+  border:1px solid var(--border);border-radius:11px;
+  background:#789acb08;transition:.2s;
 }
-.link:hover{border-color:var(--accent);background:#5b9dff12;transform:translateY(-2px)}
+.link svg{width:19px;height:19px;fill:currentColor}
+.link:hover{border-color:var(--accent);color:var(--accent);background:#5b9dff12;transform:translateY(-2px)}
 .server{
-  margin-top:20px;border:1px solid var(--border);border-radius:13px;overflow:hidden;
-  text-align:left;
+  margin-top:20px;border:1px solid var(--border);border-radius:13px;
+  overflow:hidden;text-align:left;
 }
 .server-head{
   width:100%;display:flex;align-items:center;justify-content:space-between;
   border:0;background:#5b9dff0b;padding:15px 16px;font-size:13px;
 }
-.server-head strong{letter-spacing:1.3px}
+.server-title{display:flex;flex-direction:column;gap:5px}
+.server-title strong{letter-spacing:1.8px;font-size:13px}
+.server-title small{font-size:9px;color:var(--muted);letter-spacing:2.5px}
 .server-content{padding:0 12px 12px;display:grid;gap:8px}
 .server-content.closed{display:none}
 .server-link{
@@ -98,6 +109,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 }
 .server-link:hover{color:var(--text);border-color:var(--accent)}
 .server-link span:last-child{color:var(--accent)}
+.footer{margin-top:22px;color:var(--muted);font-size:10px;letter-spacing:2px}
+
 .music{
   margin-top:15px;border:1px solid var(--border);border-radius:16px;
   padding:15px;background:var(--card);backdrop-filter:blur(16px);
@@ -119,127 +132,185 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .track-row input{width:100%;accent-color:var(--accent);cursor:pointer}
 .time{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
 .music-note{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5}
-.footer{margin-top:15px;color:var(--muted);font-size:10px;letter-spacing:2px}
-#youtube-player{
-  position:fixed;width:2px;height:2px;right:0;bottom:0;
-  opacity:.01;pointer-events:none;z-index:-5;
-}
+#youtube-player{position:fixed;width:2px;height:2px;right:0;bottom:0;opacity:.01;pointer-events:none;z-index:-5}
+
+/* Floating controls */
 .corner-btn{
-  position:fixed;z-index:20;bottom:20px;left:20px;
+  position:fixed;z-index:25;bottom:20px;
   background:var(--card);border:1px solid var(--border);
-  border-radius:11px;padding:11px 14px;font-size:11px;
+  border-radius:11px;padding:12px 14px;font-size:11px;
   backdrop-filter:blur(14px);box-shadow:var(--shadow);
 }
-.side-toggle{left:auto;right:20px}
+#settings-open{top:18px;bottom:auto;left:18px;display:flex;gap:9px;align-items:center}
+#secret-open{right:20px;display:flex;align-items:center;gap:9px}
+.secret-person{width:18px;height:18px;display:block}
+.secret-person svg{width:100%;height:100%;fill:currentColor}
+
+/* Settings drawer */
+#settings-shade{
+  position:fixed;inset:0;background:#02050ac2;z-index:49;
+  opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;
+}
+#settings-shade.open{opacity:1;visibility:visible}
+#settings-panel{
+  position:fixed;z-index:50;inset:0 auto 0 0;width:35vw;min-width:340px;max-width:520px;
+  padding:25px 25px 30px;background:var(--card);color:var(--text);
+  border-right:1px solid var(--border);backdrop-filter:blur(25px);
+  box-shadow:20px 0 70px #0005;overflow-y:auto;
+  transform:translateX(-105%);transition:transform .3s ease;
+}
+#settings-panel.open{transform:translateX(0)}
+.settings-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px}
+.settings-header h2{font-size:15px;letter-spacing:3px;margin:0}
+.icon-button{
+  border:1px solid var(--border);border-radius:9px;background:transparent;
+  width:38px;height:38px;font-size:18px;
+}
+.setting-group{border-top:1px solid var(--border);padding:19px 0}
+.setting-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:13px}
+.setting-help{font-size:11px;color:var(--muted);line-height:1.6;margin:8px 0 0}
+.setting-label{font-size:12px;color:var(--muted);display:block;margin:13px 0 8px}
+.setting-select{
+  width:100%;padding:11px;border:1px solid var(--border);border-radius:9px;
+  background:var(--bg);color:var(--text);
+}
+.range-line{display:flex;align-items:center;gap:12px}
+.range-line input{flex:1;min-width:0;accent-color:var(--accent)}
+.range-value{font-size:11px;color:var(--muted);width:42px;text-align:right}
+.setting-actions{display:flex;gap:8px;margin-top:12px}
+.small-button{
+  border:1px solid var(--border);background:transparent;border-radius:9px;
+  padding:9px 12px;font-size:11px;
+}
+.small-button.active{background:var(--accent);color:#08111e;border-color:var(--accent)}
+.palette{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.swatch{
+  display:flex;align-items:center;gap:7px;padding:8px 6px;
+  border:1px solid var(--border);border-radius:8px;background:transparent;
+  font-size:10px;min-width:0;
+}
+.swatch-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;border:1px solid #ffffff35}
+.swatch.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+
+/* Secret room */
 #quote-screen{
-  display:none;position:fixed;inset:0;z-index:15;overflow:hidden;
-  background:var(--bg);
-  background-image:radial-gradient(ellipse at center,#162a4160,transparent 70%);
+  display:none;position:fixed;inset:0;z-index:30;overflow:auto;
+  background:#030507;color:#e8eef7;
 }
 #quote-screen.active{display:block}
+#secret-background{
+  position:fixed;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:brightness(.24) saturate(.65);z-index:-2;
+}
+.secret-overlay{position:fixed;inset:0;background:linear-gradient(#020306b8,#03050bd9);z-index:-1}
 .quote-top{
-  position:absolute;top:18px;left:18px;right:18px;
-  display:flex;justify-content:space-between;align-items:center;z-index:4;
-  pointer-events:none;
+  position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;
+  gap:12px;padding:18px 20px;z-index:4;background:#030507a8;backdrop-filter:blur(12px);
 }
-.quote-top>*{pointer-events:auto}
-.quote-heading{
-  font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);
-}
-.close-quotes{
-  border:1px solid var(--border);background:var(--card);border-radius:10px;
-  padding:10px 14px;font-size:12px;
-}
-.quote-counter{
-  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
-  font-size:11px;color:var(--muted);letter-spacing:2px;z-index:4;
-  background:var(--card);border:1px solid var(--border);border-radius:20px;
-  padding:9px 14px;white-space:nowrap;
+.quote-heading{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#aab5c5}
+.close-quotes{border:1px solid #ffffff2c;background:#080b11;border-radius:10px;padding:10px 14px;font-size:12px}
+#quote-stage{
+  min-height:calc(100vh - 115px);padding:18px 24px 75px;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(135px,1fr));
+  gap:14px;max-width:1500px;margin:0 auto;
 }
 .quote-card{
-  position:absolute;width:min(240px,calc(100vw - 32px));min-height:90px;
-  padding:16px 17px;border:1px solid var(--border);border-radius:15px;
-  background:var(--card);backdrop-filter:blur(15px);box-shadow:var(--shadow);
-  text-align:left;cursor:pointer;user-select:none;
-  animation:cardIn .35s ease both;transition:border-color .2s;
+  min-width:0;min-height:135px;padding:17px;border:1px solid #a4b4c72c;
+  border-radius:15px;background:rgba(8,12,19,.82);backdrop-filter:blur(15px);
+  box-shadow:0 15px 35px #0005;text-align:left;cursor:pointer;user-select:none;
+  animation:cardIn .35s ease both;transition:border-color .2s,background .2s;
+  display:flex;flex-direction:column;justify-content:center;
 }
-.quote-card:hover{border-color:var(--accent)}
-.quote-card .tag{
-  font-size:9px;letter-spacing:2px;color:var(--accent);
-  text-transform:uppercase;margin-bottom:10px;
+.quote-card:hover{border-color:#6c9fdb;background:rgba(16,25,38,.95)}
+.quote-card .tag{font-size:9px;letter-spacing:2px;color:#83b6ff;text-transform:uppercase;margin-bottom:10px}
+.quote-card .quote-text{font-size:13px;line-height:1.6}
+.quote-card .hint{font-size:10px;color:#77869a;margin-top:10px}
+.quote-counter{
+  position:fixed;bottom:17px;left:50%;transform:translateX(-50%);
+  font-size:11px;color:#aab5c5;letter-spacing:2px;z-index:4;
+  background:#080b11ed;border:1px solid #ffffff25;border-radius:20px;
+  padding:10px 15px;white-space:nowrap;
 }
-.quote-card .quote-text{font-size:13px;line-height:1.5}
-.quote-card .hint{font-size:10px;color:var(--muted);margin-top:10px}
-@keyframes cardIn{
-  from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}
-}
-@keyframes cardOut{to{opacity:0;transform:scale(.65) rotate(5deg)}}
+@keyframes cardIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
 @keyframes heartPop{
   0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}
   35%{opacity:1;transform:translate(-50%,-75%) scale(1.3)}
   100%{opacity:0;transform:translate(-50%,-140%) scale(1)}
 }
-.heart{
-  position:fixed;z-index:30;pointer-events:none;font-size:28px;
-  animation:heartPop .8s ease forwards;
+.heart{position:fixed;z-index:60;pointer-events:none;font-size:28px;animation:heartPop .8s ease forwards}
+.glitch{animation:glitchEffect .22s steps(2,end) 3}
+@keyframes glitchEffect{
+  0%{filter:none;transform:translateX(0)}
+  25%{filter:contrast(1.8);transform:translateX(-2px)}
+  50%{filter:brightness(.65);transform:translateX(2px)}
+  75%{filter:contrast(1.5);transform:translateX(-1px)}
+  100%{filter:none;transform:translateX(0)}
 }
+
+/* Dialogs */
 .modal-backdrop{
-  position:fixed;inset:0;z-index:40;display:none;align-items:center;
+  position:fixed;inset:0;z-index:70;display:none;align-items:center;
   justify-content:center;padding:20px;background:#03070bd9;backdrop-filter:blur(9px);
 }
 .modal-backdrop.show{display:flex}
 .modal{
   width:min(100%,410px);border:1px solid var(--border);border-radius:18px;
-  padding:25px;background:var(--card);box-shadow:var(--shadow);
-  animation:cardIn .25s ease;
+  padding:25px;background:var(--card);box-shadow:var(--shadow);animation:cardIn .25s ease;
 }
 .modal h2{font-size:18px;margin:0 0 13px;letter-spacing:1px}
 .modal p{font-size:13px;line-height:1.8;color:var(--muted);white-space:pre-line}
 .modal-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
-.modal-btn{
-  border:1px solid var(--border);background:#5b9dff10;border-radius:9px;
-  padding:11px 14px;font-size:12px;
-}
+.modal-btn{border:1px solid var(--border);background:#5b9dff10;border-radius:9px;padding:11px 14px;font-size:12px}
 .modal-btn.primary{background:var(--accent);color:#08111e;border-color:var(--accent)}
 #secret-modal .modal{text-align:center}
 #secret-modal h2{font-size:19px;letter-spacing:1px}
 #secret-modal .modal p{font-size:14px}
 .secret-count{font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:16px}
-@media(max-width:500px){
-  #app{padding:62px 12px 80px}
-  .profile-card{padding:23px 17px}
-  .name{font-size:29px}
-  .corner-btn{bottom:12px;left:12px}
-  .side-toggle{left:auto;right:12px}
-  .quote-card{width:min(205px,calc(100vw - 24px));padding:13px}
+
+@media(max-width:900px){
+  #settings-panel{width:55vw}
+  #quote-stage{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:none}
+  .quote-card{min-height:145px}
+}
+@media(max-width:600px){
+  #app{padding:72px 12px 82px}
+  .profile-card{padding:25px 17px}
+  .name{font-size:30px}
+  .avatar{width:104px;height:104px}
+  #settings-panel{width:88vw;min-width:0;padding:22px 18px}
+  .palette{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #settings-open{top:12px;left:12px}
+  #secret-open{bottom:12px;right:12px}
+  #quote-stage{grid-template-columns:repeat(2,minmax(0,1fr));padding:14px 12px 80px;gap:10px}
+  .quote-card{min-height:145px;padding:13px}
   .quote-card .quote-text{font-size:12px}
+  .quote-top{padding:14px 12px}
+}
+@media(max-width:360px){
+  #quote-stage{grid-template-columns:1fr}
+  .links{gap:7px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
-<body>
 
+<body>
 <video id="background-video" autoplay muted loop playsinline preload="auto">
   <source src="https://www.shutterstock.com/shutterstock/videos/3806259979/preview/stock-footage-flickering-glitch-visuals-with-grungy-overlays-code-fragments-and-digital-static-ideal-for.webm" type="video/webm">
 </video>
 <div class="bg-overlay"></div>
-
-<!-- YouTube background music: long track only -->
 <div id="youtube-player"></div>
 
 <main id="app">
   <div class="profile-wrap">
-    <section class="profile-card">
+    <section class="profile-card" id="profile-card">
       <img class="avatar" src="avatar.jpg" alt="Nok avatar"
         onerror="this.onerror=null;this.src='https://placehold.co/200x200/101a29/7caeff?text=NOK';">
 
       <h1 class="name">Nok</h1>
-      <div class="status">Independent mind · Vastness</div>
-      <p class="bio">
-        Designer and developer. Creating things that reflect who I am.
-      </p>
+      <p class="bio">Designer and developer. Creating things that reflect who I am.</p>
 
       <div class="roles">
         <button class="role" data-role="designer">DESIGNER</button>
@@ -249,15 +320,26 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 
       <div class="section-label">Personal links</div>
       <div class="links">
-        <a class="link" href="https://t.me/nok_w" target="_blank" rel="noopener">Telegram ↗</a>
-        <a class="link" href="https://discord.com/users/1291423133789589581" target="_blank" rel="noopener">Discord ↗</a>
-        <a class="link" href="https://www.tiktok.com/@nok_vast" target="_blank" rel="noopener">TikTok ↗</a>
-        <a class="link" href="https://www.twitch.tv/nokyshka" target="_blank" rel="noopener">Twitch ↗</a>
+        <a class="link" href="https://t.me/nok_w" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 4.2 18.4 20c-.2 1.1-.8 1.4-1.7.9l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.4-4.9 8.9-8.1c.4-.4-.1-.6-.6-.2L6.3 14 1.6 12.5c-1-.3-1-1 .2-1.5L20.2 3.9c.9-.3 1.7.2 1.4.3Z"/></svg>
+        </a>
+        <a class="link" href="https://discord.com/users/1291423133789589581" target="_blank" rel="noopener" aria-label="Discord" title="Discord">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.7 5.3A18 18 0 0 0 15.3 4l-.5 1a16 16 0 0 0-5.6 0l-.5-1a18 18 0 0 0-4.4 1.3C1.5 9.4.8 13.4 1.2 17.3a18 18 0 0 0 5.4 2.7l1.2-2a11 11 0 0 1-1.9-.9l.5-.4a13 13 0 0 0 11.2 0l.5.4a11 11 0 0 1-1.9.9l1.2 2a18 18 0 0 0 5.4-2.7c.5-4.5-.8-8.4-3.1-12ZM8.7 14.8c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
+        </a>
+        <a class="link" href="https://www.tiktok.com/@nok_vast" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.6 7.1a6.9 6.9 0 0 1-4.2-1.4v9.1a6.1 6.1 0 1 1-5.3-6.1v3.2a3 3 0 1 0 2.1 2.9V2.5h3.2a6.8 6.8 0 0 0 4.2 4.3v.3Z"/></svg>
+        </a>
+        <a class="link" href="https://www.twitch.tv/nokyshka" target="_blank" rel="noopener" aria-label="Twitch" title="Twitch">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2 1.5 6v15H7v3h3.8l3-3h4.3l5-5V2H4Zm16 12.8-3 3h-4.8l-3 3v-3H4.5V4.5H20v10.3ZM16 7h2v5h-2V7Zm-5 0h2v5h-2V7Z"/></svg>
+        </a>
       </div>
 
       <section class="server">
         <button class="server-head" id="server-toggle" aria-expanded="true">
-          <strong>VASTNESS · MY SERVER</strong>
+          <span class="server-title">
+            <strong>VASTNESS</strong>
+            <small>MY SERVER</small>
+          </span>
           <span id="server-arrow">−</span>
         </button>
         <div class="server-content" id="server-content">
@@ -272,7 +354,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
           </a>
         </div>
       </section>
-
       <div class="footer">EST. IN SILENCE · BUILT BY NOK</div>
     </section>
 
@@ -290,17 +371,112 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
         <input id="music-seek" type="range" min="0" max="100" value="0" aria-label="Music progress">
         <span class="time" id="total-time">--:--</span>
       </div>
-      <div class="music-note" id="music-note">
-        Нажми ▶, чтобы включить музыку. Автовоспроизведение со звуком может блокироваться браузером.
-      </div>
+      <div class="music-note" id="music-note">Press ▶ to play the background soundtrack. Browser autoplay restrictions may apply.</div>
     </section>
   </div>
 </main>
 
-<button class="corner-btn" id="theme-toggle">THEME · BLACK</button>
-<button class="corner-btn side-toggle" id="open-quotes">✦ EXPLORE</button>
+<button class="corner-btn" id="settings-open" aria-expanded="false">
+  <span aria-hidden="true">⚙</span> SETTINGS
+</button>
 
-<section id="quote-screen" aria-label="Interactive quote cards">
+<button class="corner-btn" id="secret-open" aria-label="Open secret room">
+  <span class="secret-person" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M12 2.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM5 21v-2.2a7 7 0 0 1 14 0V21h-2v-2.2a5 5 0 0 0-10 0V21H5Z"/><path d="M3 13.5h3v2H3zm15 0h3v2h-3z"/></svg>
+  </span>
+  <span>? SECRET</span>
+</button>
+
+<div id="settings-shade"></div>
+<aside id="settings-panel" aria-label="Settings" aria-hidden="true">
+  <div class="settings-header">
+    <h2>SETTINGS</h2>
+    <button class="icon-button" id="settings-close" aria-label="Close settings">×</button>
+  </div>
+
+  <section class="setting-group">
+    <div class="setting-title">Main theme</div>
+    <label class="setting-label" for="main-theme">Website appearance</label>
+    <select class="setting-select" id="main-theme">
+      <option value="black">Black</option>
+      <option value="white">White</option>
+      <option value="gray">Gray</option>
+      <option value="blue">Midnight blue</option>
+      <option value="purple">Dark purple</option>
+      <option value="red">Dark red</option>
+      <option value="pink">Dark pink</option>
+      <option value="green">Dark green</option>
+    </select>
+    <p class="setting-help">Changes the overall website appearance. Black is the default theme.</p>
+  </section>
+
+  <section class="setting-group">
+    <div class="setting-title">Profile background</div>
+    <div class="palette" id="card-palette">
+      <button class="swatch selected" data-card="default"><span class="swatch-dot" style="background:#0c141f"></span>Default</button>
+      <button class="swatch" data-card="#111318"><span class="swatch-dot" style="background:#111318"></span>Black</button>
+      <button class="swatch" data-card="#e8e9ec"><span class="swatch-dot" style="background:#e8e9ec"></span>White</button>
+      <button class="swatch" data-card="#353a43"><span class="swatch-dot" style="background:#353a43"></span>Gray</button>
+      <button class="swatch" data-card="#101f35"><span class="swatch-dot" style="background:#101f35"></span>Blue</button>
+      <button class="swatch" data-card="#21172f"><span class="swatch-dot" style="background:#21172f"></span>Purple</button>
+      <button class="swatch" data-card="#30171c"><span class="swatch-dot" style="background:#30171c"></span>Red</button>
+      <button class="swatch" data-card="#301b29"><span class="swatch-dot" style="background:#301b29"></span>Pink</button>
+      <button class="swatch" data-card="#14271f"><span class="swatch-dot" style="background:#14271f"></span>Green</button>
+      <button class="swatch" data-card="#302616"><span class="swatch-dot" style="background:#302616"></span>Brown</button>
+      <button class="swatch" data-card="#26303a"><span class="swatch-dot" style="background:#26303a"></span>Steel</button>
+      <button class="swatch" data-card="#25202c"><span class="swatch-dot" style="background:#25202c"></span>Plum</button>
+    </div>
+    <p class="setting-help">Changes the profile card surface, independently of the border color.</p>
+  </section>
+
+  <section class="setting-group">
+    <div class="setting-title">Profile border</div>
+    <label class="setting-label" for="border-color">Border color</label>
+    <select class="setting-select" id="border-color">
+      <option value="default">Theme default</option>
+      <option value="#ffffff">White</option>
+      <option value="#9aa3ad">Gray</option>
+      <option value="#477dc0">Blue</option>
+      <option value="#7654a8">Purple</option>
+      <option value="#a7444b">Red</option>
+      <option value="#a94e80">Pink</option>
+      <option value="#4d916b">Green</option>
+      <option value="#bd9b5a">Gold</option>
+    </select>
+  </section>
+
+  <section class="setting-group">
+    <div class="setting-title">Background music</div>
+    <div class="range-line">
+      <input id="music-volume" type="range" min="0" max="100" value="35" aria-label="Music volume">
+      <span class="range-value" id="music-volume-value">35%</span>
+    </div>
+    <div class="setting-actions">
+      <button class="small-button" id="music-mute">Mute music</button>
+      <button class="small-button" id="music-play-settings">Play / Pause</button>
+    </div>
+    <p class="setting-help">The volume setting also applies to music in the secret room.</p>
+  </section>
+
+  <section class="setting-group">
+    <div class="setting-title">Click sound</div>
+    <div class="range-line">
+      <input id="click-volume" type="range" min="0" max="100" value="25" aria-label="Click sound volume">
+      <span class="range-value" id="click-volume-value">25%</span>
+    </div>
+    <div class="setting-actions">
+      <button class="small-button active" id="click-toggle">Click sound: ON</button>
+      <button class="small-button" id="click-test">Test sound</button>
+    </div>
+    <p class="setting-help">A subtle interface click sound. This uses a generated sound and does not require downloading an audio file.</p>
+  </section>
+</aside>
+
+<section id="quote-screen" aria-label="Secret room">
+  <video id="secret-background" autoplay muted loop playsinline preload="metadata">
+    <source src="https://media.istockphoto.com/id/2169005361/ru/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/%D1%80%D0%B8%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F-%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F-%D0%B4%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B8-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%83%D1%8E-%D1%81%D0%B2%D0%B5%D1%80%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%B8-%D0%BF%D0%BE%D0%B4%D0%B2%D0%B5%D1%80%D0%B3%D0%B0%D1%8E%D1%82-%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BA%D0%B8%D0%B7%D0%BC%D1%83-%D0%BF%D0%BE-%D0%B4%D0%BE%D1%80%D0%BE%D0%B3%D0%B5-%D0%B2-%D1%88%D0%BA%D0%BE%D0%BB%D1%83-%D0%B8-%D0%B8%D0%B7.mp4?s=mp4-640x640-is&k=20&c=J8CLaP78MFmP5ZKQsltvQnU6F_V-KWTL6eWhHbf3kTo=" type="video/mp4">
+  </video>
+  <div class="secret-overlay"></div>
   <div class="quote-top">
     <div class="quote-heading">Fragments of a mind</div>
     <button class="close-quotes" id="close-quotes">✕ CLOSE</button>
@@ -314,7 +490,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
     <h2 id="role-title"></h2>
     <p id="role-description"></p>
     <div class="modal-actions">
-      <a class="modal-btn primary" id="role-contact" href="https://t.me/nokyshka" target="_blank" rel="noopener">Nok Developer ↗</a>
+      <a class="modal-btn primary" href="https://t.me/nokyshka" target="_blank" rel="noopener">Contact Nok ↗</a>
       <button class="modal-btn" data-close="role-modal">Close</button>
     </div>
   </section>
@@ -333,24 +509,91 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 </div>
 
 <script>
-/* ---------- THEME ---------- */
-const themes = [
-  {name:"BLACK",className:""},
-  {name:"WHITE",className:"white"},
-  {name:"GRAY",className:"gray"}
-];
-let themeIndex = 0;
-document.getElementById("theme-toggle").addEventListener("click",()=>{
-  document.body.classList.remove("white","gray");
-  themeIndex = (themeIndex + 1) % themes.length;
-  if(themes[themeIndex].className){
-    document.body.classList.add(themes[themeIndex].className);
-  }
-  document.getElementById("theme-toggle").textContent =
-    "THEME · " + themes[themeIndex].name;
-});
+/* ---------- THEMES AND PROFILE COLORS ---------- */
+const root = document.body;
+const mainTheme = document.getElementById("main-theme");
+const profileCard = document.getElementById("profile-card");
+const borderSelect = document.getElementById("border-color");
 
-/* ---------- VASTNESS SERVER BOX ---------- */
+const themeSettings = {
+  black:  {bg:"#080d14",card:"rgba(12,20,31,.88)",text:"#e8eef7",muted:"#8999ad",accent:"#5b9dff",border:"rgba(130,170,220,.20)"},
+  white:  {bg:"#e9edf2",card:"rgba(255,255,255,.93)",text:"#17202d",muted:"#5f6d7d",accent:"#2467bd",border:"#cbd4e0"},
+  gray:   {bg:"#252a31",card:"rgba(36,43,53,.94)",text:"#e5e8ed",muted:"#a0a9b6",accent:"#81b8ff",border:"#444e5c"},
+  blue:   {bg:"#07101d",card:"rgba(12,24,42,.91)",text:"#e8eef7",muted:"#8b9db5",accent:"#528ee8",border:"#253c5b"},
+  purple: {bg:"#100b18",card:"rgba(29,19,42,.92)",text:"#eee8f7",muted:"#a69ab8",accent:"#9a79d1",border:"#46335d"},
+  red:    {bg:"#13090c",card:"rgba(38,18,22,.92)",text:"#f3e9eb",muted:"#b69a9f",accent:"#c65e6a",border:"#583039"},
+  pink:   {bg:"#160b13",card:"rgba(40,20,34,.92)",text:"#f4e9f0",muted:"#bba0b2",accent:"#c66a9b",border:"#5b344b"},
+  green:  {bg:"#08130e",card:"rgba(17,35,26,.92)",text:"#e8f1eb",muted:"#99b3a3",accent:"#6caf88",border:"#2b503b"}
+};
+let cardSurface = "default";
+let borderColor = "default";
+
+function applyTheme(name) {
+  const t = themeSettings[name] || themeSettings.black;
+  root.classList.remove("theme-white","theme-gray");
+  if(name === "white") root.classList.add("theme-white");
+  if(name === "gray") root.classList.add("theme-gray");
+  root.style.setProperty("--bg",t.bg);
+  root.style.setProperty("--card",t.card);
+  root.style.setProperty("--text",t.text);
+  root.style.setProperty("--muted",t.muted);
+  root.style.setProperty("--accent",t.accent);
+  root.style.setProperty("--border",t.border);
+  applyProfileSurface();
+  applyBorder();
+}
+function applyProfileSurface() {
+  if(cardSurface === "default") {
+    profileCard.style.background = "";
+  } else {
+    profileCard.style.background = cardSurface;
+  }
+  document.querySelectorAll("[data-card]").forEach(b=>{
+    b.classList.toggle("selected",b.dataset.card === cardSurface);
+  });
+}
+function applyBorder() {
+  if(borderColor === "default") {
+    profileCard.style.borderColor = "";
+  } else {
+    profileCard.style.borderColor = borderColor;
+  }
+}
+mainTheme.addEventListener("change",()=>applyTheme(mainTheme.value));
+document.querySelectorAll("[data-card]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    cardSurface = button.dataset.card;
+    applyProfileSurface();
+  });
+});
+borderSelect.addEventListener("change",()=>{
+  borderColor = borderSelect.value;
+  applyBorder();
+});
+applyTheme("black");
+
+/* ---------- SETTINGS DRAWER ---------- */
+const settingsPanel = document.getElementById("settings-panel");
+const settingsShade = document.getElementById("settings-shade");
+const settingsOpen = document.getElementById("settings-open");
+
+function openSettings() {
+  settingsPanel.classList.add("open");
+  settingsShade.classList.add("open");
+  settingsPanel.setAttribute("aria-hidden","false");
+  settingsOpen.setAttribute("aria-expanded","true");
+}
+function closeSettings() {
+  settingsPanel.classList.remove("open");
+  settingsShade.classList.remove("open");
+  settingsPanel.setAttribute("aria-hidden","true");
+  settingsOpen.setAttribute("aria-expanded","false");
+}
+settingsOpen.addEventListener("click",openSettings);
+document.getElementById("settings-close").addEventListener("click",closeSettings);
+settingsShade.addEventListener("click",closeSettings);
+
+/* ---------- VASTNESS SERVER ---------- */
 const serverToggle = document.getElementById("server-toggle");
 const serverContent = document.getElementById("server-content");
 serverToggle.addEventListener("click",()=>{
@@ -363,15 +606,15 @@ serverToggle.addEventListener("click",()=>{
 const roleInfo = {
   designer:{
     title:"Designer",
-    description:"Я занимаюсь визуальной частью цифровых проектов: оформлением профилей, интерфейсов, графикой и общей атмосферой проекта.\n\nЕсть идея для дизайна? Можешь написать мне, обсудим задачу и возможность заказа."
+    description:"I work on the visual side of digital projects: profile design, interfaces, graphics and the overall atmosphere of a project.\n\nHave a design idea? Message me and we can discuss the concept and possible commission."
   },
   developer:{
     title:"Developer",
-    description:"Я изучаю разработку и создаю цифровые проекты: сайты, небольшие инструменты и другие идеи, которые можно реализовать с помощью кода.\n\nПо поводу разработки сайта или другого проекта напиши мне в Telegram."
+    description:"I study development and build digital projects: websites, small tools and other ideas that can be brought to life with code.\n\nFor website development or another project, contact me on Telegram."
   },
   founder:{
     title:"Founder · Vastness",
-    description:"Vastness — сообщество со своей атмосферой, оформлением и внутренними событиями. Я занимаюсь его развитием, концепцией и организацией.\n\nДля сотрудничества и вопросов о проектах — Telegram."
+    description:"Vastness is a community with its own atmosphere, design and events. I work on its development, concept and organization.\n\nFor collaboration and project questions, contact me on Telegram."
   }
 };
 const roleModal = document.getElementById("role-modal");
@@ -392,114 +635,200 @@ document.querySelectorAll("[data-close]").forEach(button=>{
 });
 document.querySelectorAll(".modal-backdrop").forEach(backdrop=>{
   backdrop.addEventListener("click",event=>{
-    if(event.target===backdrop)backdrop.classList.remove("show");
+    if(event.target === backdrop) backdrop.classList.remove("show");
   });
 });
 document.addEventListener("keydown",event=>{
-  if(event.key==="Escape"){
+  if(event.key === "Escape") {
     document.querySelectorAll(".modal-backdrop.show").forEach(el=>el.classList.remove("show"));
+    closeSettings();
   }
 });
 
-/* ---------- YOUTUBE MUSIC ---------- */
-/* Only the long track is used. No second music player. */
-const TRACK_ID = "yYrUpbK6_MI";
+/* ---------- YOUTUBE MUSIC: MAIN + SECRET ROOM ---------- */
+const MAIN_TRACK = "yYrUpbK6_MI";
+const SECRET_TRACK = "ea1Shogsk7k";
 let player = null;
 let playerReady = false;
 let musicPlaying = false;
+let currentTrack = MAIN_TRACK;
 let seekDragging = false;
+let musicVolume = 35;
+let musicMuted = false;
+
 const playButton = document.getElementById("play-button");
 const musicStatus = document.getElementById("music-status");
 const musicNote = document.getElementById("music-note");
 const seek = document.getElementById("music-seek");
+const musicVolumeInput = document.getElementById("music-volume");
+const musicVolumeValue = document.getElementById("music-volume-value");
+const musicMuteButton = document.getElementById("music-mute");
 
-function loadYouTubeAPI(){
+function effectiveVolume() { return musicMuted ? 0 : musicVolume; }
+function setPlayerVolume() {
+  if(playerReady && player) player.setVolume(effectiveVolume());
+}
+function loadYouTubeAPI() {
+  if(window.YT && window.YT.Player) {
+    window.onYouTubeIframeAPIReady();
+    return;
+  }
   const script = document.createElement("script");
   script.src = "https://www.youtube.com/iframe_api";
   document.head.appendChild(script);
 }
-window.onYouTubeIframeAPIReady = function(){
+window.onYouTubeIframeAPIReady = function() {
   player = new YT.Player("youtube-player",{
-    width:"2",height:"2",
-    videoId:TRACK_ID,
-    playerVars:{
-      autoplay:0,controls:0,disablekb:1,playsinline:1,
-      rel:0,loop:1,playlist:TRACK_ID
-    },
+    width:"2",height:"2",videoId:MAIN_TRACK,
+    playerVars:{autoplay:0,controls:0,disablekb:1,playsinline:1,rel:0,loop:1,playlist:MAIN_TRACK},
     events:{
       onReady:()=>{
         playerReady = true;
-        musicStatus.textContent = "Ready · Long background track";
-        musicNote.textContent = "Нажми ▶ для воспроизведения. Если трек недоступен, проверь настройки видео на YouTube.";
+        setPlayerVolume();
+        musicStatus.textContent = "Ready · Ambient soundtrack";
+        musicNote.textContent = "Press ▶ to play. Your browser may block automatic playback.";
       },
       onStateChange:event=>{
-        if(event.data===YT.PlayerState.PLAYING){
+        if(event.data === YT.PlayerState.PLAYING) {
           musicPlaying = true;
           playButton.textContent = "Ⅱ";
           playButton.setAttribute("aria-label","Pause music");
-          musicStatus.textContent = "Now playing";
-        }else if(event.data===YT.PlayerState.PAUSED){
+          musicStatus.textContent = currentTrack === SECRET_TRACK ? "Secret room soundtrack" : "Now playing";
+        } else if(event.data === YT.PlayerState.PAUSED) {
           musicPlaying = false;
           playButton.textContent = "▶";
           playButton.setAttribute("aria-label","Play music");
           musicStatus.textContent = "Paused";
-        }else if(event.data===YT.PlayerState.ENDED){
+        } else if(event.data === YT.PlayerState.ENDED) {
           player.seekTo(0,true);
           player.playVideo();
-        }else if(event.data===YT.PlayerState.BUFFERING){
+        } else if(event.data === YT.PlayerState.BUFFERING) {
           musicStatus.textContent = "Loading…";
         }
       },
       onError:()=>{
         musicStatus.textContent = "Track unavailable";
-        musicNote.textContent = "YouTube не разрешил воспроизведение этого видео. Возможно, владелец ограничил встраивание.";
+        musicNote.textContent = "YouTube may have restricted embedding for this video.";
       }
     }
   });
 };
 loadYouTubeAPI();
 
-playButton.addEventListener("click",()=>{
-  if(!playerReady || !player){
-    musicNote.textContent = "Плеер загружается. Подожди несколько секунд и нажми ещё раз.";
+function toggleMusic() {
+  if(!playerReady || !player) {
+    musicNote.textContent = "The music player is loading. Wait a few seconds and try again.";
     return;
   }
-  if(musicPlaying){
-    player.pauseVideo();
-  }else{
+  if(musicPlaying) player.pauseVideo();
+  else {
+    setPlayerVolume();
     player.playVideo();
   }
-});
-
-function formatTime(seconds){
-  if(!Number.isFinite(seconds)||seconds<0)return "0:00";
-  seconds=Math.floor(seconds);
-  const mins=Math.floor(seconds/60);
-  const secs=seconds%60;
-  return mins+":"+String(secs).padStart(2,"0");
 }
-seek.addEventListener("input",()=>{
-  seekDragging=true;
-});
-seek.addEventListener("change",()=>{
-  if(playerReady&&player){
-    const duration=player.getDuration();
-    if(duration>0)player.seekTo(duration*(Number(seek.value)/100),true);
+playButton.addEventListener("click",toggleMusic);
+document.getElementById("music-play-settings").addEventListener("click",toggleMusic);
+
+function switchTrack(trackId,shouldPlay) {
+  if(!playerReady || !player) return;
+  currentTrack = trackId;
+  player.setVolume(effectiveVolume());
+  player.loadVideoById({videoId:trackId,suggestedQuality:"small"});
+  if(shouldPlay) player.playVideo();
+  else player.pauseVideo();
+  if(trackId === SECRET_TRACK) {
+    musicStatus.textContent = "Secret room soundtrack";
+  } else {
+    musicStatus.textContent = "Background soundtrack";
   }
-  seekDragging=false;
+}
+musicVolumeInput.addEventListener("input",()=>{
+  musicVolume = Number(musicVolumeInput.value);
+  musicVolumeValue.textContent = musicVolume + "%";
+  musicMuted = false;
+  musicMuteButton.textContent = "Mute music";
+  musicMuteButton.classList.remove("active");
+  setPlayerVolume();
+});
+musicMuteButton.addEventListener("click",()=>{
+  musicMuted = !musicMuted;
+  musicMuteButton.textContent = musicMuted ? "Unmute music" : "Mute music";
+  musicMuteButton.classList.toggle("active",musicMuted);
+  setPlayerVolume();
+});
+function formatTime(seconds) {
+  if(!Number.isFinite(seconds) || seconds < 0) return "0:00";
+  seconds = Math.floor(seconds);
+  return Math.floor(seconds/60) + ":" + String(seconds%60).padStart(2,"0");
+}
+seek.addEventListener("input",()=>{seekDragging=true;});
+seek.addEventListener("change",()=>{
+  if(playerReady && player && currentTrack === MAIN_TRACK) {
+    const duration = player.getDuration();
+    if(duration > 0) player.seekTo(duration*(Number(seek.value)/100),true);
+  }
+  seekDragging = false;
 });
 setInterval(()=>{
-  if(!playerReady||!player||typeof player.getCurrentTime!=="function")return;
-  try{
-    const current=player.getCurrentTime();
-    const duration=player.getDuration();
-    if(!seekDragging&&duration>0)seek.value=String((current/duration)*100);
-    document.getElementById("current-time").textContent=formatTime(current);
-    document.getElementById("total-time").textContent=formatTime(duration);
-  }catch(e){}
+  if(!playerReady || !player || typeof player.getCurrentTime !== "function") return;
+  try {
+    const current = player.getCurrentTime();
+    const duration = player.getDuration();
+    if(!seekDragging && currentTrack === MAIN_TRACK && duration > 0) {
+      seek.value = String((current/duration)*100);
+    }
+    document.getElementById("current-time").textContent = formatTime(current);
+    document.getElementById("total-time").textContent = formatTime(duration);
+  } catch(e) {}
 },500);
 
-/* ---------- FULLSCREEN RANDOM QUOTE GAME ---------- */
+/* ---------- CLICK SOUND ---------- */
+let clickSoundEnabled = true;
+let clickVolume = 25;
+let audioContext = null;
+
+function playClickSound() {
+  if(!clickSoundEnabled || clickVolume <= 0) return;
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if(!AudioContextClass) return;
+    if(!audioContext) audioContext = new AudioContextClass();
+    if(audioContext.state === "suspended") audioContext.resume();
+
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(850,audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(460,audioContext.currentTime + 0.035);
+    gain.gain.setValueAtTime((clickVolume/100)*0.075,audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,audioContext.currentTime + 0.045);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.05);
+  } catch(e) {}
+}
+document.getElementById("click-volume").addEventListener("input",event=>{
+  clickVolume = Number(event.target.value);
+  document.getElementById("click-volume-value").textContent = clickVolume + "%";
+});
+const clickToggle = document.getElementById("click-toggle");
+clickToggle.addEventListener("click",()=>{
+  clickSoundEnabled = !clickSoundEnabled;
+  clickToggle.textContent = "Click sound: " + (clickSoundEnabled ? "ON" : "OFF");
+  clickToggle.classList.toggle("active",clickSoundEnabled);
+});
+document.getElementById("click-test").addEventListener("click",playClickSound);
+
+/* Add the subtle click sound to buttons and links, except controls that already make sounds. */
+document.addEventListener("click",event=>{
+  const target = event.target.closest("button, a");
+  if(!target) return;
+  if(target.id === "click-test") return;
+  playClickSound();
+});
+
+/* ---------- SECRET ROOM AND 12 QUOTE CARDS ---------- */
 const quoteData = [
   ["BLEACH","No one stands at the top of the heavens from the very beginning."],
   ["VINLAND SAGA","I have no enemies."],
@@ -521,224 +850,176 @@ const quoteData = [
 const quoteScreen = document.getElementById("quote-screen");
 const quoteStage = document.getElementById("quote-stage");
 const quoteCounter = document.getElementById("quote-counter");
-const cardWidth = ()=>Math.min(240,window.innerWidth-32);
+const secretOpen = document.getElementById("secret-open");
 let totalClicks = 0;
-let gameStarted = false;
-let quoteCards = [];
-let layoutTimer = null;
+let secretRoomOpen = false;
+let lastMainTrackWasPlaying = false;
+let usedQuotes = [];
 
-function rectsOverlap(a,b,pad=12){
-  return !(a.x+a.w+pad<=b.x || b.x+b.w+pad<=a.x ||
-           a.y+a.h+pad<=b.y || b.y+b.h+pad<=a.y);
-}
-function randomPosition(w,h,existing){
-  const margin=12;
-  const topReserve=68,bottomReserve=62;
-  const maxX=Math.max(margin,window.innerWidth-w-margin);
-  const maxY=Math.max(topReserve,window.innerHeight-h-bottomReserve);
-  for(let attempt=0;attempt<180;attempt++){
-    const x=margin+Math.random()*(maxX-margin);
-    const y=topReserve+Math.random()*(maxY-topReserve);
-    const rect={x,y,w,h};
-    if(existing.every(other=>!rectsOverlap(rect,other,14)))return rect;
+function openSecretRoom() {
+  secretRoomOpen = true;
+  lastMainTrackWasPlaying = musicPlaying;
+  if(playerReady && player) {
+    player.pauseVideo();
+    switchTrack(SECRET_TRACK,true);
   }
-  /* If the viewport is too small for every card, use a non-overlapping grid. */
-  const cols=Math.max(1,Math.floor((window.innerWidth-margin*2)/(w+10)));
-  const index=existing.length;
-  return {
-    x:margin+(index%cols)*(w+10),
-    y:topReserve+Math.floor(index/cols)*(h+10),
-    w,h
-  };
+  document.getElementById("app").style.display = "none";
+  document.getElementById("settings-open").style.display = "none";
+  secretOpen.style.display = "none";
+  quoteScreen.classList.add("active");
+  totalClicks = 0;
+  usedQuotes = [];
+  quoteCounter.textContent = "CLICKS · 0";
+  createCards();
 }
-function placeCard(card,existing){
-  const width=cardWidth();
-  card.style.width=width+"px";
-  card.style.left="0px";
-  card.style.top="0px";
-  card.style.visibility="hidden";
-  quoteStage.appendChild(card);
-  const h=card.offsetHeight;
-  const pos=randomPosition(width,h,existing);
-  card.style.left=pos.x+"px";
-  card.style.top=pos.y+"px";
-  card.style.visibility="visible";
-  return pos;
-}
-function createQuoteCard(data){
-  const card=document.createElement("article");
-  card.className="quote-card";
-  card.tabIndex=0;
-  card.setAttribute("role","button");
-  card.setAttribute("aria-label","Quote card: "+data[0]);
-  const tag=document.createElement("div");
-  tag.className="tag";tag.textContent=data[0];
-  const quote=document.createElement("div");
-  quote.className="quote-text";quote.textContent=data[1];
-  const hint=document.createElement("div");
-  hint.className="hint";hint.textContent="click to reveal";
-  card.append(tag,quote,hint);
-  card.addEventListener("click",()=>clickQuoteCard(card));
-  card.addEventListener("keydown",event=>{
-    if(event.key==="Enter"||event.key===" "){
-      event.preventDefault();clickQuoteCard(card);
+function closeSecretRoom() {
+  secretRoomOpen = false;
+  quoteScreen.classList.remove("active");
+  document.getElementById("app").style.display = "";
+  document.getElementById("settings-open").style.display = "";
+  secretOpen.style.display = "";
+  if(playerReady && player) {
+    if(lastMainTrackWasPlaying) switchTrack(MAIN_TRACK,true);
+    else {
+      switchTrack(MAIN_TRACK,false);
+      player.pauseVideo();
     }
-  });
-  return card;
+  }
 }
-function heartEffect(x,y){
-  const heart=document.createElement("div");
-  heart.className="heart";
-  heart.textContent=["♥","♡","💙","♥"][Math.floor(Math.random()*4)];
-  heart.style.left=x+"px";heart.style.top=y+"px";
+secretOpen.addEventListener("click",openSecretRoom);
+document.getElementById("close-quotes").addEventListener("click",closeSecretRoom);
+
+function createCards() {
+  quoteStage.innerHTML = "";
+  const shuffled = [...quoteData].sort(()=>Math.random()-.5);
+  const chosen = shuffled.slice(0,12);
+  chosen.forEach((data,index)=>{
+    const card = document.createElement("article");
+    card.className = "quote-card";
+    card.tabIndex = 0;
+    card.setAttribute("role","button");
+    card.innerHTML =
+      '<div class="tag"></div><div class="quote-text"></div><div class="hint">CLICK TO OPEN</div>';
+    card.querySelector(".tag").textContent = data[0];
+    card.querySelector(".quote-text").textContent = data[1];
+    card.style.animationDelay = (index*25) + "ms";
+    card.addEventListener("click",()=>handleQuoteClick(card));
+    card.addEventListener("keydown",event=>{
+      if(event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        handleQuoteClick(card);
+      }
+    });
+    quoteStage.appendChild(card);
+  });
+}
+function showHeart(x,y) {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = Math.random() > .5 ? "♡" : "♥";
+  heart.style.left = x + "px";
+  heart.style.top = y + "px";
+  heart.style.color = "#78aaff";
   document.body.appendChild(heart);
   setTimeout(()=>heart.remove(),850);
 }
-function currentRects(except=null){
-  return [...quoteStage.querySelectorAll(".quote-card")]
-    .filter(card=>card!==except)
-    .map(card=>({
-      x:parseFloat(card.style.left)||0,
-      y:parseFloat(card.style.top)||0,
-      w:card.offsetWidth,h:card.offsetHeight
-    }));
-}
-function respawnCard(oldCard){
-  const data=quoteData[Math.floor(Math.random()*quoteData.length)];
-  const replacement=createQuoteCard(data);
-  oldCard.style.animation="cardOut .22s ease forwards";
-  setTimeout(()=>{
-    const rects=currentRects(oldCard);
-    oldCard.remove();
-    placeCard(replacement,rects);
-  },220);
-}
-function clickQuoteCard(card){
+function handleQuoteClick(card) {
   totalClicks++;
-  quoteCounter.textContent="CLICKS · "+totalClicks;
-  const rect=card.getBoundingClientRect();
-  heartEffect(rect.left+rect.width/2,rect.top+rect.height/2);
-  respawnCard(card);
-  showSecretAtMilestone(totalClicks);
-}
-function startQuoteGame(){
-  if(gameStarted)return;
-  gameStarted=true;
-  quoteStage.innerHTML="";
-  quoteCards=[];
-  /* Start with a modest number; respawning keeps the game endless. */
-  const count=Math.min(8,Math.max(4,Math.floor((window.innerWidth*window.innerHeight)/85000)));
-  const used=[];
-  for(let i=0;i<count;i++){
-    const data=quoteData[Math.floor(Math.random()*quoteData.length)];
-    const card=createQuoteCard(data);
-    const rect=placeCard(card,used);
-    used.push(rect);
-    quoteCards.push(card);
+  quoteCounter.textContent = "CLICKS · " + totalClicks;
+  const rect = card.getBoundingClientRect();
+  showHeart(rect.left + rect.width/2,rect.top + rect.height/2);
+
+  const fresh = [...quoteData].filter(q=>!usedQuotes.includes(q[0]));
+  if(fresh.length) {
+    const next = fresh[Math.floor(Math.random()*fresh.length)];
+    usedQuotes.push(next[0]);
+    card.querySelector(".tag").textContent = next[0];
+    card.querySelector(".quote-text").textContent = next[1];
+  } else {
+    const next = quoteData[Math.floor(Math.random()*quoteData.length)];
+    card.querySelector(".tag").textContent = next[0];
+    card.querySelector(".quote-text").textContent = next[1];
+    usedQuotes = [];
   }
-}
-function openQuoteScreen(){
-  quoteScreen.classList.add("active");
-  document.getElementById("app").style.display="none";
-  document.getElementById("theme-toggle").style.display="none";
-  document.getElementById("open-quotes").style.display="none";
-  startQuoteGame();
-  setTimeout(repositionCards,50);
-}
-function closeQuoteScreen(){
-  quoteScreen.classList.remove("active");
-  document.getElementById("app").style.display="";
-  document.getElementById("theme-toggle").style.display="";
-  document.getElementById("open-quotes").style.display="";
-}
-document.getElementById("open-quotes").addEventListener("click",openQuoteScreen);
-document.getElementById("close-quotes").addEventListener("click",closeQuoteScreen);
+  card.classList.remove("glitch");
+  void card.offsetWidth;
+  card.classList.add("glitch");
 
-function repositionCards(){
-  if(!quoteScreen.classList.contains("active"))return;
-  const cards=[...quoteStage.querySelectorAll(".quote-card")];
-  const used=[];
-  cards.forEach(card=>{
-    card.style.width=cardWidth()+"px";
-    const rect=placeCard(card,used);
-    used.push(rect);
-  });
-}
-window.addEventListener("resize",()=>{
-  clearTimeout(layoutTimer);
-  layoutTimer=setTimeout(repositionCards,100);
-});
-
-/* ---------- SECRET MESSAGES ---------- */
-const milestones={
-  3:{
-    title:"Остановись спокойно.",
-    description:"Ты просто нажал на карточки. Пока всё нормально.",
-    color:"#b4c7dd"
-  },
-  5:{
-    title:"Спокойно...",
-    description:"Ты ведь заметил, что сообщения меняются?",
-    color:"#d7a8a8"
-  },
-  10:{
-    title:"Я тебя умоляю, прекрати.",
-    description:"Зачем ты продолжаешь? Здесь больше нечего искать... наверное.",
-    color:"#ed7777"
-  },
-  20:{
-    title:"Остановись, а то будут последствия.",
-    description:"Ты уже зашёл дальше, чем большинство. Может, хватит?",
-    color:"#ff4545"
-  },
-  50:{
-    title:"Они тебя уже ждут. Ты умрёшь.",
-    description:"...Тишина. Кажется, это конец.",
-    color:"#ff1717",
-    final:true
-  }
-};
-let finalRevealStage=0;
-const secretModal=document.getElementById("secret-modal");
-const secretTitle=document.getElementById("secret-title");
-const secretDescription=document.getElementById("secret-description");
-const secretCount=document.getElementById("secret-count");
-const secretContinue=document.getElementById("secret-continue");
-const secretClose=document.getElementById("secret-close");
-
-function showSecretAtMilestone(count){
-  const info=milestones[count];
-  if(!info)return;
-  secretTitle.textContent=info.title;
-  secretDescription.textContent=info.description;
-  secretTitle.style.color=info.color;
-  secretCount.textContent="SYSTEM MESSAGE · "+count;
-  secretContinue.textContent=info.final?"...":"Continue";
-  secretContinue.style.display="inline-block";
-  secretClose.style.display="inline-block";
-  secretContinue.onclick=()=>{
-    if(info.final){
-      showFinalReveal();
-    }else{
-      secretModal.classList.remove("show");
+  const milestones = {
+    3:{
+      title:"Take it easy.",
+      text:"You are just clicking the cards. Everything is fine. For now.",
+      count:"SYSTEM MESSAGE"
+    },
+    5:{
+      title:"Still here?",
+      text:"You noticed that the messages change, didn't you?",
+      count:"SYSTEM MESSAGE"
+    },
+    10:{
+      title:"Please, stop for a moment.",
+      text:"Why do you keep going? There may be nothing else to find here... maybe.",
+      count:"UNUSUAL ACTIVITY"
+    },
+    20:{
+      title:"You have gone far enough.",
+      text:"You have already gone further than most people. Maybe it is time to stop?",
+      count:"WARNING"
+    },
+    50:{
+      title:"They are waiting for you.",
+      text:"You will die. ...Silence. It seems this is the end.",
+      count:"CRITICAL MESSAGE"
     }
   };
-  secretClose.onclick=()=>secretModal.classList.remove("show");
-  secretModal.classList.add("show");
+  if(milestones[totalClicks]) {
+    const message = milestones[totalClicks];
+    document.getElementById("secret-count").textContent = message.count;
+    document.getElementById("secret-title").textContent = message.title;
+    document.getElementById("secret-description").textContent = message.text;
+    document.getElementById("secret-continue").textContent = totalClicks === 50 ? "Reveal" : "Continue";
+    document.getElementById("secret-modal").classList.add("show");
+    if(totalClicks >= 10) quoteScreen.classList.add("glitch");
+    if(totalClicks >= 20) {
+      quoteScreen.style.backgroundColor = "#050000";
+    }
+  }
 }
-function showFinalReveal(){
-  secretTitle.textContent="Ты добрался до секретного текста";
-  secretTitle.style.color="#8bd6a8";
-  secretCount.textContent="SECRET UNLOCKED · 50+";
-  secretDescription.textContent="Я пошутил. Всё с тобой будет хорошо. ♡\n\nСпасибо, что дошёл до конца. Береги себя и не забывай: за любой тёмной атмосферой может скрываться что-то хорошее. 💙☺️";
-  secretContinue.style.display="none";
-  secretClose.textContent="Всё хорошо 💙";
-  secretClose.style.display="inline-block";
-  secretClose.onclick=()=>{
-    secretModal.classList.remove("show");
-    secretClose.textContent="Close";
-  };
-}
+document.getElementById("secret-continue").addEventListener("click",()=>{
+  const modal = document.getElementById("secret-modal");
+  if(totalClicks >= 50) {
+    document.getElementById("secret-count").textContent = "ONE LAST THING";
+    document.getElementById("secret-title").textContent = "I was joking. ♡";
+    document.getElementById("secret-description").textContent =
+      "Everything will be okay. You made it to the end, and that means something.\n\nThank you for staying until the end. Take care of yourself. Even when life feels dark, there is still kindness in the world.\n\nYou deserve good things. 💙";
+    document.getElementById("secret-continue").textContent = "Close";
+    document.getElementById("secret-continue").onclick = ()=>{
+      modal.classList.remove("show");
+      document.getElementById("secret-continue").onclick = null;
+    };
+    return;
+  }
+  modal.classList.remove("show");
+});
+document.getElementById("secret-close").addEventListener("click",()=>{
+  document.getElementById("secret-modal").classList.remove("show");
+});
+
+/* Attempt playback only after a real user gesture, if autoplay was blocked. */
+document.addEventListener("pointerdown",()=>{
+  if(playerReady && !musicPlaying && !secretRoomOpen && !window.__musicGestureAttempted) {
+    window.__musicGestureAttempted = true;
+    setPlayerVolume();
+    /* Playback is attempted once; browsers can still require the visible play button. */
+    try { player.playVideo(); } catch(e) {}
+  }
+},{once:true});
+
+/* The secret background video can fail if its host blocks embedding. */
+document.getElementById("secret-background").addEventListener("error",()=>{
+  quoteScreen.style.backgroundImage =
+    "radial-gradient(ellipse at center,#151923 0%,#030507 75%)";
+});
 </script>
 </body>
 </html>
