@@ -2,23 +2,18 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080b12">
 <title>Nok — Personal Space</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#080b12;--panel:rgba(12,17,28,.82);--panel-strong:rgba(9,13,22,.96);
-  --text:#edf2fb;--muted:#9aa8bd;--line:rgba(177,198,230,.16);
-  --accent:#526f9e;--accent-rgb:82,111,158;--accent-soft:rgba(82,111,158,.18);
-  --shadow:0 24px 80px rgba(0,0,0,.45);--radius:24px;--card-rgb:12,17,28;--card-alpha:.82;--surface-opacity:1;
-}
+:root{--bg:#080b12;--panel:rgba(12,17,28,.82);--panel-strong:rgba(9,13,22,.96);--text:#edf2fb;--muted:#9aa8bd;--line:rgba(177,198,230,.16);--accent:#526f9e;--accent-rgb:82,111,158;--accent-soft:rgba(82,111,158,.18);--shadow:0 24px 80px #0007;--card-rgb:12,17,28;--card-alpha:.82;--surface-opacity:1}
 *{box-sizing:border-box}
 html{min-height:100%;background:#05070b;scroll-behavior:smooth}
-body{margin:0;min-height:100vh;overflow-x:hidden;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transition:background .35s,color .35s}
-body.theme-white{--bg:#e8ebf0;--panel:rgba(255,255,255,.84);--panel-strong:rgba(250,251,253,.97);--text:#161c27;--muted:#586476;--line:rgba(30,42,62,.15);--shadow:0 24px 80px rgba(24,31,43,.18);--card-rgb:255,255,255;--card-alpha:.84}
+body{margin:0;min-height:100vh;overflow-x:hidden;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;transition:background .35s,color .35s}
+body.theme-white{--bg:#e8ebf0;--panel:rgba(255,255,255,.84);--panel-strong:rgba(250,251,253,.97);--text:#161c27;--muted:#586476;--line:rgba(30,42,62,.15);--shadow:0 24px 80px #181f2b30;--card-rgb:255,255,255;--card-alpha:.84}
 body.theme-gray{--bg:#22262d;--panel:rgba(37,42,51,.86);--panel-strong:rgba(25,29,36,.97);--text:#edf0f5;--muted:#a3aab7;--line:rgba(220,228,241,.14);--card-rgb:37,42,51;--card-alpha:.86}
 body.accent-blue{--accent:#526f9e;--accent-rgb:82,111,158}
 body.accent-purple{--accent:#72568f;--accent-rgb:114,86,143}
@@ -31,21 +26,18 @@ body.accent-yellow{--accent:#8c8252;--accent-rgb:140,130,82}
 body.accent-indigo{--accent:#555b91;--accent-rgb:85,91,145}
 body.accent-white{--accent:#aab5c7;--accent-rgb:170,181,199}
 body.accent-black{--accent:#252a34;--accent-rgb:37,42,52}
-button,input{font:inherit}
-button{color:inherit}
+button,input{font:inherit}button{color:inherit;cursor:pointer}a{color:inherit;text-decoration:none}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
-a{color:inherit;text-decoration:none}
-button{cursor:pointer}
 #mainBackground{position:fixed;inset:0;z-index:-4;background:radial-gradient(ellipse at 50% 15%,rgba(var(--accent-rgb),.19),transparent 45%),linear-gradient(145deg,#0b111c,#05070b 70%)}
 #mainBackground video{position:absolute;width:100%;height:100%;object-fit:cover;opacity:.22;filter:saturate(.7) contrast(1.08)}
-#mainBackground:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,5,10,.35),rgba(3,5,10,.76))}
-.ambient{position:fixed;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(circle at 50% 50%,transparent 0,rgba(0,0,0,.12) 65%,rgba(0,0,0,.45) 100%)}
+#mainBackground:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#03050a59,#03050ac2)}
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(circle at 50% 50%,transparent,rgba(0,0,0,.45))}
 .topline{position:fixed;top:0;left:0;right:0;height:2px;z-index:20;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.7}
-.icon-button{width:46px;height:46px;border:1px solid var(--line);border-radius:15px;background:var(--panel);backdrop-filter:blur(18px);display:grid;place-items:center;transition:transform .2s,border-color .2s,background .2s;box-shadow:0 8px 30px #0002}
+.icon-button{width:46px;height:46px;border:1px solid var(--line);border-radius:15px;background:var(--panel);backdrop-filter:blur(18px);display:grid;place-items:center;transition:.2s;box-shadow:0 8px 30px #0002}
 .icon-button:hover{transform:translateY(-2px);border-color:rgba(var(--accent-rgb),.7);background:var(--accent-soft)}
 .icon-button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 #settingsOpen{position:fixed;top:22px;left:22px;z-index:40}
-#settingsShade{position:fixed;inset:0;z-index:48;background:rgba(0,0,0,.56);opacity:0;visibility:hidden;transition:.3s}
+#settingsShade{position:fixed;inset:0;z-index:48;background:#0009;opacity:0;visibility:hidden;transition:.3s}
 #settingsShade.open{opacity:1;visibility:visible}
 #settingsPanel{position:fixed;z-index:49;left:0;top:0;bottom:0;width:min(35vw,470px);min-width:330px;padding:28px 25px 34px;background:var(--panel-strong);border-right:1px solid var(--line);box-shadow:30px 0 80px #0004;backdrop-filter:blur(28px);transform:translateX(-105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);overflow:auto}
 #settingsPanel.open{transform:translateX(0)}
@@ -55,12 +47,12 @@ button{cursor:pointer}
 .setting-group{padding:18px 0;border-top:1px solid var(--line)}
 .setting-group h3{margin:0 0 12px;font-size:11px;font-weight:650;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .segmented{display:flex;gap:7px;flex-wrap:wrap}
-.segmented button{padding:9px 12px;border-radius:11px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12px;transition:.2s}
+.segmented button{padding:9px 12px;border-radius:11px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12px}
 .segmented button.active,.segmented button:hover{background:var(--accent-soft);color:var(--text);border-color:rgba(var(--accent-rgb),.6)}
 .swatches{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
 .swatch{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 3px;border:1px solid transparent;border-radius:12px;background:transparent;color:var(--muted);font-size:10px}
 .swatch:hover,.swatch.active{border-color:var(--line);background:var(--accent-soft);color:var(--text)}
-.swatch i{display:block;width:24px;height:24px;border-radius:50%;background:var(--swatch);border:1px solid #ffffff30;box-shadow:inset 0 0 0 3px #00000012}
+.swatch i{display:block;width:24px;height:24px;border-radius:50%;background:var(--swatch);border:1px solid #ffffff30;box-shadow:inset 0 0 0 3px #0002}
 .setting-row{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:13px 0 8px;font-size:13px}
 .setting-row span:last-child{font-variant-numeric:tabular-nums;color:var(--muted)}
 input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
@@ -72,8 +64,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .switch span:before{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;border-radius:50%;background:white;transition:.2s}
 .switch input:checked+span{background:var(--accent)}
 .switch input:checked+span:before{transform:translateX(16px)}
-.page{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:24px 18px 35px}
-.profile-card{position:relative;width:min(100%,430px);padding:25px 26px 21px;border:1px solid var(--line);border-radius:28px;background:rgba(var(--card-rgb),calc(var(--card-alpha) * var(--surface-opacity)));backdrop-filter:blur(24px);box-shadow:var(--shadow);text-align:center;animation:card-in .8s cubic-bezier(.2,.8,.2,1) both}
+.page{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:66px 18px 24px}
+.profile-card{position:relative;width:min(100%,430px);padding:25px 26px 21px;border:1px solid var(--line);border-radius:28px;background:rgba(var(--card-rgb),calc(var(--card-alpha)*var(--surface-opacity)));backdrop-filter:blur(24px);box-shadow:var(--shadow);text-align:center;animation:card-in .8s cubic-bezier(.2,.8,.2,1) both}
 .profile-card,.profile-card *{color:var(--profile-text-color,var(--text))}
 .profile-card .live-dot{background:#6a9d87}
 .profile-card .social-link svg,.profile-card .chevron{stroke:currentColor}
@@ -87,89 +79,94 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 @keyframes orbit{to{transform:rotate(360deg)}}
 .avatar{width:100%;height:100%;object-fit:cover;border-radius:50%;border:1px solid var(--line);background:linear-gradient(145deg,#303a4b,#10151e);display:block}
 .avatar-fallback{display:none;width:100%;height:100%;border-radius:50%;align-items:center;justify-content:center;background:linear-gradient(145deg,#303d52,#10141c);font-size:30px;letter-spacing:-.1em;color:#d8e2f4}
-h1{margin:0;font-family:"Space Grotesk",Inter,ui-sans-serif,system-ui,sans-serif;font-size:32px;font-weight:600;letter-spacing:-.065em}
+h1{margin:0;font-family:"Space Grotesk",system-ui,sans-serif;font-size:32px;font-weight:600;letter-spacing:-.065em}
 .status{margin-top:7px;color:var(--muted);font-size:11px;letter-spacing:.09em}
 .bio{max-width:310px;margin:16px auto 18px;color:var(--muted);font-size:12px;line-height:1.75}
 .roles{display:flex;gap:7px;justify-content:center;margin-bottom:17px}
 .role{border:1px solid var(--line);border-radius:10px;background:transparent;padding:8px 10px;font-size:9px;letter-spacing:.12em;color:var(--muted);transition:.2s}
 .role:hover{border-color:rgba(var(--accent-rgb),.65);color:var(--text);background:var(--accent-soft);transform:translateY(-1px)}
 .links{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:15px}
-.social-link{min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.018);font-size:9px;color:var(--muted);transition:.2s}
+.social-link{min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:1px solid var(--line);border-radius:13px;background:#ffffff05;font-size:9px;color:var(--muted);transition:.2s}
 .social-link:hover{background:var(--accent-soft);border-color:rgba(var(--accent-rgb),.6);color:var(--text);transform:translateY(-2px)}
 .social-link svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .server-box{border:1px solid var(--line);border-radius:14px;text-align:left;overflow:hidden;margin-bottom:12px}
 .server-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border:0;background:transparent;text-align:left}
-.server-title{font-size:12px;font-weight:600}
-.server-subtitle{font-size:10px;color:var(--muted);margin-top:4px}
-.chevron{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:1.7;transition:transform .25s}
+.server-title{font-size:12px;font-weight:600;letter-spacing:.02em}
+.server-sub{display:block;margin-top:3px;font-size:10px;color:var(--muted);font-weight:400}
+.chevron{color:var(--muted);transition:transform .2s}
 .server-box.open .chevron{transform:rotate(180deg)}
-.server-content{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
-.server-box.open .server-content{grid-template-rows:1fr}
-.server-content-inner{overflow:hidden}
-.server-content p{margin:0;padding:0 13px 13px;color:var(--muted);font-size:11px;line-height:1.7}
-.server-content a{color:var(--accent)}
-.card-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:15px;padding-top:13px;border-top:1px solid var(--line);color:var(--muted);font-size:9px;letter-spacing:.08em}
-.card-footer button{border:0;background:transparent;color:var(--muted);font-size:9px;padding:3px}
-.card-footer button:hover{color:var(--accent)}
-.music-card{position:fixed;top:22px;left:80px;z-index:39;width:280px;padding:11px 12px;border:1px solid var(--line);border-radius:16px;background:var(--panel);backdrop-filter:blur(20px);box-shadow:0 8px 30px #0002}
-.music-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
-.music-title{font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.music-subtitle{font-size:9px;color:var(--muted);margin-top:3px}
-.music-controls{display:flex;align-items:center;gap:6px}
-.music-controls button{width:28px;height:28px;display:grid;place-items:center;border:1px solid var(--line);border-radius:9px;background:transparent;color:var(--text)}
-.music-controls button:hover{background:var(--accent-soft)}
-.music-controls svg{width:13px;height:13px;fill:currentColor;stroke:currentColor;stroke-width:1.5}
-.music-progress{height:3px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:7px}
-.music-progress span{display:block;width:0;height:100%;background:var(--accent);transition:width .25s linear}
-.music-meta{display:flex;justify-content:space-between;gap:8px;margin-top:5px;color:var(--muted);font-size:8px}
-#secretOpen{position:fixed;right:22px;bottom:22px;z-index:35;width:48px;height:48px;border:1px solid var(--line);border-radius:16px;background:var(--panel);backdrop-filter:blur(18px);display:grid;place-items:center;box-shadow:0 8px 30px #0002;transition:.2s}
-#secretOpen:hover{transform:translateY(-3px);border-color:rgba(var(--accent-rgb),.7);background:var(--accent-soft)}
-#secretOpen svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-#secretRoom{position:fixed;inset:0;z-index:60;display:none;background:#030508;color:#e5eaf2;overflow:auto}
-#secretRoom.open{display:block;animation:secret-in .4s ease both}
-@keyframes secret-in{from{opacity:0}to{opacity:1}}
-.secret-bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% 20%,rgba(48,76,110,.2),transparent 55%),#030508}
-.secret-bg video{width:100%;height:100%;object-fit:cover;opacity:.12;filter:grayscale(.5)}
-.secret-header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 22px;border-bottom:1px solid #ffffff15;background:#030508d9;backdrop-filter:blur(18px)}
-.secret-header h2{margin:0;font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase}
-.secret-header button{width:40px;height:40px;border:1px solid #ffffff20;border-radius:13px;background:#ffffff08;color:#e5eaf2}
-.secret-content{width:min(100%,920px);margin:0 auto;padding:30px 20px 70px}
-.secret-intro{text-align:center;max-width:600px;margin:0 auto 28px}
-.secret-intro .eyebrow{color:#788ba5}
-.secret-intro h3{font-size:clamp(25px,4vw,42px);font-weight:400;letter-spacing:-.04em;margin:12px 0}
-.secret-intro p{color:#8e9aaa;font-size:12px;line-height:1.8}
-.secret-progress{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;color:#7d8b9c;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
-.secret-progress .progress-line{height:2px;flex:1;background:#ffffff16;overflow:hidden}
-.secret-progress .progress-line span{display:block;width:0;height:100%;background:#7d9dbb;transition:width .3s}
-#quoteGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(105px,1fr));gap:12px}
-.quote-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:112px;padding:14px 13px;border:1px solid #ffffff17;border-radius:14px;background:linear-gradient(145deg,#111721c9,#080b10d9);text-align:left;cursor:pointer;overflow:hidden;transition:border-color .25s,background .25s,transform .25s;isolation:isolate}
-.quote-card:hover{border-color:#8097b155;transform:translateY(-2px);background:linear-gradient(145deg,#17202ccf,#080b10e8)}
-.quote-card p{margin:0;color:#c7d0dc;font-size:12px;line-height:1.65}
-.quote-card small{color:#6e7d8f;font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-top:12px}
-.quote-card .quote-number{font-size:9px;color:#63778e;letter-spacing:.15em}
-.quote-card.destroying{pointer-events:none;animation:card-destroy .75s ease forwards}
-@keyframes card-destroy{0%{opacity:1;transform:scale(1);filter:none}35%{opacity:.8;transform:scale(1.03) rotate(1deg);filter:brightness(1.5)}100%{opacity:0;transform:scale(.65) rotate(-8deg);filter:blur(8px)}}
-.fragment{position:fixed;z-index:90;pointer-events:none;background:linear-gradient(145deg,#90a9c7,#182536);border:1px solid #b7cee055;box-shadow:0 5px 18px #0008;animation:fragment-fly .9s cubic-bezier(.15,.65,.25,1) forwards}
-@keyframes fragment-fly{to{transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.2);opacity:0;filter:blur(2px)}}
-.secret-message{min-height:45px;margin:20px 0 0;text-align:center;color:#9baabc;font-size:12px;line-height:1.7}
-.secret-message strong{color:#d5e0ef;font-weight:500}
-.secret-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
-.secret-actions button{padding:10px 15px;border:1px solid #ffffff20;border-radius:11px;background:#ffffff08;color:#dce4ef;font-size:11px}
-.secret-actions button:hover{background:#ffffff12;border-color:#ffffff35}
-.secret-exit{display:block;margin:30px auto 0;padding:10px 16px;border:1px solid #ffffff22;border-radius:12px;background:transparent;color:#9eabba;font-size:11px}
-.secret-exit:hover{color:#fff;border-color:#ffffff55}
-.secret-overlay{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.8);backdrop-filter:blur(12px)}
-.secret-overlay.open{display:flex}
-.secret-dialog{width:min(100%,440px);padding:27px;border:1px solid #ffffff20;border-radius:20px;background:#0b1018;box-shadow:0 30px 100px #0009;text-align:center}
-.secret-dialog .dialog-number{color:#7d9dbb;font-size:10px;letter-spacing:.2em;text-transform:uppercase}
-.secret-dialog h3{margin:14px 0 10px;font-size:22px;font-weight:450}
-.secret-dialog p{margin:0;color:#a1adbc;font-size:12px;line-height:1.8}
-.secret-dialog button{margin-top:20px;padding:10px 18px;border:1px solid #ffffff24;border-radius:11px;background:#ffffff09;color:#e5eaf2}
-.secret-chaos{animation:chaos .25s steps(2) 5}
-@keyframes chaos{0%{transform:translate(0)}25%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}75%{transform:translate(-1px,-2px)}}
-.secret-climax{animation:climax .65s ease}
+.server-links{display:none;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 10px 10px}
+.server-box.open .server-links{display:grid}
+.server-links a{padding:9px 4px;text-align:center;border-radius:9px;background:var(--accent-soft);font-size:10px;color:var(--muted);transition:.2s}
+.server-links a:hover{color:var(--text);background:rgba(var(--accent-rgb),.3)}
+.music-card{position:fixed;z-index:40;top:22px;left:82px;width:min(420px,calc(100vw - 105px));border:1px solid var(--line);border-radius:15px;padding:12px 13px;text-align:left;background:var(--panel);backdrop-filter:blur(18px);box-shadow:0 8px 30px #0002}
+.music-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.music-info{display:flex;flex-direction:column;min-width:0}
+.music-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;font-weight:600}
+.music-author{display:block;color:var(--muted);font-size:10px;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.music-caption{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.music-nav{display:flex;align-items:center;gap:2px}
+.music-skip{border:0;background:transparent;color:var(--muted);padding:5px 6px;font-size:17px;line-height:1}
+.music-skip:hover{color:var(--text)}
+.music-controls{display:flex;align-items:center;gap:10px}
+.music-play{width:31px;height:31px;flex:0 0 auto;border:0;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:white}
+.music-play svg{width:13px;height:13px;fill:currentColor}
+.music-track{flex:1;min-width:0}
+.progress{width:100%;height:3px;border-radius:4px;background:var(--line);overflow:hidden}
+.progress-fill{height:100%;width:0;background:var(--accent)}
+.music-meta{display:flex;justify-content:space-between;margin-top:6px;color:var(--muted);font-size:9px;font-variant-numeric:tabular-nums}
+.music-repeat{border:0;background:transparent;color:var(--muted);padding:4px;font-size:15px}
+.music-repeat.active{color:var(--text)}
+.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px;color:var(--muted);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.card-footer span:last-child{opacity:.65}
+#secretOpen{position:fixed;right:23px;bottom:22px;z-index:30;width:47px;height:47px;border:1px solid #ffffff2b;border-radius:50%;background:#050608;color:#f3f3f3;display:grid;place-items:center;box-shadow:0 8px 30px #0005;transition:.2s}
+#secretOpen:hover{transform:translateY(-3px);border-color:rgba(var(--accent-rgb),.75)}
+#secretOpen svg{width:22px;height:22px;fill:currentColor;stroke:none}
+#secretRoom{position:fixed;inset:0;z-index:60;display:none;overflow:hidden;background:#000;color:#eee}
+#secretRoom.active{display:block;animation:room-in .6s ease both}
+@keyframes room-in{from{opacity:0}to{opacity:1}}
+#secretBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.19) contrast(1.15) saturate(.5);transform:scale(1.02)}
+#secretRoom:after{content:"";position:absolute;inset:0;z-index:0;background:#0008;pointer-events:none;transition:background 1s}
+#secretRoom.level-1:after{background:#0009}
+#secretRoom.level-2:after{background:#000b}
+#secretRoom.level-3:after{background:#000c}
+#secretRoom.level-4:after{background:#000d}
+#secretRoom.level-5:after{background:#000e}
+.secret-grain{position:absolute;inset:-50%;z-index:1;pointer-events:none;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");animation:grain .25s steps(2) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(2%,-1%)}50%{transform:translate(-1%,2%)}75%{transform:translate(1%,1%)}100%{transform:translate(-2%,-1%)}}
+.secret-content{position:relative;z-index:2;min-height:100%;padding:28px 24px 34px;display:flex;flex-direction:column}
+.secret-top{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.secret-label{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#a4a4a4}
+.secret-count{font-size:11px;letter-spacing:.12em;color:#8d8d8d;font-variant-numeric:tabular-nums}
+.secret-close{width:40px;height:40px;border:1px solid #ffffff25;border-radius:50%;background:#0008;color:#ddd;font-size:22px;line-height:1}
+.secret-heading{text-align:center;margin:12px 0 18px}
+.secret-heading h2{font-size:clamp(18px,2.2vw,26px);font-weight:450;letter-spacing:.05em;margin:0;color:#e2e2e2}
+.secret-heading p{font-size:11px;color:#777;margin:8px 0 0;letter-spacing:.07em}
+#quoteGrid{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(80px,1fr));gap:12px;min-height:0;max-width:1300px;width:100%;margin:0 auto}
+.quote-card{position:relative;min-height:0;border:1px solid #dcdcdc21;border-radius:14px;background:#0008;backdrop-filter:blur(5px);padding:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;overflow:hidden;transition:background .25s,border-color .25s,transform .25s;animation:quote-appear .45s both}
+.quote-card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff09,transparent 55%);pointer-events:none}
+.quote-card:hover{border-color:#ffffff42;background:#0c0c0cb8;transform:translateY(-2px)}
+.quote-card p{position:relative;margin:0;color:#c3c3c3;font-size:clamp(11px,.95vw,14px);line-height:1.55}
+.quote-card small{position:relative;margin-top:12px;color:#676767;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+@keyframes quote-appear{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.quote-card.popped{animation:pop .42s ease both}
+@keyframes pop{0%{transform:scale(1);opacity:1}45%{transform:scale(.94);opacity:.2}100%{transform:scale(1);opacity:1}}
+.heart-float{position:fixed;z-index:80;pointer-events:none;color:#d9d9d9;font-size:20px;animation:heart-rise .85s ease-out forwards}
+@keyframes heart-rise{0%{opacity:0;transform:translateY(5px) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translateY(-70px) scale(1.35)}}
+.card-shard{position:fixed;z-index:85;pointer-events:none;border:1px solid #e1e8f238;background:linear-gradient(135deg,#d2dceb38,#4652661a);box-shadow:0 0 12px #b4c8e10f;animation:shard-break .72s cubic-bezier(.15,.7,.25,1) forwards;will-change:transform,opacity}
+@keyframes shard-break{0%{opacity:.9;transform:translate(0,0) rotate(0) scale(1)}35%{opacity:.8}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.25)}}
+#scareMessage{position:absolute;z-index:10;left:50%;top:50%;width:min(90vw,680px);transform:translate(-50%,-50%);text-align:center;opacity:0;pointer-events:none;color:#e4e4e4;text-shadow:0 0 22px #fff2}
+#scareMessage.show{animation:scare-in 3.1s ease both}
+#scareMessage strong{display:block;font-size:clamp(20px,4vw,42px);font-weight:450;letter-spacing:.05em}
+#scareMessage span{display:block;margin-top:15px;color:#9c9c9c;font-size:clamp(11px,1.4vw,15px);line-height:1.6}
+@keyframes scare-in{0%{opacity:0;filter:blur(8px);transform:translate(-50%,-48%)}12%,70%{opacity:1;filter:blur(0);transform:translate(-50%,-50%)}85%{opacity:.7}100%{opacity:0;filter:blur(5px)}}
+#secretRoom.level-2 .secret-content{animation:subtle-shake .7s ease}
+#secretRoom.level-3 .secret-content{animation:subtle-shake .45s ease}
+#secretRoom.level-4 .secret-content{animation:subtle-shake .32s ease}
+#secretRoom.level-5 .secret-content{animation:climax .85s ease}
+@keyframes subtle-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-2px)}40%{transform:translateX(2px)}60%{transform:translateX(-1px)}80%{transform:translateX(1px)}}
 @keyframes climax{0%,100%{transform:translateX(0);filter:none}18%{transform:translateX(-4px);filter:contrast(1.8)}38%{transform:translateX(3px);filter:brightness(.55)}58%{transform:translateX(-2px);filter:contrast(1.5)}78%{transform:translateX(2px);filter:brightness(.7)}}
-#finalReveal{position:absolute;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.93);text-align:center}
+#finalReveal{position:absolute;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:24px;background:#000f;text-align:center}
 #finalReveal.show{display:flex;animation:reveal-in 1.2s ease both}
 @keyframes reveal-in{from{opacity:0}to{opacity:1}}
 .reveal-box{max-width:650px}
@@ -181,7 +178,7 @@ h1{margin:0;font-family:"Space Grotesk",Inter,ui-sans-serif,system-ui,sans-serif
 @keyframes glitch{0%{text-shadow:2px 0 #a44,-2px 0 #48a;transform:translateX(0)}50%{text-shadow:-2px 0 #a44,2px 0 #48a;transform:translateX(1px)}100%{text-shadow:none;transform:translateX(0)}}
 #youtubePlayers{position:fixed;width:200px;height:200px;left:-1000px;top:-1000px;overflow:hidden;opacity:.001;pointer-events:none}
 #youtubePlayers iframe{width:200px;height:200px}
-.modal-shade{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.66);backdrop-filter:blur(8px)}
+.modal-shade{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;padding:20px;background:#000a;backdrop-filter:blur(8px)}
 .modal-shade.open{display:flex}
 .modal{width:min(100%,390px);padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--panel-strong);box-shadow:var(--shadow)}
 .modal h2{margin:0 0 10px;font-size:20px;font-weight:600}
@@ -217,952 +214,262 @@ h1{margin:0;font-family:"Space Grotesk",Inter,ui-sans-serif,system-ui,sans-serif
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
 </head>
-<body>
-<div id="mainBackground"></div>
-<div class="ambient"></div>
+<body class="theme-black accent-blue">
 <div class="topline"></div>
-
-<button class="icon-button" id="settingsOpen" aria-label="Настройки" title="Настройки">
-  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.7 2.94-.08-.02a1.7 1.7 0 0 0-1.78.6l-.05.07h-3.4l-.03-.08a1.7 1.7 0 0 0-1.45-1.12 1.7 1.7 0 0 0-1.62.68l-.05.07-2.94-1.7.02-.08a1.7 1.7 0 0 0-.6-1.78l-.07-.05v-3.4l.08-.03a1.7 1.7 0 0 0 1.12-1.45 1.7 1.7 0 0 0-.68-1.62l-.07-.05 1.7-2.94.08.02a1.7 1.7 0 0 0 1.78-.6l.05-.07h3.4l.03.08a1.7 1.7 0 0 0 1.45 1.12 1.7 1.7 0 0 0 1.62-.68l.05-.07 2.94 1.7-.02.08a1.7 1.7 0 0 0 .6 1.78l.07.05v3.4l-.08.03A1.7 1.7 0 0 0 19.4 15Z"></path></svg>
-</button>
-
-<aside id="settingsPanel" aria-label="Настройки сайта">
-  <div class="settings-head">
-    <div>
-      <div class="eyebrow">PERSONAL SPACE</div>
-      <h2>Настройки</h2>
-    </div>
-    <button class="icon-button" id="settingsClose" aria-label="Закрыть">
-      <svg viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"></path></svg>
-    </button>
-  </div>
-
-  <section class="setting-group">
-    <h3>Тема интерфейса</h3>
-    <div class="segmented" id="themeOptions">
-      <button data-theme="dark" class="active">Тёмная</button>
-      <button data-theme="white">Светлая</button>
-      <button data-theme="gray">Серая</button>
-    </div>
-  </section>
-
-  <section class="setting-group">
-    <h3>Акцентный цвет</h3>
-    <div class="swatches">
-      <button class="swatch active" data-accent="blue" style="--swatch:#526f9e"><i></i>Синий</button>
-      <button class="swatch" data-accent="purple" style="--swatch:#72568f"><i></i>Фиолет.</button>
-      <button class="swatch" data-accent="red" style="--swatch:#914d58"><i></i>Красный</button>
-      <button class="swatch" data-accent="pink" style="--swatch:#93657e"><i></i>Розовый</button>
-      <button class="swatch" data-accent="green" style="--swatch:#4f796e"><i></i>Зелёный</button>
-      <button class="swatch" data-accent="cyan" style="--swatch:#4d7c88"><i></i>Голубой</button>
-      <button class="swatch" data-accent="orange" style="--swatch:#966e4d"><i></i>Оранж.</button>
-      <button class="swatch" data-accent="yellow" style="--swatch:#8c8252"><i></i>Жёлтый</button>
-      <button class="swatch" data-accent="indigo" style="--swatch:#555b91"><i></i>Индиго</button>
-      <button class="swatch" data-accent="white" style="--swatch:#aab5c7"><i></i>Белый</button>
-      <button class="swatch" data-accent="black" style="--swatch:#252a34"><i></i>Чёрный</button>
-    </div>
-  </section>
-
-  <section class="setting-group">
-    <h3>Карточка профиля</h3>
-    <div class="setting-row">
-      <label for="cardOpacity">Прозрачность фона</label>
-      <span id="opacityValue">82%</span>
-    </div>
-    <input id="cardOpacity" type="range" min="10" max="100" value="82">
-    <p class="setting-note">Изменяется только фон карточки. Текст, кнопки и музыкальный плеер не затрагиваются.</p>
-
-    <div class="setting-row">
-      <label for="textColor">Цвет текста</label>
-    </div>
-    <div class="segmented" id="textColorOptions">
-      <button data-text-color="default" class="active">Авто</button>
-      <button data-text-color="#ffffff">Белый</button>
-      <button data-text-color="#d2d6de">Серый</button>
-      <button data-text-color="#111827">Чёрный</button>
-      <button data-text-color="#9abaff">Голубой</button>
-    </div>
-  </section>
-
-  <section class="setting-group">
-    <h3>Эффекты</h3>
-    <label class="toggle-row">
-      <span>Звуки нажатий</span>
-      <span class="switch"><input id="clickSoundToggle" type="checkbox" checked><span></span></span>
-    </label>
-    <label class="toggle-row">
-      <span>Анимации</span>
-      <span class="switch"><input id="animationsToggle" type="checkbox" checked><span></span></span>
-    </label>
-  </section>
-
-  <section class="setting-group">
-    <h3>Музыка</h3>
-    <label class="toggle-row">
-      <span>Автоматически включать</span>
-      <span class="switch"><input id="musicAutoplayToggle" type="checkbox" checked><span></span></span>
-    </label>
-    <p class="setting-note">Автовоспроизведение зависит от настроек браузера. Если музыка не стартует, нажми кнопку воспроизведения.</p>
-  </section>
-</aside>
-
+<div id="mainBackground"><video autoplay muted loop playsinline aria-hidden="true"><source src="https://www.shutterstock.com/shutterstock/videos/3806259979/preview/stock-footage-flickering-glitch-visuals-with-grungy-overlays-code-fragments-and-digital-static-ideal-for.webm" type="video/webm"></video></div>
+<div class="ambient"></div>
+<button id="settingsOpen" class="icon-button" aria-label="Открыть настройки" title="Настройки"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button>
 <div id="settingsShade"></div>
-
-<div class="music-card" id="musicCard">
-  <div class="music-head">
-    <div style="min-width:0">
-      <div class="music-title" id="musicTitle">Nok — Background music</div>
-      <div class="music-subtitle" id="musicSubtitle">Трек 1 из 12</div>
-    </div>
-    <div class="music-controls">
-      <button id="musicPrev" aria-label="Предыдущий трек" title="Предыдущий">
-        <svg viewBox="0 0 24 24"><path d="M6 5v14M19 6 8 12l11 6z"></path></svg>
-      </button>
-      <button id="musicPlay" aria-label="Воспроизвести" title="Воспроизвести">
-        <svg id="musicPlayIcon" viewBox="0 0 24 24"><path d="m8 5 12 7-12 7z"></path></svg>
-      </button>
-      <button id="musicNext" aria-label="Следующий трек" title="Следующий">
-        <svg viewBox="0 0 24 24"><path d="M18 5v14M5 6l11 6-11 6z"></path></svg>
-      </button>
-    </div>
-  </div>
-  <div class="music-progress"><span id="musicProgress"></span></div>
-  <div class="music-meta">
-    <span id="musicTime">00:00</span>
-    <span id="musicStatus">Остановлено</span>
-  </div>
-</div>
-
-<main class="page">
-  <article class="profile-card" id="profileCard">
-    <div class="card-top">
-      <span class="live-label"><i class="live-dot"></i>ONLINE SPACE</span>
-      <span class="location-label">UKRAINE · UA</span>
-    </div>
-
-    <div class="avatar-wrap">
-      <img class="avatar" id="profileAvatar" src="avatar.png" alt="Nok"
-           onerror="this.style.display='none';document.getElementById('avatarFallback').style.display='flex'">
-      <div class="avatar-fallback" id="avatarFallback">N.</div>
-    </div>
-
-    <h1>Nok</h1>
-    <div class="status">Independent mind · Quiet presence</div>
-    <p class="bio">Designer and developer. Creating things that reflect who I am.</p>
-
-    <div class="roles">
-      <button class="role" data-role="designer">DESIGNER</button>
-      <button class="role" data-role="developer">DEVELOPER</button>
-      <button class="role" data-role="creator">CREATOR</button>
-    </div>
-
-    <div class="links">
-      <a class="social-link" href="https://t.me/nok_w" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-        <svg viewBox="0 0 24 24"><path d="m21 3-7 18-4-8-8-4 19-6ZM10 13l5-5"></path></svg>
-        <span>Telegram</span>
-      </a>
-      <a class="social-link" href="https://ru.pinterest.com/amm1485/%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%BD%D0%B5%D0%B1%D0%BE%D0%BC/" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m10 15 2-8c2-1 5 1 3 4-1 2-3 2-4 1"></path><path d="m10 15-1 4"></path></svg>
-        <span>Pinterest</span>
-      </a>
-      <a class="social-link" href="https://github.com/nokan29092000-hash" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-        <svg viewBox="0 0 24 24"><path d="M9 19c-4 1-4-2-6-2m12 4v-3.5c0-1 .1-1.5-.5-2 3.3-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 19.5 5c.1-.4.7-2-.1-4-2 0-3.3 1.2-3.9 1.7a13.4 13.4 0 0 0-7 0C7.9 2.2 6.6 1 4.6 1c-.8 2-.2 3.6-.1 4A5.4 5.4 0 0 0 3 8.5c0 5.4 3.2 6.6 6.5 7-.6.5-.7 1.2-.7 2V21"></path></svg>
-        <span>GitHub</span>
-      </a>
-      <button class="social-link" id="copyProfile" aria-label="Скопировать ссылку на профиль">
-        <svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
-        <span>Копировать</span>
-      </button>
-    </div>
-
-    <div class="server-box" id="serverBox">
-      <button class="server-toggle" id="serverToggle" aria-expanded="false">
-        <span>
-          <span class="server-title">Vastness — Discord</span>
-          <span class="server-subtitle">A place for free minds</span>
-        </span>
-        <svg class="chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg>
-      </button>
-      <div class="server-content">
-        <div class="server-content-inner">
-          <p>Сообщество для общения, творчества и совместных игр. Спокойная атмосфера, свобода самовыражения и собственные правила.<br><br><a href="https://discord.gg/5ZhTv8nm" target="_blank" rel="noopener noreferrer">Открыть приглашение →</a></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card-footer">
-      <span>© NOK · PERSONAL SPACE</span>
-      <button id="secretHint">there is more</button>
-      <span id="localClock">00:00</span>
-    </div>
-  </article>
-</main>
-
-<button id="secretOpen" aria-label="Открыть секретную комнату" title="Секретная комната">
-  <svg viewBox="0 0 24 24"><path d="M4 11V7a8 8 0 0 1 16 0v4"></path><rect x="3" y="11" width="18" height="10" rx="3"></rect><circle cx="12" cy="15" r="1"></circle></svg>
-</button>
-
-<div id="secretRoom" aria-hidden="true">
-  <div class="secret-bg"></div>
-  <header class="secret-header">
-    <h2>СЕКРЕТНАЯ КОМНАТА</h2>
-    <button id="secretClose" aria-label="Закрыть комнату">✕</button>
-  </header>
-
-  <div class="secret-content">
-    <div class="secret-intro">
-      <div class="eyebrow">UNKNOWN / PERSONAL ARCHIVE</div>
-      <h3>Не всё видно с первого взгляда.</h3>
-      <p>Каждая карточка хранит отдельную мысль. Нажимай на них, чтобы открыть скрытые сообщения. Некоторые вещи проявляются только со временем.</p>
-    </div>
-
-    <div class="secret-progress">
-      <span id="clickCount">Открыто: 0</span>
-      <div class="progress-line"><span id="secretProgressBar"></span></div>
-      <span id="remainingCount">Осталось: 12</span>
-    </div>
-
-    <div id="quoteGrid">
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 01</span><p>Иногда тишина говорит больше, чем объяснения.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 02</span><p>Не каждый, кто улыбается, счастлив.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 03</span><p>Свобода начинается с собственного выбора.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 04</span><p>Необязательно быть понятым всеми.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 05</span><p>Иногда лучший ответ — продолжать идти.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 06</span><p>Прошлое объясняет, но не определяет тебя.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 07</span><p>Даже маленький шаг остаётся движением.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 08</span><p>Не теряй себя, пытаясь удержать других.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 09</span><p>Не всё важное можно выразить словами.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 10</span><p>Спокойствие — тоже форма силы.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 11</span><p>Будущее создаётся действиями, а не ожиданием.</p><small>Нажми, чтобы открыть</small></button>
-      <button class="quote-card"><span class="quote-number">ARCHIVE / 12</span><p>Если ты здесь, значит, тебе было интересно.</p><small>Нажми, чтобы открыть</small></button>
-    </div>
-
-    <p class="secret-message" id="secretMessage" aria-live="polite">Система ожидает твоего действия.</p>
-    <div class="secret-actions">
-      <button id="shuffleQuotes">Перемешать карточки</button>
-      <button id="resetQuotes">Начать заново</button>
-    </div>
-    <button class="secret-exit" id="secretExit">Вернуться в профиль</button>
-  </div>
-
-  <div id="finalReveal">
-    <div class="reveal-box">
-      <div class="reveal-mark">✳</div>
-      <h2>Ты дошёл до конца.</h2>
-      <p>Но у таких историй редко бывает настоящий конец. Иногда достаточно просто продолжать создавать что-то своё — даже если никто пока не видит результата.</p>
-      <button id="finalRevealClose">Вернуться к архиву</button>
-    </div>
-  </div>
-</div>
-
-<div class="secret-overlay" id="milestoneOverlay">
-  <div class="secret-dialog">
-    <div class="dialog-number" id="milestoneNumber">ARCHIVE / 03</div>
-    <h3 id="milestoneTitle">Ты заметил больше.</h3>
-    <p id="milestoneText">Продолжай исследовать.</p>
-    <button id="milestoneClose">Продолжить</button>
-  </div>
-</div>
-
-<div class="modal-shade" id="roleModal">
-  <div class="modal">
-    <h2 id="roleTitle">Designer</h2>
-    <p id="roleDescription">Создание визуальных концепций, интерфейсов и цифровых образов.</p>
-    <div class="modal-actions">
-      <button id="roleModalClose">Закрыть</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div id="youtubePlayers" aria-hidden="true"></div>
-
+<aside id="settingsPanel" aria-label="Настройки сайта">
+<div class="settings-head"><div><div class="eyebrow">PERSONAL SPACE</div><h2>Настройки</h2></div><button id="settingsClose" class="icon-button" aria-label="Закрыть настройки"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+<section class="setting-group"><h3>Основная тема</h3><div class="segmented" id="mainThemes"><button data-theme="black" class="active">Чёрная</button><button data-theme="gray">Серая</button><button data-theme="white">Белая</button></div><p class="setting-note">Меняет общую поверхность сайта и карточек.</p></section>
+<section class="setting-group"><h3>Внешний вид карточки</h3><div class="setting-row"><span>Прозрачность карточки</span><span id="surfaceOpacityLabel">100%</span></div><input id="surfaceOpacity" type="range" min="10" max="100" value="100" aria-label="Прозрачность карточки профиля"><p class="setting-note">Меняется только фон карточки. Текст остаётся полностью непрозрачным.</p></section>
+<section class="setting-group"><h3>Цвет профиля</h3><div class="swatches" id="accentThemes">
+<button class="swatch active" data-accent="blue" style="--swatch:#526f9e"><i></i>Синий</button><button class="swatch" data-accent="purple" style="--swatch:#72568f"><i></i>Фиолет.</button><button class="swatch" data-accent="red" style="--swatch:#914d58"><i></i>Красный</button><button class="swatch" data-accent="pink" style="--swatch:#93657e"><i></i>Розовый</button><button class="swatch" data-accent="green" style="--swatch:#4f796e"><i></i>Зелёный</button><button class="swatch" data-accent="cyan" style="--swatch:#4d7c88"><i></i>Бирюза</button><button class="swatch" data-accent="orange" style="--swatch:#966e4d"><i></i>Оранж.</button><button class="swatch" data-accent="yellow" style="--swatch:#8c8252"><i></i>Жёлтый</button><button class="swatch" data-accent="indigo" style="--swatch:#555b91"><i></i>Индиго</button><button class="swatch" data-accent="white" style="--swatch:#aab5c7"><i></i>Белый</button></div><p class="setting-note">Цвета приглушённые, без неонового свечения.</p></section>
+<section class="setting-group"><h3>Цвет текста</h3><div class="swatches" id="textColors">
+<button class="swatch active" data-text-color="default" style="--swatch:#edf2fb"><i></i>Стандарт.</button><button class="swatch" data-text-color="#526f9e" style="--swatch:#526f9e"><i></i>Синий</button><button class="swatch" data-text-color="#72568f" style="--swatch:#72568f"><i></i>Фиолет.</button><button class="swatch" data-text-color="#914d58" style="--swatch:#914d58"><i></i>Красный</button><button class="swatch" data-text-color="#93657e" style="--swatch:#93657e"><i></i>Розовый</button><button class="swatch" data-text-color="#4f796e" style="--swatch:#4f796e"><i></i>Зелёный</button><button class="swatch" data-text-color="#4d7c88" style="--swatch:#4d7c88"><i></i>Бирюза</button><button class="swatch" data-text-color="#966e4d" style="--swatch:#966e4d"><i></i>Оранж.</button><button class="swatch" data-text-color="#8c8252" style="--swatch:#8c8252"><i></i>Жёлтый</button><button class="swatch" data-text-color="#555b91" style="--swatch:#555b91"><i></i>Индиго</button><button class="swatch" data-text-color="#aab5c7" style="--swatch:#aab5c7"><i></i>Белый</button></div><p class="setting-note">Меняет цвет текста профиля независимо от цвета карточки.</p></section>
+<section class="setting-group"><h3>Фоновая музыка</h3><div class="setting-row"><span>Громкость</span><span id="musicVolumeLabel">35%</span></div><input id="musicVolume" type="range" min="0" max="100" value="35" aria-label="Громкость фоновой музыки"><div class="toggle-row"><span>Включать музыку при первом взаимодействии</span><label class="switch"><input id="musicEnabled" type="checkbox" checked><span></span></label></div><p class="setting-note">Браузер может блокировать автозапуск со звуком. Нажми Play на плеере, если музыка не началась.</p></section>
+<section class="setting-group"><h3>Звук кликов</h3><div class="setting-row"><span>Громкость кликов</span><span id="clickVolumeLabel">30%</span></div><input id="clickVolume" type="range" min="0" max="100" value="30" aria-label="Громкость звуков клика"><div class="toggle-row"><span>Звуки интерфейса</span><label class="switch"><input id="clickEnabled" type="checkbox" checked><span></span></label></div><p class="setting-note">Звук загружается напрямую с MyInstants. Доступность зависит от внешнего сервера.</p></section>
+<section class="setting-group"><h3>Секретная комната</h3><div class="toggle-row"><span>Звуки кликов внутри комнаты</span><label class="switch"><input id="secretClickEnabled" type="checkbox" checked><span></span></label></div><p class="setting-note">В комнате отдельный саундтрек и затемнённый видеоряд.</p></section>
+</aside>
+<main class="page"><article class="profile-card">
+<div class="card-top"><span class="live-label"><i class="live-dot"></i>ONLINE / OFFLINE</span><span class="location-label">VASTNESS · 01</span></div>
+<div class="avatar-wrap"><img class="avatar" id="avatar" src="avatar.jpg" alt="Аватар Nok" onerror="this.style.display='none';document.getElementById('avatarFallback').style.display='flex'"><div class="avatar-fallback" id="avatarFallback">N.</div></div>
+<h1>Nok</h1><div class="status">Independent mind · Vastness</div><p class="bio">Designer and developer. Creating things that reflect who I am.</p>
+<div class="roles"><button class="role" data-role="DESIGNER">DESIGNER</button><button class="role" data-role="DEVELOPER">DEVELOPER</button><button class="role" data-role="FOUNDER">FOUNDER</button></div>
+<nav class="links" aria-label="Социальные сети">
+<a class="social-link" href="https://t.me/nok_w" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="m21 3-7.2 18-4.1-7.1L3 10.2 21 3Z"/><path d="m9.7 13.9 5.1-5.1"/></svg><span>Telegram</span></a>
+<a class="social-link" href="https://discord.com/users/1291423133789589581" target="_blank" rel="noopener" aria-label="Discord profile"><svg viewBox="0 0 24 24"><path d="M7 7.5A13 13 0 0 1 17 7.5l2 10a14 14 0 0 1-4 1.5l-1-1.5M7 7.5l-2 10a14 14 0 0 0 4 1.5l1-1.5M7 7.5 5.5 6 4 9c-1.2 3-1.2 5.5-.7 7.5A17 17 0 0 0 8 19M17 7.5 18.5 6 20 9c1.2 3 1.2 5.5.7 7.5A17 17 0 0 1 16 19"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg><span>Discord</span></a>
+<a class="social-link" href="https://www.tiktok.com/@nok_vast" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M14 4v10.2a4.3 4.3 0 1 1-4-4.3"/><path d="M14 4c.5 3.1 2.4 4.8 5 5"/></svg><span>TikTok</span></a>
+<a class="social-link" href="https://www.twitch.tv/nokyshka" target="_blank" rel="noopener" aria-label="Twitch"><svg viewBox="0 0 24 24"><path d="M5 3h16v12l-4 4h-4l-3 3v-3H6V6Z"/><path d="M11 7v5M16 7v5"/></svg><span>Twitch</span></a>
+</nav>
+<section class="server-box" id="serverBox"><button class="server-toggle" id="serverToggle" aria-expanded="false"><span><span class="server-title">Vastness Community</span><span class="server-sub">Discord · TikTok · Telegram</span></span><svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 9 6 6 6-6"/></svg></button><div class="server-links"><a href="https://discord.gg/t5F4gEDwRu" target="_blank" rel="noopener">Discord</a><a href="https://www.tiktok.com/@vastness_ds" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/Vastness_ds" target="_blank" rel="noopener">Telegram</a></div></section>
+<section class="music-card"><div class="music-heading"><div class="music-info"><span class="music-title" id="trackTitle">Загрузка названия…</span><span class="music-author" id="trackAuthor">YouTube</span><span class="music-caption" id="musicState">Фоновая музыка</span></div><div class="music-nav"><button class="music-skip" id="previousTrack" title="Предыдущая песня" aria-label="Предыдущая песня">‹</button><button class="music-skip" id="nextTrack" title="Следующая песня" aria-label="Следующая песня">›</button><button class="music-repeat" id="repeatButton" title="Повтор трека" aria-label="Повтор трека">↻</button></div></div><div class="music-controls"><button class="music-play" id="musicPlay" aria-label="Воспроизвести музыку"><svg id="playIcon" viewBox="0 0 24 24"><path d="M7 4v16l13-8Z"/></svg></button><div class="music-track"><div class="progress"><div class="progress-fill" id="progressFill"></div></div><div class="music-meta"><span id="currentTime">0:00</span><span id="totalTime">—:—</span></div></div></div></section>
+<div class="card-footer"><span>MADE BY NOK · 2026</span><span>STAY UNDEFINED</span></div>
+</article></main>
+<button id="secretOpen" aria-label="Открыть секретную комнату" title="..."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 9c.2-4.1 2.8-6.5 7-6.5s6.8 2.4 7 6.5H5Z"/></svg></button>
+<section id="secretRoom" aria-label="Секретная комната">
+<video id="secretBg" autoplay muted loop playsinline><source src="https://media.istockphoto.com/id/2169005361/ru/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/%D1%80%D0%B8%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F-%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F-%D0%B4%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B8-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%83%D1%8E-%D1%81%D0%B2%D0%B5%D1%80%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%B8-%D0%BF%D0%BE%D0%B4%D0%B2%D0%B5%D1%80%D0%B3%D0%B0%D1%8E%D1%82-%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BA%D0%B8%D0%B7%D0%BC%D1%83-%D0%BF%D0%BE-%D0%B4%D0%BE%D1%80%D0%BE%D0%B3%D0%B5-%D0%B2-%D1%88%D0%BA%D0%BE%D0%BB%D1%83-%D0%B8-%D0%B8%D0%B7.mp4?s=mp4-640x640-is&k=20&c=J8CLaP78MFmP5ZKQsltvQnU6F_V-KWTL6eWhHbf3kTo=" type="video/mp4"></video>
+<div class="secret-grain"></div><div class="secret-content"><div class="secret-top"><span class="secret-label">НЕИЗВЕСТНОЕ / КОМНАТА 00</span><span class="secret-count" id="secretCount">НАЖАТИЯ · 00</span><button id="secretClose" class="secret-close" aria-label="Закрыть">×</button></div>
+<div class="secret-heading"><h2 id="secretHeading">Осколки сознания</h2><p id="secretSubheading">Нажми на карточки. Посмотрим, как далеко ты зайдёшь.</p></div><div id="quoteGrid"></div></div>
+<div id="scareMessage"><strong id="scareTitle"></strong><span id="scareText"></span></div>
+<div id="finalReveal"><div class="reveal-box"><div class="reveal-mark">♡</div><h2>Ты добрался до конца.</h2><p>Я пошутил. Всё с тобой будет хорошо. ♡<br><br>Спасибо, что дошёл до конца. Береги себя и не забывай: за любой тёмной атмосферой может скрываться что-то хорошее. 💙</p><button id="revealClose">Закрыть</button></div></div>
+</section>
+<div id="roleModal" class="modal-shade"><div class="modal"><h2 id="roleTitle">DESIGNER</h2><p id="roleText">Заказы и сотрудничество.</p><div class="modal-actions"><a href="https://t.me/nokyshka" target="_blank" rel="noopener">Связаться в Telegram</a><button id="roleClose">Закрыть</button></div></div></div>
+<div id="toast" class="toast" role="status"></div>
+<div id="youtubePlayers" aria-hidden="true"><div id="mainYT"></div><div id="secretYT"></div></div>
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-(() => {
-  "use strict";
-
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-
-  const state = {
-    theme: "dark",
-    accent: "blue",
-    opacity: 82,
-    textColor: "default",
-    clickSounds: true,
-    animations: true,
-    autoplay: true,
-    musicPlaying: false,
-    trackIndex: 0,
-    totalClicks: 0,
-    destroyed: 0,
-    milestoneSeen: new Set(),
-    lastToast: 0
-  };
-
-  const tracks = [
-    { id: "__cFrzeIdfU", title: "Трек 01" },
-    { id: "kmTWXxDHuqo", title: "Трек 02" },
-    { id: "MucMIJJ1Dso", title: "Трек 03" },
-    { id: "hM7n3TZ_cC0", title: "Трек 04" },
-    { id: "SKjtvKDqYhA", title: "Трек 05" },
-    { id: "pmTifnmXswI", title: "Трек 06" },
-    { id: "qpylrM5OMSE", title: "Трек 07" },
-    { id: "GbzXNK1MJMM", title: "Трек 08" },
-    { id: "a-x7Apy0RIA", title: "Трек 09" },
-    { id: "Oud0Cy-WNDo", title: "Трек 10" },
-    { id: "6BvJzsmcfy0", title: "Трек 11" },
-    { id: "8gb1706XupY", title: "Трек 12" }
-  ];
-
-  const quotes = [
-    "Иногда тишина говорит больше, чем объяснения.",
-    "Не каждый, кто улыбается, счастлив.",
-    "Свобода начинается с собственного выбора.",
-    "Необязательно быть понятым всеми.",
-    "Иногда лучший ответ — продолжать идти.",
-    "Прошлое объясняет, но не определяет тебя.",
-    "Даже маленький шаг остаётся движением.",
-    "Не теряй себя, пытаясь удержать других.",
-    "Не всё важное можно выразить словами.",
-    "Спокойствие — тоже форма силы.",
-    "Будущее создаётся действиями, а не ожиданием.",
-    "Если ты здесь, значит, тебе было интересно.",
-    "Не нужно доказывать свою ценность каждому.",
-    "Некоторые перемены начинаются незаметно.",
-    "Быть собой сложнее, чем копировать остальных.",
-    "Не всякая потеря означает поражение.",
-    "Ты можешь изменить направление, не отказываясь от цели.",
-    "Иногда нужно остановиться, чтобы понять, куда идти.",
-    "Не всё, что закончилось, было напрасным.",
-    "Твой путь не обязан выглядеть как чужой."
-  ];
-
-  const randomMessages = [
-    "Архив зарегистрировал ещё одно действие.",
-    "Не торопись. Здесь нет правильной последовательности.",
-    "Некоторые ответы появляются только после паузы.",
-    "С каждым нажатием остаётся чуть меньше неизвестного.",
-    "Ты всё ещё здесь. Это уже часть истории.",
-    "Не каждую мысль нужно объяснять.",
-    "Система продолжает наблюдение за архивом.",
-    "Иногда любопытство приводит дальше, чем план.",
-    "Ты можешь начать сначала, но опыт останется.",
-    "Некоторые детали становятся заметны не сразу."
-  ];
-
-  const milestones = {
-    3: {
-      title: "Первый след",
-      text: "Ты начал исследовать архив. Пока это только начало."
-    },
-    5: {
-      title: "Пять шагов",
-      text: "Интерес иногда открывает двери, которые раньше казались незаметными."
-    },
-    10: {
-      title: "Десятый след",
-      text: "Ты уже увидел больше половины первоначального архива."
-    },
-    20: {
-      title: "За пределами карточек",
-      text: "Ты продолжаешь даже тогда, когда первые ответы уже найдены."
-    },
-    50: {
-      title: "Пятьдесят действий",
-      text: "Настойчивость меняет то, что сначала казалось обычным интерфейсом."
-    },
-    100: {
-      title: "Сто шагов",
-      text: "Ты добрался до отметки в сто действий. Спасибо за внимание к деталям."
-    }
-  };
-
-  let audioContext = null;
-  let toastTimer = null;
-  let progressTimer = null;
-  let player = null;
-  let playerReady = false;
-  let ytApiRequested = false;
-  let trackStartedAt = 0;
-  let progressEstimate = 0;
-  let activeCards = [];
-  let messageIndex = 0;
-
-  function toast(message) {
-    const el = $("#toast");
-    if (!el) return;
-    el.textContent = message;
-    el.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => el.classList.remove("show"), 2300);
-  }
-
-  function playClickSound(frequency = 520) {
-    if (!state.clickSounds) return;
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      if (!audioContext) audioContext = new AudioCtx();
-      if (audioContext.state === "suspended") audioContext.resume();
-
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-      gain.gain.setValueAtTime(0.035, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.065);
-      oscillator.connect(gain);
-      gain.connect(audioContext.destination);
-      oscillator.start();
-      oscillator.stop(audioContext.currentTime + 0.07);
-    } catch (_) {
-      // Звук отключён браузером или устройством.
-    }
-  }
-
-  function setAnimations(enabled) {
-    document.body.classList.toggle("no-animations", !enabled);
-    if (!enabled) {
-      const style = document.getElementById("noAnimationsStyle") || document.createElement("style");
-      style.id = "noAnimationsStyle";
-      style.textContent = ".no-animations *, .no-animations *::before, .no-animations *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }";
-      document.head.appendChild(style);
-    } else {
-      $("#noAnimationsStyle")?.remove();
-    }
-  }
-
-  function openSettings() {
-    $("#settingsPanel").classList.add("open");
-    $("#settingsShade").classList.add("open");
-    $("#settingsPanel").setAttribute("aria-hidden", "false");
-    playClickSound();
-  }
-
-  function closeSettings() {
-    $("#settingsPanel").classList.remove("open");
-    $("#settingsShade").classList.remove("open");
-    $("#settingsPanel").setAttribute("aria-hidden", "true");
-  }
-
-  $("#settingsOpen").addEventListener("click", openSettings);
-  $("#settingsClose").addEventListener("click", closeSettings);
-  $("#settingsShade").addEventListener("click", closeSettings);
-
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-      closeSettings();
-      closeSecretRoom();
-      closeRoleModal();
-      $("#milestoneOverlay").classList.remove("open");
-    }
-  });
-
-  function applyTheme(theme) {
-    state.theme = theme;
-    document.body.classList.remove("theme-white", "theme-gray");
-    if (theme === "white") document.body.classList.add("theme-white");
-    if (theme === "gray") document.body.classList.add("theme-gray");
-
-    $$("#themeOptions button").forEach(button => {
-      button.classList.toggle("active", button.dataset.theme === theme);
-    });
-  }
-
-  $$("#themeOptions button").forEach(button => {
-    button.addEventListener("click", () => {
-      applyTheme(button.dataset.theme);
-      playClickSound();
-    });
-  });
-
-  function applyAccent(accent) {
-    state.accent = accent;
-    document.body.classList.remove(
-      "accent-blue", "accent-purple", "accent-red", "accent-pink",
-      "accent-green", "accent-cyan", "accent-orange", "accent-yellow",
-      "accent-indigo", "accent-white", "accent-black"
-    );
-    document.body.classList.add("accent-" + accent);
-
-    $$(".swatch").forEach(button => {
-      button.classList.toggle("active", button.dataset.accent === accent);
-    });
-  }
-
-  $$(".swatch").forEach(button => {
-    button.addEventListener("click", () => {
-      applyAccent(button.dataset.accent);
-      playClickSound(650);
-    });
-  });
-
-  $("#cardOpacity").addEventListener("input", event => {
-    state.opacity = Number(event.target.value);
-    $("#opacityValue").textContent = state.opacity + "%";
-    document.documentElement.style.setProperty("--card-alpha", String(state.opacity / 100));
-  });
-
-  function applyTextColor(color) {
-    state.textColor = color;
-    const card = $("#profileCard");
-    if (color === "default") {
-      card.style.setProperty("--profile-text-color", "var(--text)");
-    } else {
-      card.style.setProperty("--profile-text-color", color);
-    }
-
-    $$("#textColorOptions button").forEach(button => {
-      button.classList.toggle("active", button.dataset.textColor === color);
-    });
-  }
-
-  $$("#textColorOptions button").forEach(button => {
-    button.addEventListener("click", () => {
-      applyTextColor(button.dataset.textColor);
-      playClickSound();
-    });
-  });
-
-  $("#clickSoundToggle").addEventListener("change", event => {
-    state.clickSounds = event.target.checked;
-    if (state.clickSounds) playClickSound();
-  });
-
-  $("#animationsToggle").addEventListener("change", event => {
-    state.animations = event.target.checked;
-    setAnimations(state.animations);
-  });
-
-  $("#musicAutoplayToggle").addEventListener("change", event => {
-    state.autoplay = event.target.checked;
-  });
-
-  $("#serverToggle").addEventListener("click", () => {
-    const box = $("#serverBox");
-    const isOpen = box.classList.toggle("open");
-    $("#serverToggle").setAttribute("aria-expanded", String(isOpen));
-    playClickSound();
-  });
-
-  $("#copyProfile").addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      toast("Ссылка на профиль скопирована");
-    } catch (_) {
-      const field = document.createElement("textarea");
-      field.value = window.location.href;
-      document.body.appendChild(field);
-      field.select();
-      const copied = document.execCommand("copy");
-      field.remove();
-      toast(copied ? "Ссылка скопирована" : "Не удалось скопировать ссылку");
-    }
-    playClickSound();
-  });
-
-  const roleDescriptions = {
-    designer: {
-      title: "Designer",
-      text: "Создание визуальных концепций, интерфейсов и цифровых образов. Внимание к форме, цвету и деталям."
-    },
-    developer: {
-      title: "Developer",
-      text: "Разработка сайтов и интерактивных проектов. Идеи становятся работающими цифровыми продуктами."
-    },
-    creator: {
-      title: "Creator",
-      text: "Личные проекты, эксперименты и поиск собственного стиля без привязки к одному направлению."
-    }
-  };
-
-  $$(".role").forEach(button => {
-    button.addEventListener("click", () => {
-      const role = roleDescriptions[button.dataset.role];
-      if (!role) return;
-      $("#roleTitle").textContent = role.title;
-      $("#roleDescription").textContent = role.text;
-      $("#roleModal").classList.add("open");
-      playClickSound();
-    });
-  });
-
-  function closeRoleModal() {
-    $("#roleModal").classList.remove("open");
-  }
-
-  $("#roleModalClose").addEventListener("click", closeRoleModal);
-  $("#roleModal").addEventListener("click", event => {
-    if (event.target === $("#roleModal")) closeRoleModal();
-  });
-
-  function updateClock() {
-    const now = new Date();
-    $("#localClock").textContent = now.toLocaleTimeString("ru-RU", {
-      hour: "2-digit",
-      minute: "2-digit"
-    });
-  }
-  updateClock();
-  setInterval(updateClock, 15000);
-
-  // Музыкальный плеер YouTube.
-  function updateMusicLabels() {
-    const track = tracks[state.trackIndex];
-    $("#musicTitle").textContent = track.title;
-    $("#musicSubtitle").textContent = `Трек ${state.trackIndex + 1} из ${tracks.length}`;
-  }
-
-  function updatePlayButton(playing) {
-    state.musicPlaying = playing;
-    $("#musicPlay").setAttribute("aria-label", playing ? "Пауза" : "Воспроизвести");
-    $("#musicPlay").title = playing ? "Пауза" : "Воспроизвести";
-    $("#musicPlayIcon").innerHTML = playing
-      ? '<path d="M7 5h4v14H7zM15 5h4v14h-4z"></path>'
-      : '<path d="m8 5 12 7-12 7z"></path>';
-    $("#musicStatus").textContent = playing ? "Воспроизводится" : "Пауза";
-  }
-
-  function loadYouTubeApi() {
-    if (ytApiRequested) return;
-    ytApiRequested = true;
-
-    window.onYouTubeIframeAPIReady = function () {
-      try {
-        player = new YT.Player("youtubePlayers", {
-          height: "200",
-          width: "200",
-          videoId: tracks[state.trackIndex].id,
-          playerVars: {
-            autoplay: 0,
-            controls: 0,
-            disablekb: 1,
-            fs: 0,
-            playsinline: 1,
-            rel: 0
-          },
-          events: {
-            onReady: () => {
-              playerReady = true;
-              $("#musicStatus").textContent = "Готово к воспроизведению";
-              if (state.autoplay) {
-                // Браузер может запретить автоматический запуск со звуком.
-                tryStartMusic();
-              }
-            },
-            onStateChange: event => {
-              if (!window.YT) return;
-              if (event.data === YT.PlayerState.PLAYING) {
-                updatePlayButton(true);
-                $("#musicStatus").textContent = "Воспроизводится";
-              } else if (event.data === YT.PlayerState.PAUSED) {
-                updatePlayButton(false);
-              } else if (event.data === YT.PlayerState.ENDED) {
-                nextTrack(true);
-              }
-            },
-            onError: () => {
-              $("#musicStatus").textContent = "Трек недоступен";
-              updatePlayButton(false);
-            }
-          }
-        });
-      } catch (_) {
-        $("#musicStatus").textContent = "Плеер недоступен";
-      }
-    };
-
-    const script = document.createElement("script");
-    script.src = "https://www.youtube.com/iframe_api";
-    script.async = true;
-    document.head.appendChild(script);
-  }
-
-  function tryStartMusic() {
-    if (!playerReady || !player) {
-      loadYouTubeApi();
-      $("#musicStatus").textContent = "Загрузка плеера…";
-      return;
-    }
-    try {
-      player.playVideo();
-      updatePlayButton(true);
-    } catch (_) {
-      $("#musicStatus").textContent = "Нажми воспроизведение";
-    }
-  }
-
-  function toggleMusic() {
-    loadYouTubeApi();
-    if (!playerReady || !player) {
-      $("#musicStatus").textContent = "Загрузка плеера…";
-      return;
-    }
-
-    try {
-      const status = player.getPlayerState();
-      if (status === YT.PlayerState.PLAYING) {
-        player.pauseVideo();
-        updatePlayButton(false);
-      } else {
-        player.playVideo();
-        updatePlayButton(true);
-      }
-    } catch (_) {
-      $("#musicStatus").textContent = "Не удалось включить трек";
-    }
-    playClickSound();
-  }
-
-  function loadTrack(index, autoplay = true) {
-    state.trackIndex = (index + tracks.length) % tracks.length;
-    progressEstimate = 0;
-    $("#musicProgress").style.width = "0%";
-    $("#musicTime").textContent = "00:00";
-    updateMusicLabels();
-    loadYouTubeApi();
-
-    if (playerReady && player) {
-      try {
-        player.loadVideoById(tracks[state.trackIndex].id);
-        if (!autoplay) {
-          player.pauseVideo();
-          updatePlayButton(false);
-        } else {
-          updatePlayButton(true);
-        }
-      } catch (_) {
-        $("#musicStatus").textContent = "Не удалось загрузить трек";
-      }
-    }
-  }
-
-  function nextTrack(autoplay = true) {
-    loadTrack(state.trackIndex + 1, autoplay);
-    playClickSound(590);
-  }
-
-  function previousTrack() {
-    loadTrack(state.trackIndex - 1, true);
-    playClickSound(470);
-  }
-
-  $("#musicPlay").addEventListener("click", toggleMusic);
-  $("#musicNext").addEventListener("click", () => nextTrack(true));
-  $("#musicPrev").addEventListener("click", previousTrack);
-
-  setInterval(() => {
-    if (!playerReady || !player) return;
-    try {
-      const current = player.getCurrentTime() || 0;
-      const duration = player.getDuration() || 0;
-      if (duration > 0) {
-        $("#musicProgress").style.width = Math.min(100, current / duration * 100) + "%";
-      }
-      const minutes = Math.floor(current / 60);
-      const seconds = Math.floor(current % 60);
-      $("#musicTime").textContent =
-        String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
-    } catch (_) {}
-  }, 1000);
-
-  updateMusicLabels();
-
-  // Секретная комната.
-  function openSecretRoom() {
-    $("#secretRoom").classList.add("open");
-    $("#secretRoom").setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-    playClickSound(440);
-  }
-
-  function closeSecretRoom() {
-    $("#secretRoom").classList.remove("open");
-    $("#secretRoom").setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-  }
-
-  $("#secretOpen").addEventListener("click", openSecretRoom);
-  $("#secretHint").addEventListener("click", openSecretRoom);
-  $("#secretClose").addEventListener("click", closeSecretRoom);
-  $("#secretExit").addEventListener("click", closeSecretRoom);
-
-  const quoteGrid = $("#quoteGrid");
-
-  function createQuoteCard(text, index) {
-    const button = document.createElement("button");
-    button.className = "quote-card";
-    button.type = "button";
-
-    const number = document.createElement("span");
-    number.className = "quote-number";
-    number.textContent = `ARCHIVE / ${String(index + 1).padStart(2, "0")}`;
-
-    const paragraph = document.createElement("p");
-    paragraph.textContent = text;
-
-    const small = document.createElement("small");
-    small.textContent = "Нажми, чтобы открыть";
-
-    button.append(number, paragraph, small);
-    button.addEventListener("click", () => handleQuoteClick(button, text));
-    return button;
-  }
-
-  function renderQuotes(shuffle = false) {
-    let selected = quotes.slice(0, 12);
-    if (shuffle) {
-      selected = quotes.slice().sort(() => Math.random() - 0.5).slice(0, 12);
-    }
-
-    quoteGrid.replaceChildren();
-    selected.forEach((quote, index) => {
-      quoteGrid.appendChild(createQuoteCard(quote, index));
-    });
-    activeCards = $$(".quote-card", quoteGrid);
-    updateSecretCounters();
-  }
-
-  function createFragments(card) {
-    if (!state.animations) return;
-
-    const rect = card.getBoundingClientRect();
-    const amount = 9 + Math.floor(Math.random() * 5);
-
-    for (let i = 0; i < amount; i++) {
-      const fragment = document.createElement("span");
-      fragment.className = "fragment";
-
-      const width = 7 + Math.random() * 20;
-      const height = 8 + Math.random() * 19;
-
-      fragment.style.width = width + "px";
-      fragment.style.height = height + "px";
-      fragment.style.left = (rect.left + Math.random() * rect.width) + "px";
-      fragment.style.top = (rect.top + Math.random() * rect.height) + "px";
-      fragment.style.setProperty("--dx", ((Math.random() - 0.5) * 280) + "px");
-      fragment.style.setProperty("--dy", ((Math.random() - 0.5) * 240 - 30) + "px");
-      fragment.style.setProperty("--rot", ((Math.random() - 0.5) * 500) + "deg");
-      fragment.style.clipPath = Math.random() > .5
-        ? "polygon(50% 0,100% 100%,0 80%)"
-        : "polygon(0 0,100% 20%,80% 100%,15% 80%)";
-
-      document.body.appendChild(fragment);
-      setTimeout(() => fragment.remove(), 1000);
-    }
-  }
-
-  function updateSecretCounters() {
-    $("#clickCount").textContent = "Открыто: " + state.totalClicks;
-    $("#remainingCount").textContent = "Осталось: " + $$(".quote-card", quoteGrid).length;
-    $("#secretProgressBar").style.width = Math.min(100, state.destroyed / 12 * 100) + "%";
-  }
-
-  function showMilestone(count) {
-    const item = milestones[count];
-    if (!item || state.milestoneSeen.has(count)) return;
-
-    state.milestoneSeen.add(count);
-    $("#milestoneNumber").textContent = "ARCHIVE / " + String(count).padStart(3, "0");
-    $("#milestoneTitle").textContent = item.title;
-    $("#milestoneText").textContent = item.text;
-    $("#milestoneOverlay").classList.add("open");
-
-    if (count === 100) {
-      $("#finalReveal").classList.add("show");
-    }
-  }
-
-  function handleQuoteClick(card, quote) {
-    if (card.classList.contains("destroying")) return;
-
-    state.totalClicks++;
-    state.destroyed++;
-
-    playClickSound(360 + Math.random() * 300);
-    createFragments(card);
-    card.classList.add("destroying");
-
-    const message = randomMessages[Math.floor(Math.random() * randomMessages.length)];
-    $("#secretMessage").textContent = "«" + quote + "» — " + message;
-
-    const shouldShowMilestone = Boolean(milestones[state.totalClicks]);
-    updateSecretCounters();
-
-    const oldRect = card.getBoundingClientRect();
-
-    setTimeout(() => {
-      card.remove();
-
-      if (quoteGrid.children.length === 0) {
-        $("#secretMessage").textContent =
-          "Все карточки открыты. Архив можно начать заново или продолжить исследование.";
-        renderQuotes(true);
-      }
-
-      updateSecretCounters();
-    }, state.animations ? 740 : 10);
-
-    if (shouldShowMilestone) {
-      setTimeout(() => showMilestone(state.totalClicks), state.animations ? 780 : 20);
-    } else {
-      messageIndex++;
-      if (messageIndex % 4 === 0) {
-        $("#secretMessage").classList.remove("secret-chaos");
-        void $("#secretMessage").offsetWidth;
-        $("#secretMessage").classList.add("secret-chaos");
-      }
-    }
-  }
-
-  $("#shuffleQuotes").addEventListener("click", () => {
-    renderQuotes(true);
-    $("#secretMessage").textContent = "Карточки перемешаны. Порядок больше ничего не гарантирует.";
-    playClickSound();
-  });
-
-  $("#resetQuotes").addEventListener("click", () => {
-    state.destroyed = 0;
-    renderQuotes(false);
-    $("#secretMessage").textContent = "Архив восстановлен. Можно начать заново.";
-    playClickSound(450);
-  });
-
-  $("#milestoneClose").addEventListener("click", () => {
-    $("#milestoneOverlay").classList.remove("open");
-    playClickSound();
-  });
-
-  $("#milestoneOverlay").addEventListener("click", event => {
-    if (event.target === $("#milestoneOverlay")) {
-      $("#milestoneOverlay").classList.remove("open");
-    }
-  });
-
-  $("#finalRevealClose").addEventListener("click", () => {
-    $("#finalReveal").classList.remove("show");
-    $("#milestoneOverlay").classList.remove("open");
-    playClickSound();
-  });
-
-  renderQuotes(false);
-
-  // Начальные настройки.
-  applyTheme("dark");
-  applyAccent("blue");
-  applyTextColor("default");
-  document.documentElement.style.setProperty("--card-alpha", "0.82");
-  setAnimations(true);
-
-  // Попытка запустить музыку после первого взаимодействия пользователя.
-  document.addEventListener("pointerdown", function firstInteraction() {
-    if (state.autoplay && !playerReady) {
-      loadYouTubeApi();
-    }
-    document.removeEventListener("pointerdown", firstInteraction);
-  }, { once: true });
-
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id),STORE_KEY='nok-personal-space-settings-v2';
+const defaults={mainTheme:'black',accent:'blue',textColor:'default',musicVolume:35,clickVolume:30,musicEnabled:true,clickEnabled:true,secretClickEnabled:true,surfaceOpacity:100};
+let settings={...defaults};
+try{settings={...defaults,...JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}}catch(e){}
+if(!['black','gray','white'].includes(settings.mainTheme))settings.mainTheme='black';
+if(!['blue','purple','red','pink','green','cyan','orange','yellow','indigo','white','black'].includes(settings.accent))settings.accent='blue';
+if(!['default','#526f9e','#72568f','#914d58','#93657e','#4f796e','#4d7c88','#966e4d','#8c8252','#555b91','#aab5c7'].includes(settings.textColor))settings.textColor='default';
+const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+settings.musicVolume=clamp(Number(settings.musicVolume)||0,0,100);
+settings.clickVolume=clamp(Number(settings.clickVolume)||0,0,100);
+settings.surfaceOpacity=clamp(Number(settings.surfaceOpacity)||100,10,100);
+const saveSettings=()=>{try{localStorage.setItem(STORE_KEY,JSON.stringify(settings))}catch(e){}};
+let mainPlayer=null,secretPlayer=null,apiReady=false,userStartedMusic=false,currentDuration=0,progressTimer=null,repeatMain=false,secretOpen=false;
+function applySettings(){
+ document.body.classList.remove('theme-black','theme-gray','theme-white');
+ document.body.classList.add('theme-'+settings.mainTheme);
+ document.body.classList.forEach(c=>{if(c.startsWith('accent-'))document.body.classList.remove(c)});
+ document.body.classList.add('accent-'+settings.accent);
+ document.querySelectorAll('#mainThemes button').forEach(b=>b.classList.toggle('active',b.dataset.theme===settings.mainTheme));
+ document.querySelectorAll('#accentThemes .swatch').forEach(b=>b.classList.toggle('active',b.dataset.accent===settings.accent));
+ document.querySelectorAll('#textColors .swatch').forEach(b=>b.classList.toggle('active',b.dataset.textColor===settings.textColor));
+ if(settings.textColor==='default')document.documentElement.style.removeProperty('--profile-text-color');else document.documentElement.style.setProperty('--profile-text-color',settings.textColor);
+ $('musicVolume').value=settings.musicVolume;$('musicVolumeLabel').textContent=settings.musicVolume+'%';
+ $('clickVolume').value=settings.clickVolume;$('clickVolumeLabel').textContent=settings.clickVolume+'%';
+ $('musicEnabled').checked=settings.musicEnabled;$('clickEnabled').checked=settings.clickEnabled;$('secretClickEnabled').checked=settings.secretClickEnabled;
+ document.documentElement.style.setProperty('--surface-opacity',settings.surfaceOpacity/100);
+ $('surfaceOpacity').value=settings.surfaceOpacity;$('surfaceOpacityLabel').textContent=settings.surfaceOpacity+'%';
+ if(mainPlayer?.setVolume)mainPlayer.setVolume(settings.musicVolume);
+ if(secretPlayer?.setVolume)secretPlayer.setVolume(settings.musicVolume);
+}
+applySettings();
+const panel=$('settingsPanel'),shade=$('settingsShade');
+function openSettings(){panel.classList.add('open');shade.classList.add('open')}
+function closeSettings(){panel.classList.remove('open');shade.classList.remove('open')}
+$('settingsOpen').addEventListener('click',openSettings);
+$('settingsClose').addEventListener('click',closeSettings);
+shade.addEventListener('click',closeSettings);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSettings();closeRoleModal();if($('secretRoom').classList.contains('active'))closeSecretRoom()}});
+document.querySelectorAll('#mainThemes button').forEach(b=>b.addEventListener('click',()=>{settings.mainTheme=b.dataset.theme;applySettings();saveSettings()}));
+document.querySelectorAll('#accentThemes .swatch').forEach(b=>b.addEventListener('click',()=>{settings.accent=b.dataset.accent;applySettings();saveSettings()}));
+document.querySelectorAll('#textColors .swatch').forEach(b=>b.addEventListener('click',()=>{settings.textColor=b.dataset.textColor;applySettings();saveSettings()}));
+$('surfaceOpacity').addEventListener('input',e=>{settings.surfaceOpacity=clamp(+e.target.value,10,100);document.documentElement.style.setProperty('--surface-opacity',settings.surfaceOpacity/100);$('surfaceOpacityLabel').textContent=settings.surfaceOpacity+'%';saveSettings()});
+$('musicVolume').addEventListener('input',e=>{settings.musicVolume=+e.target.value;$('musicVolumeLabel').textContent=settings.musicVolume+'%';if(mainPlayer?.setVolume)mainPlayer.setVolume(settings.musicVolume);if(secretPlayer?.setVolume)secretPlayer.setVolume(settings.musicVolume);saveSettings()});
+$('clickVolume').addEventListener('input',e=>{settings.clickVolume=+e.target.value;$('clickVolumeLabel').textContent=settings.clickVolume+'%';saveSettings()});
+$('musicEnabled').addEventListener('change',e=>{settings.musicEnabled=e.target.checked;if(!settings.musicEnabled)pauseActivePlayer();else if(userStartedMusic)playActivePlayer();saveSettings()});
+$('clickEnabled').addEventListener('change',e=>{settings.clickEnabled=e.target.checked;saveSettings()});
+$('secretClickEnabled').addEventListener('change',e=>{settings.secretClickEnabled=e.target.checked;saveSettings()});
+const clickAudioUrl='https://www.myinstants.com/media/sounds/clicksoundeffect.mp3';
+let clickAudio=null;
+function clickSound(force=false){
+ if(!force&&(!settings.clickEnabled||settings.clickVolume<=0))return;
+ if($('secretRoom').classList.contains('active')&&!settings.secretClickEnabled)return;
+ try{if(!clickAudio){clickAudio=new Audio(clickAudioUrl);clickAudio.preload='auto'}clickAudio.pause();clickAudio.currentTime=0;clickAudio.volume=clamp(settings.clickVolume/100,0,1);const p=clickAudio.play();if(p?.catch)p.catch(()=>{})}catch(e){}
+}
+document.addEventListener('click',e=>{const el=e.target.closest('button,a,.quote-card');if(el&&!el.classList.contains('music-play')&&!el.classList.contains('quote-card'))clickSound()},true);
+const MAIN_TRACKS=['__cFrzeIdfU','kmTWXxDHuqo','MucMIJJ1Dso','hM7n3TZ_cC0','SKjtvKDqYhA','pmTifnmXswI','qpylrM5OMSE','GbzXNK1MJMM','a-x7Apy0RIA','Oud0Cy-WNDo','6BvJzsmcfy0','8gb1706XupY'];
+const SECRET_TRACK='ea1Shogsk7k';
+let currentTrackIndex=0;
+function updateTrackInfo(){
+ if(!mainPlayer?.getVideoData)return;
+ try{const d=mainPlayer.getVideoData()||{};$('trackTitle').textContent=d.title||('Трек '+(currentTrackIndex+1));$('trackAuthor').textContent=d.author||'YouTube'}catch(e){}
+ $('musicState').textContent='Фоновая музыка';
+ try{currentDuration=mainPlayer.getDuration()||0;$('totalTime').textContent=formatTime(currentDuration)}catch(e){}
+}
+function loadTrack(index,autoplay=true){
+ currentTrackIndex=(index+MAIN_TRACKS.length)%MAIN_TRACKS.length;
+ $('trackTitle').textContent='Загрузка названия…';$('trackAuthor').textContent='YouTube';$('currentTime').textContent='0:00';$('totalTime').textContent='—:—';$('progressFill').style.width='0%';
+ if(!mainPlayer||!apiReady)return;
+ try{mainPlayer.setVolume(settings.musicVolume);if(autoplay&&settings.musicEnabled){mainPlayer.loadVideoById(MAIN_TRACKS[currentTrackIndex]);userStartedMusic=true}else mainPlayer.cueVideoById(MAIN_TRACKS[currentTrackIndex])}catch(e){}
+ setTimeout(updateTrackInfo,500);setTimeout(updateTrackInfo,1400);
+}
+function nextTrack(){loadTrack(currentTrackIndex+1,true)}
+function previousTrack(){loadTrack(currentTrackIndex-1,true)}
+window.onYouTubeIframeAPIReady=function(){
+ mainPlayer=new YT.Player('mainYT',{height:'1',width:'1',videoId:MAIN_TRACKS[currentTrackIndex],playerVars:{autoplay:0,controls:0,disablekb:1,playsinline:1,rel:0,modestbranding:1},events:{
+ onReady:e=>{apiReady=true;e.target.setVolume(settings.musicVolume);try{e.target.setPlaybackQuality('small')}catch(_){}updateTrackInfo()},
+ onStateChange:e=>{if(!secretOpen)updateMainState(e.data);if(e.data===YT.PlayerState.PLAYING)updateTrackInfo();if(e.data===YT.PlayerState.ENDED&&!secretOpen){if(repeatMain){mainPlayer.seekTo(0,true);mainPlayer.playVideo()}else loadTrack(currentTrackIndex+1,true)}},
+ onError:()=>{$('trackTitle').textContent='Трек недоступен';$('trackAuthor').textContent='Попробуй следующую песню'}
+ }});
+ secretPlayer=new YT.Player('secretYT',{height:'1',width:'1',videoId:SECRET_TRACK,playerVars:{autoplay:0,controls:0,disablekb:1,playsinline:1,rel:0,modestbranding:1},events:{
+ onReady:e=>{e.target.setVolume(settings.musicVolume);try{e.target.setPlaybackQuality('small')}catch(_){}},
+ onStateChange:e=>{if(secretOpen&&e.data===YT.PlayerState.ENDED){try{e.target.seekTo(0,true);e.target.playVideo()}catch(_){}}}
+ }});
+};
+function activePlayer(){return secretOpen?secretPlayer:mainPlayer}
+function pauseActivePlayer(){try{mainPlayer?.pauseVideo();secretPlayer?.pauseVideo()}catch(e){}}
+function playActivePlayer(){if(!settings.musicEnabled)return;const p=activePlayer();try{if(p?.playVideo)p.playVideo();userStartedMusic=true}catch(e){}}
+function startMainTrack(){if(!settings.musicEnabled)return;try{if(mainPlayer){mainPlayer.setVolume(settings.musicVolume);mainPlayer.playVideo();userStartedMusic=true}}catch(e){}}
+function updateMainState(state){
+ if(!window.YT)return;
+ const playing=state===YT.PlayerState.PLAYING;
+ $('playIcon').innerHTML=playing?'<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>':'<path d="M7 4v16l13-8Z"/>';
+ $('musicPlay').setAttribute('aria-label',playing?'Поставить музыку на паузу':'Воспроизвести музыку');
+ if(playing){try{currentDuration=mainPlayer.getDuration()||0;$('totalTime').textContent=formatTime(currentDuration);updateTrackInfo()}catch(e){}startProgressTimer()}
+ else if(state===YT.PlayerState.PAUSED||state===YT.PlayerState.ENDED)stopProgressTimer();
+}
+function formatTime(sec){if(!Number.isFinite(sec)||sec<0)return'0:00';return Math.floor(sec/60)+':'+String(Math.floor(sec%60)).padStart(2,'0')}
+function startProgressTimer(){stopProgressTimer();progressTimer=setInterval(()=>{const p=secretOpen?secretPlayer:mainPlayer;if(!p?.getCurrentTime)return;try{let t=p.getCurrentTime()||0,d=p.getDuration()||0;if(!secretOpen){$('currentTime').textContent=formatTime(t);$('totalTime').textContent=formatTime(d);$('progressFill').style.width=(d?100*t/d:0)+'%'}}catch(e){}},700)}
+function stopProgressTimer(){if(progressTimer){clearInterval(progressTimer);progressTimer=null}}
+$('musicPlay').addEventListener('click',()=>{
+ if(!apiReady){showToast('Музыкальный плеер загружается');return}
+ const p=activePlayer();
+ try{const state=p.getPlayerState();if(state===YT.PlayerState.PLAYING){p.pauseVideo();if(!secretOpen)$('musicState').textContent='Пауза'}else{userStartedMusic=true;p.setVolume(settings.musicVolume);p.playVideo()}}catch(e){startMainTrack()}
+});
+$('previousTrack').addEventListener('click',previousTrack);
+$('nextTrack').addEventListener('click',nextTrack);
+$('repeatButton').addEventListener('click',()=>{repeatMain=!repeatMain;$('repeatButton').classList.toggle('active',repeatMain);showToast(repeatMain?'Повтор включён':'Повтор выключен')});
+document.addEventListener('pointerdown',()=>{if(!userStartedMusic&&settings.musicEnabled&&!secretOpen&&apiReady){try{mainPlayer.setVolume(settings.musicVolume);mainPlayer.playVideo();userStartedMusic=true}catch(e){}}},{once:true});
+const roleCopy={
+ DESIGNER:['DESIGNER','Дизайн аватарок, баннеров и визуального оформления. По заказам и сотрудничеству напиши в Telegram.'],
+ DEVELOPER:['DEVELOPER','Разработка сайтов, Discord-ботов и небольших проектов. По вопросам сотрудничества — Telegram.'],
+ FOUNDER:['FOUNDER','Создатель Vastness. Идеи, организация сообщества и работа над проектами.']
+};
+const roleModal=$('roleModal');
+function openRoleModal(key){const [title,txt]=roleCopy[key];$('roleTitle').textContent=title;$('roleText').textContent=txt;roleModal.classList.add('open')}
+function closeRoleModal(){roleModal.classList.remove('open')}
+document.querySelectorAll('[data-role]').forEach(b=>b.addEventListener('click',()=>openRoleModal(b.dataset.role)));
+$('roleClose').addEventListener('click',closeRoleModal);
+roleModal.addEventListener('click',e=>{if(e.target===roleModal)closeRoleModal()});
+$('serverToggle').addEventListener('click',()=>{const open=$('serverBox').classList.toggle('open');$('serverToggle').setAttribute('aria-expanded',String(open))});
+const quoteData=[
+['Тишина тоже ответ.','МЫСЛЬ'],['Не всё нужно объяснять.','ФРАГМЕНТ'],['Некоторые двери открываются внутрь.','ЗАМЕТКА'],['Ты здесь не случайно.','НЕИЗВЕСТНО'],
+['Смотри внимательнее.','СИГНАЛ'],['У каждого есть своя темнота.','МЫСЛЬ'],['Не торопись уходить.','ФРАГМЕНТ'],['Ты уже заметил перемены?','СИГНАЛ'],
+['Иногда вопрос важнее ответа.','ЗАМЕТКА'],['Никто не видит всю картину.','МЫСЛЬ'],['Продолжай, если уверен.','НЕИЗВЕСТНО'],['Не забывай дышать.','НАПОМИНАНИЕ'],
+['Ты всё ещё здесь.','СИГНАЛ'],['Память меняет детали.','ФРАГМЕНТ'],['В тишине слышно больше.','МЫСЛЬ'],['Не каждый след ведёт назад.','ЗАМЕТКА'],
+['Ты сам выбрал нажать.','НЕИЗВЕСТНО'],['Иногда выход ближе, чем кажется.','НАПОМИНАНИЕ'],['Не принимай темноту за конец.','МЫСЛЬ'],['Что именно ты ищешь?','СИГНАЛ']
+];
+const milestones={
+3:{title:'Остановись спокойно.',text:'Ты просто нажал на карточки. Пока всё нормально.',level:1},
+5:{title:'Спокойно…',text:'Ты ведь заметил, что сообщения меняются?',level:1},
+10:{title:'Зачем ты продолжаешь?',text:'Здесь больше нечего искать… наверное.',level:2},
+20:{title:'Остановись.',text:'Ты зашёл дальше, чем большинство. Может, хватит?',level:3},
+50:{title:'ОНИ УЖЕ ЗНАЮТ.',text:'Ты дошёл до пятидесяти нажатий. Не торопись. Здесь ещё не конец.',level:5},
+100:{title:'Всё с тобой будет хорошо. ♡',text:'Ты дошёл до конца. Это была лишь игра. Береги себя и не забывай: за любой тёмной атмосферой может скрываться что-то хорошее. 💙',level:5}
+};
+let clicks=0,cardOrder=[],quotePool=[],currentLevel=0;
+const grid=$('quoteGrid'),room=$('secretRoom');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function renderCards(){
+ grid.innerHTML='';cardOrder=shuffle(Array.from({length:12},(_,i)=>i));quotePool=shuffle([...quoteData]);
+ for(let i=0;i<12;i++){
+  const item=quotePool[i%quotePool.length],card=document.createElement('button');
+  card.className='quote-card';card.type='button';card.dataset.slot=String(cardOrder[i]);
+  card.innerHTML='<p></p><small></small>';card.querySelector('p').textContent=item[0];card.querySelector('small').textContent=item[1];
+  card.style.animationDelay=(Math.random()*.45)+'s';card.addEventListener('click',onQuoteClick);grid.appendChild(card);
+ }
+}
+function resetSecret(){
+ clicks=0;currentLevel=0;$('secretCount').textContent='НАЖАТИЯ · 00';room.className='active';
+ $('finalReveal').classList.remove('show');$('scareMessage').classList.remove('show');
+ $('secretHeading').style.opacity='1';$('secretHeading').textContent='Осколки сознания';
+ $('secretSubheading').textContent='Нажми на карточки. Посмотрим, как далеко ты зайдёшь.';
+ renderCards();
+}
+function openSecretRoom(){
+ secretOpen=true;room.className='active';resetSecret();
+ $('secretBg').play().catch(()=>{});
+ try{if(mainPlayer)mainPlayer.pauseVideo();if(secretPlayer){secretPlayer.setVolume(settings.musicVolume);if(settings.musicEnabled)secretPlayer.playVideo()}}catch(e){}
+ $('musicState').textContent='Музыка секретной комнаты';$('playIcon').innerHTML='<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+}
+function closeSecretRoom(){
+ secretOpen=false;room.className='';$('finalReveal').classList.remove('show');$('scareMessage').classList.remove('show');
+ try{if(secretPlayer)secretPlayer.pauseVideo();if(mainPlayer&&settings.musicEnabled&&userStartedMusic)mainPlayer.playVideo()}catch(e){}
+ $('musicState').textContent='Фоновая музыка';stopProgressTimer();
+}
+$('secretOpen').addEventListener('click',openSecretRoom);
+$('secretClose').addEventListener('click',closeSecretRoom);
+$('revealClose').addEventListener('click',closeSecretRoom);
+function showScare(item,level){
+ currentLevel=Math.max(currentLevel,level);
+ room.classList.remove('level-1','level-2','level-3','level-4','level-5');room.classList.add('level-'+currentLevel);
+ $('scareTitle').textContent=item.title;$('scareText').textContent=item.text;
+ const message=$('scareMessage');message.classList.remove('show');void message.offsetWidth;message.classList.add('show');
+ $('scareTitle').classList.toggle('glitch-text',level>=2);
+ if(level>=2){const content=room.querySelector('.secret-content');content.style.animation='none';void content.offsetWidth;content.style.animation=''}
+ if(level>=4)$('secretHeading').style.opacity='.3';
+ if(level>=5){$('secretHeading').style.opacity='.12';$('secretSubheading').textContent=''}
+}
+function shatterCard(card){
+ const r=card.getBoundingClientRect();
+ for(let i=0;i<30;i++){
+  const shard=document.createElement('span');shard.className='card-shard';
+  const w=6+Math.random()*18,h=6+Math.random()*15;
+  shard.style.width=w+'px';shard.style.height=h+'px';
+  shard.style.left=(r.left+Math.random()*Math.max(1,r.width-w))+'px';
+  shard.style.top=(r.top+Math.random()*Math.max(1,r.height-h))+'px';
+  shard.style.setProperty('--dx',((Math.random()-.5)*260)+'px');
+  shard.style.setProperty('--dy',((Math.random()-.65)*240)+'px');
+  shard.style.setProperty('--rot',((Math.random()-.5)*260)+'deg');
+  shard.style.animationDelay=(Math.random()*.09)+'s';
+  document.body.appendChild(shard);setTimeout(()=>shard.remove(),900);
+ }
+}
+function onQuoteClick(e){
+ if(clicks>=100)return;
+ clickSound();clicks++;$('secretCount').textContent='НАЖАТИЯ · '+String(clicks).padStart(2,'0');
+ const card=e.currentTarget,rect=card.getBoundingClientRect();shatterCard(card);
+ const heart=document.createElement('span');heart.className='heart-float';heart.textContent='♡';
+ heart.style.left=(rect.left+rect.width/2)+'px';heart.style.top=(rect.top+rect.height/2)+'px';
+ document.body.appendChild(heart);setTimeout(()=>heart.remove(),900);
+ card.classList.remove('popped');void card.offsetWidth;card.classList.add('popped');
+ const item=quoteData[Math.floor(Math.random()*quoteData.length)];
+ setTimeout(()=>{if(!room.classList.contains('active'))return;card.querySelector('p').textContent=item[0];card.querySelector('small').textContent=item[1];card.style.animationDelay='0s'},170);
+ if(milestones[clicks])showScare(milestones[clicks],milestones[clicks].level);
+ if(clicks===100)setTimeout(()=>$('finalReveal').classList.add('show'),1700);
+}
+let toastTimer;
+function showToast(text){$('toast').textContent=text;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),1800)}
 })();
 </script>
 </body>
